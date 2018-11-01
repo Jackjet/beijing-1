@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private RecyclerView classTitleRecyclerView;
     private RecyclerViewAdapter classTitleAdapter;
 
-    private TextView lingdaoricheng;
+    private TextView lingdaoricheng,todoNumber;
 
 
     private RecyclerViewAdapter todoAdapter;
@@ -84,6 +84,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         tvZhuomian = findViewById(R.id.tv_zhuomian);
         todoRefresh = findViewById(R.id.refresh);
         lingdaoricheng = findViewById(R.id.tv_richeng);
+        todoNumber = findViewById(R.id.tv_todo_more);
         tvAddress.setOnClickListener(this);
         classTitleRecyclerView = findViewById(R.id.classTitleRecyclerView);
         todoRecyclerView = findViewById(R.id.todoRecyclerView);
@@ -337,13 +338,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 String s = WebServiceUtils.getInstance().findTodoFiles(todoPage);
                 List<TodoBean> todoBeans = new Gson().fromJson(s, new TypeToken<List<TodoBean>>() {
                 }.getType());
-                if (todoBeans == null) {
+                if (todoBeans == null ||todoBeans.size() ==0) {
                     handler.sendEmptyMessage(1);
                     handler.sendEmptyMessage(2);
                     return;
                 }
                 String instanceGuid = "";
                 String userId = "";
+//                try {
+//                    int count = todoBeans.get(0).getCount();
+//                    todoNumber.setText(count);
+//                    if (count == 0){
+//                        todoNumber.setVisibility(View.GONE);
+//                    }else {
+//                        todoNumber.setVisibility(View.VISIBLE);
+//                    }
+//                    String todo_title = todoBeans.get(0).getTODO_TITLE();
+//                    if (TextUtils.isEmpty(todo_title)){
+//                        todoBeans.remove(0);
+//                    }
+//                }catch (Exception e){
+//                }
                 for (int i = 0; i < todoBeans.size(); i++) {
                     String todoTargeturl = todoBeans.get(i).getTODO_TARGETURL();
                     String substring = todoTargeturl.substring(todoTargeturl.indexOf("instanceGUID="));
@@ -375,7 +390,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (todoBeans.size() == 0) {
                     handler.sendEmptyMessage(2);
                 }
-//                getTodoRedGreenData(instanceGuid,userId);
             }
         }.start();
 

@@ -75,6 +75,7 @@ public class TodoBean {
     private String TIQIANXIADA;
     private String HQZBW_CHUSHI_HAO;
     private String YDWWENHAO;
+    private int count;
 
     private String status;
     private String look;
@@ -431,6 +432,14 @@ public class TodoBean {
         this.TODO_DATE = TODO_DATE;
     }
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     @Override
     public String toString() {
         return "TodoBean{" +
@@ -477,6 +486,7 @@ public class TodoBean {
                 ", HQZBW_CHUSHI_HAO='" + HQZBW_CHUSHI_HAO + '\'' +
                 ", YDWWENHAO='" + YDWWENHAO + '\'' +
                 ", status='" + status + '\'' +
+                ", count='" + count + '\'' +
                 '}';
     }
 }
