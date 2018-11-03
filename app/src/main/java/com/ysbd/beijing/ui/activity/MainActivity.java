@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,7 +56,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private RecyclerView classTitleRecyclerView;
     private RecyclerViewAdapter classTitleAdapter;
 
-    private TextView lingdaoricheng,todoNumber;
+    private TextView lingdaoricheng, todoNumber;
 
 
     private RecyclerViewAdapter todoAdapter;
@@ -338,27 +339,34 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 String s = WebServiceUtils.getInstance().findTodoFiles(todoPage);
                 List<TodoBean> todoBeans = new Gson().fromJson(s, new TypeToken<List<TodoBean>>() {
                 }.getType());
-                if (todoBeans == null ||todoBeans.size() ==0) {
+                if (todoBeans == null || todoBeans.size() == 0) {
                     handler.sendEmptyMessage(1);
                     handler.sendEmptyMessage(2);
                     return;
                 }
                 String instanceGuid = "";
                 String userId = "";
-//                try {
-//                    int count = todoBeans.get(0).getCount();
-//                    todoNumber.setText(count);
-//                    if (count == 0){
-//                        todoNumber.setVisibility(View.GONE);
-//                    }else {
-//                        todoNumber.setVisibility(View.VISIBLE);
-//                    }
-//                    String todo_title = todoBeans.get(0).getTODO_TITLE();
-//                    if (TextUtils.isEmpty(todo_title)){
-//                        todoBeans.remove(0);
-//                    }
-//                }catch (Exception e){
-//                }
+
+                try {
+                    final String count = todoBeans.get(0).getCount();
+                    String todo_title = todoBeans.get(0).getTODO_TITLE();
+                    if (TextUtils.isEmpty(todo_title)) {
+                        todoBeans.remove(0);
+                    }
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            todoNumber.setText(count);
+                            if ("0".equals(count)) {
+                                todoNumber.setVisibility(View.GONE);
+                            } else {
+                                todoNumber.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e("抛出异常", "解析数据抛出异常" + e.getMessage());
+                }
                 for (int i = 0; i < todoBeans.size(); i++) {
                     String todoTargeturl = todoBeans.get(i).getTODO_TARGETURL();
                     String substring = todoTargeturl.substring(todoTargeturl.indexOf("instanceGUID="));
