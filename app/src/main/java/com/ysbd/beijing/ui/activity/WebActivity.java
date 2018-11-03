@@ -28,7 +28,6 @@ public class WebActivity extends BaseActivity {
         });
         url = getIntent().getStringExtra("url");
         String substring = url.substring(0, url.lastIndexOf(".")) + "_app_czj.html";
-
         webView.loadUrl(substring);
         //自己使用屏幕大小
         webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
