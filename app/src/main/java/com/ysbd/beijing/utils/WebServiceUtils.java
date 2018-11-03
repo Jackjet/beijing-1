@@ -3,6 +3,7 @@ package com.ysbd.beijing.utils;
 
 import android.content.Context;
 import android.text.ClipboardManager;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -235,6 +236,7 @@ public class WebServiceUtils {
 
     public String findTodoFiles(int page) {
         String value = "{\"instanceguid\":\"{0A2FF324-FFFF-FFFF-8885-740500000008}\",\"userid\":\"" + userid + "\",\"stalength\":" + page + ",\"returnlength\":30}";
+        Log.e("首页待办",value);
         return WebServiceManager.getInstance().connect("findTodoFiles", HOST_TODO, value);
     }
 

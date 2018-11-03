@@ -254,10 +254,16 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                 }
             }
             adapterMap.get(editType).notifyDataSetChanged();
-        }
-        if (requestCode == 101 && resultCode == 101) {//更新正文
-            if (actor.equals("todo") || actor.equals("待办"))
+        } else if (requestCode == 101 && resultCode == 101) {//更新正文
+            Log.e("是否待办",actor);
+            if (actor.equals("todo") || actor.equals("待办")) {
+                String path = data.getStringExtra("path");
+                Log.e("原始上传正文地址",filePath);
+                Log.e("修改上传正文地址",path);
                 upLoadDocument(documentBean, filePath);
+            }
+        }else if (requestCode == 101){//无需修改正文
+
         }
     }
 
@@ -413,7 +419,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
     }
 
     public void down(String url, String attachmentName, final boolean isDocument) {
-        Log.e("下载文件", "开始下载");
+//        url = " http://172.10.48.92:9998/risenetoabjcz/riseoffice/MobileDocServlet?instanceGuid={0A2FCA25-0000-0000-1BD9-635B00016673}&documentGUid={0A2FCA25-0000-0000-1BDA-382C0001667F}";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (getActivity() != null && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 20102);
@@ -421,14 +427,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
             }
         }
         try {
-//            ClipboardManager clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-//            //添加ClipData对象到剪切板中
-//            clipboardManager.setText(url);
-//            ToastUtil.show("文件地址已拷贝到剪切板", getContext());
             fileName = attachmentName;
-//        if (WebServiceUtils.HOST == WebServiceUtils.HOST1) {
-//            url = url.replace("218.60.41.112", "192.168.0.102");
-//        }
             final Request request = new Request.Builder()
                     .url(url)
                     .build();
@@ -500,6 +499,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
 //        String fileName = request.getParameter("fileName");
         SharedPreferences sp = getContext().getSharedPreferences(Constants.SP, Context.MODE_PRIVATE);
         String userId = sp.getString(Constants.USER_ID, "");
+        Log.e("上传地址",Constants.UP_LOAD_DOC);
         map.put("url", Constants.UP_LOAD_DOC);
         map.put("path", filePath);
         map.put("instanceGUID", guid);
@@ -517,11 +517,13 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                 @Override
                 public void onFailure(Call call, IOException e) {
                     e.getCause();
+                    Log.e("上传正文返回结果","失败："+e.getMessage());
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String s = response.body().string();
+                    Log.e("上传正文返回结果","结果："+s);
                     if (s.length() > 5 && s.substring(0, 5).contains("OK")) {
                         handler.sendEmptyMessage(8);
                     } else {
@@ -531,6 +533,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
             }, new File(filePath));
         } catch (Exception e) {
             e.getCause();
+            Log.e("上传文件出现异常",e.getMessage());
         }
     }
 
@@ -563,7 +566,6 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
 
     //跳转intent 打开
     public void lookFile1(boolean isDocument) {
-
         if (isDocument) {
             Intent intent = new Intent(getContext(), EditActivity.class);
             intent.putExtra("path", filePath);
@@ -576,7 +578,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
             intent.putExtra("uploadurl", "");
             startActivityForResult(intent, 101);
         } else {
-           getContext().startActivity(FileUtils.getInstance().openFile(filePath, getContext()));
+            getContext().startActivity(FileUtils.getInstance().openFile(filePath, getContext()));
         }
     }
 
@@ -623,6 +625,8 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                         } else {
                             lookFile1(false);
                         }
+                    } else {
+                        lookFile1(false);
                     }
                     break;
                 case 6:
@@ -635,6 +639,8 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                         } else {
                             lookFile1(true);
                         }
+                    } else {
+                        lookFile1(true);
                     }
                     break;
                 case 8:

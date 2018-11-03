@@ -3,6 +3,7 @@ package com.ysbd.beijing.fileProgress;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 
 import com.ysbd.beijing.utils.CommentFormUtils;
 import com.ysbd.beijing.utils.FileUtils;
@@ -94,6 +95,7 @@ public class ProgressLoadFile {
                 + "&documentTitle=" + params.get("documentTitle")
                 + "&fileName=" + params.get("fileName")
                 + "&userid=" + params.get("userId");
+        Log.e("上传正文拼接地址",url);
         MultipartBody.Builder mbody = new MultipartBody.Builder().setType(MultipartBody.FORM);
         if (true) {
             mbody.addFormDataPart("chengbaoneirongjncwnew",params.get("fileName"),

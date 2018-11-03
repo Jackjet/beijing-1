@@ -356,7 +356,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     new Handler(Looper.getMainLooper()).post(new Runnable() {
                         @Override
                         public void run() {
-                            todoNumber.setText(count);
+                            todoNumber.setText("（" + count + "）");
                             if ("0".equals(count)) {
                                 todoNumber.setVisibility(View.GONE);
                             } else {
@@ -447,6 +447,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 // TODO Auto-generated method stub
                 //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
 //                view.loadUrl(url);
+                for (int i = 0; i < 100; i++) {
+                    if (url.contains("jntz/index_1077_" + i + ".htm")) {
+                        view.loadUrl(url);
+                        return true;
+                    }
+                }
                 Intent intent = new Intent(MainActivity.this, WebActivity.class);
                 intent.putExtra("url", url);
                 startActivity(intent);
