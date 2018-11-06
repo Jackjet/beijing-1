@@ -121,10 +121,10 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:text="1"
-                        android:textColor="#ff0000"
+                        android:textColor="#000000"
                         android:textSize="@dimen/dimen16"
                         android:visibility="gone" />
-
+                    <!--android:textColor="#ff0000"-->
                 </LinearLayout>
 
                 <com.cjj.MaterialRefreshLayout

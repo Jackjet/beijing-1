@@ -36,8 +36,8 @@ public class DeskTopActivity extends AppCompatActivity implements BaseRecyclerVi
     RecyclerView recyclerView;
     @BindView(R.id.tvTitle)
     TextView tvTitle;
-    private AppListsAdapter adapter;
     private ArrayList<AppListsModel.AppModel> list;
+    private AppListsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
