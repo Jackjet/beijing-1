@@ -453,9 +453,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         return true;
                     }
                 }
-                Intent intent = new Intent(MainActivity.this, WebActivity.class);
-                intent.putExtra("url", url);
-                startActivity(intent);
+                if (url.contains("http://10.123.27.193/jntz/index_1077.htm")){
+                    view.loadUrl(url);
+                }else {
+                    Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                    intent.putExtra("url", url);
+                    startActivity(intent);
+                }
                 return true;
             }
         });
