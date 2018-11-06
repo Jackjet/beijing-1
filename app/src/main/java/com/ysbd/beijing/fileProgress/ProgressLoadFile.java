@@ -70,7 +70,6 @@ public class ProgressLoadFile {
             progressDialog.dismiss();
         }
 
-
     }
 
     public static void docUpLoad(Context context, Map<String, String> params, okhttp3.Callback callback, File file) {
