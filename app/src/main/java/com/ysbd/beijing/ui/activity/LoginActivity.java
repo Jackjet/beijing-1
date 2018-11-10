@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.ClipboardManager;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
@@ -18,13 +17,11 @@ import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.ysbd.beijing.App;
-import com.ysbd.beijing.BaseActivity;
 import com.ysbd.beijing.R;
 import com.ysbd.beijing.base.BaseLoginActivity;
 import com.ysbd.beijing.ui.bean.LoginResBean;
 import com.ysbd.beijing.utils.CodeUtils;
 import com.ysbd.beijing.utils.Constants;
-import com.ysbd.beijing.utils.LoginUtils;
 import com.ysbd.beijing.utils.MD5;
 import com.ysbd.beijing.utils.SpUtils;
 import com.ysbd.beijing.utils.ToastUtil;
@@ -243,7 +240,7 @@ public class LoginActivity extends BaseLoginActivity {
     }
 
 
-    Handler handler = new Handler() {
+     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

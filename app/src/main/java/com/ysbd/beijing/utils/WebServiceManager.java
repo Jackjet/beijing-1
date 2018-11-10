@@ -1,7 +1,6 @@
 package com.ysbd.beijing.utils;
 
 import android.content.Context;
-import android.os.Looper;
 import android.text.ClipboardManager;
 import android.util.Log;
 
@@ -15,7 +14,6 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.util.logging.Handler;
 
 /**
  * Created by lcjing on 2018/8/29.
@@ -105,7 +103,7 @@ public class WebServiceManager {
         log(userName + "****json************" + method + "***********json****\n" + json);
         //添加ClipData对象到剪切板中
         String log = "json=" + json + ";   url=" + url + ";  method=" + method;
-        clipboardManager.setText(log);
+//        clipboardManager.setText(log);
 //        String soapAction = "http://mobile.risesoft.net/login";
         try {
             String a = "";

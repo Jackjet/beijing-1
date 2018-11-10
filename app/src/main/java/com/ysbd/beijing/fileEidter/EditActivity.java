@@ -1,7 +1,6 @@
 package com.ysbd.beijing.fileEidter;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -17,9 +16,7 @@ import com.ntko.app.support.Params;
 import com.ntko.app.support.WPSOfficeAgent;
 import com.ntko.app.support.callback.WPSWordParametersCallback;
 import com.ysbd.beijing.R;
-import com.ysbd.beijing.utils.Constants;
 import com.ysbd.beijing.utils.SpUtils;
-
 
 import java.io.File;
 
@@ -55,7 +52,7 @@ public class EditActivity extends OfficeSDKCompatActivity {
     }
 
     public void openLocalWord(String path, String filename) {
-        open(new File("/storage/emulated/0/bjczj1/document/cb正文.doc"));
+        open(new File(path));
 
 //       WPSWordParameters parameters = new WPSWordParameters();
 //        parameters.setOpenInView(WPSWordParameters.OPEN_IN_NORMAL);

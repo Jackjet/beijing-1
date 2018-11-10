@@ -12,7 +12,8 @@ public class Constants {
     //http://218.60.41.112:9998/risenetoabjcz/services/mobileWorkflowInstance?wsdl
 //    http://218.60.41.112:9998
 
-    public static final String LOAD_FILE = "http://192.168.0.102:9998/risenetoabjcz/riseoffice/MobileFileServlet";
+    //public static final String LOAD_FILE = "http://192.168.0.102:9998/risenetoabjcz/riseoffice/MobileFileServlet";
+    public static final String LOAD_FILE = "http://192.168.0.112:9998/risenetoabjcz/riseoffice/MobileFileServlet";
     public static final String UP_LOAD_DOC = WebServiceUtils.HOST + "/riseoffice/OfficeTagUploadServletMobile";
     public static final int LEAVE_TIME = 30 * 60 * 1000;//
     public static final String SP = "sp";
