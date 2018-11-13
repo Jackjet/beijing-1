@@ -29,6 +29,17 @@ public class OpinionModel implements Serializable{
     private String sealguid;
     private int isSign;
     private String userParentId;
+    private String step;
+
+    public String getStep() {
+        return step;
+    }
+
+    public void setStep(String step) {
+        this.step = step;
+    }
+
+
 
     public String getUserParentId() {
         return userParentId;

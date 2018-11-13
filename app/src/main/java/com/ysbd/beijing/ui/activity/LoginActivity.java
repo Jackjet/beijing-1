@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.ClipboardManager;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
@@ -185,7 +186,7 @@ public class LoginActivity extends BaseLoginActivity {
 //            ToastUtil.show(msg, this);
 //        } else
 
-        {
+       // {
             final String psw = new MD5().getMD5ofStr(pass);
             loadingDialog = new LoadingDialog();
             loadingDialog.show(getSupportFragmentManager());
@@ -194,11 +195,15 @@ public class LoginActivity extends BaseLoginActivity {
                 @Override
                 public void run() {
                     super.run();
-                    String msg = WebServiceUtils.getInstance().login(name, psw,clipboardManager);
+                    String msg;
+                    do {
+                       msg= WebServiceUtils.getInstance().login(name, psw, clipboardManager);
+                    }while (TextUtils.isEmpty(msg));
 //                    {"success":"false","info":"用户不存在"}
                     handler.obtainMessage(0, msg).sendToTarget();
                     try {
                         JSONObject jsonObject = new JSONObject(msg);
+                        //jsonObject.has("success");
                         if (jsonObject.has("success")) {
                             if (jsonObject.getBoolean("success")) {
                                 LoginResBean loginResBean = new Gson().fromJson(msg, LoginResBean.class);
@@ -218,14 +223,17 @@ public class LoginActivity extends BaseLoginActivity {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        handler.obtainMessage(2, "登录异常，请稍后再试...").sendToTarget();
+                        String message = e.getMessage();
+                        ClipboardManager clipboardManager = (ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                        clipboardManager.setText("服务器返回数据::"+msg);
+                        handler.obtainMessage(3, "登录异常，请稍后再试...").sendToTarget();
                     }
                 }
             }.start();
 
 
         }
-    }
+   //}
 
 
     private void getAddressBook() {
@@ -264,6 +272,9 @@ public class LoginActivity extends BaseLoginActivity {
 //                    ToastUtil.show(msg.obj.toString(),LoginActivity.this);
 //                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
 //                    finish();
+                    break;
+                case 3:
+                    ToastUtil.show("登录异常，请稍后再试...", LoginActivity.this);
                     break;
             }
         }

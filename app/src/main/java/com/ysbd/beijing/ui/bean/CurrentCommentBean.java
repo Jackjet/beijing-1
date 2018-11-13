@@ -9,6 +9,16 @@ public class CurrentCommentBean {
     private String action_guid;
     private String comment_guid;
 
+    public String getStep() {
+        return step;
+    }
+
+    public void setStep(String step) {
+        this.step = step;
+    }
+
+    private String step;
+
     public String getAction_name() {
         return action_name;
     }

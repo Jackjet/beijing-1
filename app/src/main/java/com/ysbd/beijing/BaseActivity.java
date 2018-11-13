@@ -1,16 +1,15 @@
 package com.ysbd.beijing;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.ysbd.beijing.ui.activity.LoginActivity;
@@ -18,6 +17,8 @@ import com.ysbd.beijing.utils.ActivityManager;
 import com.ysbd.beijing.utils.Constants;
 import com.ysbd.beijing.utils.SpUtils;
 import com.ysbd.beijing.utils.WebServiceUtils;
+
+import java.io.File;
 
 /**
  * Created by lcjing on 2018/8/13.
@@ -33,7 +34,8 @@ public class BaseActivity extends AppCompatActivity {
         sp = getSharedPreferences(Constants.SP, MODE_PRIVATE);
         WebServiceUtils.getInstance().initId(this);
         ActivityManager.getInstance().addActivity(this);
-    }
+        Log.d("BaseActivity",getClass().getSimpleName());
+}
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -96,5 +98,29 @@ public class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ActivityManager.getInstance().finishActivity(this);
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+//获取SD卡路径
+            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/"
+                    + this.getPackageName() + "/bjczj1/";
+
+            File file = new File(path);
+
+            if (file.exists()) {//如果路径存在
+
+                if (file.isDirectory()) {//如果是文件夹
+                    File[] childFiles = file.listFiles();//获取文件夹下所有文件
+                    if (childFiles == null || childFiles.length == 0) {//如果为空文件夹
+                        file.delete();//删除文件夹
+                        return;
+                    }
+
+                    for (int i = 0; i < childFiles.length; i++) {//删除文件夹下所有文件
+                        childFiles[i].delete();
+                    }
+                    file.delete();//删除文件夹
+                }
+            }
+        }
+
     }
 }

@@ -4,24 +4,17 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 
-import com.google.gson.util.VersionUtils;
 import com.ysbd.beijing.autoExist.ScreenObserver;
 import com.ysbd.beijing.autoExist.TimeoutService;
-import com.ysbd.beijing.ui.activity.LoginActivity;
 import com.ysbd.beijing.utils.Constants;
-import com.ysbd.beijing.utils.SpUtils;
 import com.ysbd.beijing.utils.WebServiceUtils;
 
 /**
@@ -37,6 +30,7 @@ public class BaseLoginActivity extends AppCompatActivity {
         sp = getSharedPreferences(Constants.SP, MODE_PRIVATE);
         WebServiceUtils.getInstance().initId(this);
         registerReceiver(receiver, new IntentFilter(Constants.FINISH));
+        Log.d("BaseActivity",getClass().getSimpleName());
 //        mScreenObserver = new ScreenObserver(this);
 //        mScreenObserver.requestScreenStateUpdate(new ScreenObserver.ScreenStateListener() {
 //            @Override
