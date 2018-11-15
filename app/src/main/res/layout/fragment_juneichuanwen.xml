@@ -420,7 +420,7 @@
                             <ImageView
                                 android:layout_marginLeft="@dimen/dimen8"
                                 android:layout_marginRight="@dimen/dimen8"
-                                android:layout_width="@dimen/dimen20"
+                                android:layout_width="@dimen/dimen28"
                                 android:layout_height="match_parent"
                                 android:src="@mipmap/document"/>
                             <TextView

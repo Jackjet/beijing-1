@@ -1,14 +1,13 @@
 package com.ysbd.beijing.ui.activity;
 
 import android.app.AlertDialog;
-import android.content.ClipboardManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -30,21 +29,20 @@ import com.google.gson.reflect.TypeToken;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
-import com.ysbd.beijing.App;
 import com.ysbd.beijing.BaseActivity;
 import com.ysbd.beijing.R;
-import com.ysbd.beijing.directorDesktop.Desk2Activity;
 import com.ysbd.beijing.recyclerView.OnBindView;
 import com.ysbd.beijing.recyclerView.OnViewClickListener;
 import com.ysbd.beijing.recyclerView.RecyclerViewAdapter;
 import com.ysbd.beijing.ui.bean.TodoBean;
-import com.ysbd.beijing.utils.update.CheckVersionUtil;
 import com.ysbd.beijing.utils.Constants;
 import com.ysbd.beijing.utils.DateFormatUtil;
 import com.ysbd.beijing.utils.SpUtils;
 import com.ysbd.beijing.utils.ToastUtil;
 import com.ysbd.beijing.utils.WebServiceUtils;
+import com.ysbd.beijing.utils.update.CheckVersionUtil;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,7 +111,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     userName.equals("师淑英") || userName.equals("汪刚") || userName.equals("张宏宇")) {
                 lingdaoricheng.setVisibility(View.VISIBLE);
             }
-            if (userName.equals("吴素芳") || userName.equals("徐蘅") || userName.equals("王婴") ||
+            if (userName.equals("马祥伟") || userName.equals("吴素芳") || userName.equals("徐蘅") || userName.equals("王婴") ||
                     userName.equals("于学强") || userName.equals("赵彦明") || userName.equals("韩杰") ||
                     userName.equals("师淑英") || userName.equals("汪刚") || userName.equals("张宏宇")) {
                 tvZhuomian.setVisibility(View.VISIBLE);
@@ -474,6 +472,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 finish();
                 SharedPreferences sp = getSharedPreferences(Constants.SP, MODE_PRIVATE);
                 sp.edit().putBoolean(Constants.IS_LOGIN, false).apply();
+                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+//获取SD卡路径
+                    String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/"
+                            + this.getPackageName() + "/bjczj1/";
+
+                    File file = new File(path);
+
+                    if (file.exists()) {//如果路径存在
+
+                        if (file.isDirectory()) {//如果是文件夹
+                            File[] childFiles = file.listFiles();//获取文件夹下所有文件
+                            if (childFiles == null || childFiles.length == 0) {//如果为空文件夹
+                                return;
+                            }
+
+                            for (int i = 0; i < childFiles.length; i++) {//删除文件夹下所有文件
+                                childFiles[i].delete();
+                            }
+                        }
+                    }
+                }
+
+
                 break;
             case R.id.tv_todo_more:
                 Intent intent = new Intent(this, DataActivity.class);

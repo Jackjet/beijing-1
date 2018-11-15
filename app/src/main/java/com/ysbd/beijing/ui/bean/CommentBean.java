@@ -11,6 +11,7 @@ public class CommentBean {
     private String comment_person;
     private String comment_date;
     private String person_guid;
+    private String step;
 
     public String getStep() {
         return step;
@@ -20,7 +21,7 @@ public class CommentBean {
         this.step = step;
     }
 
-    private String step;
+
 
     public String getPerson_guid() {
         return person_guid;

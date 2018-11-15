@@ -1,26 +1,19 @@
 package com.ysbd.beijing.ui.fragment.form;
 
 import android.Manifest;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
-import com.ntko.app.office.wps.params.WPSWordParameters;
-import com.ntko.app.support.Params;
-import com.ntko.app.support.callback.WPSWordParametersCallback;
 import com.ysbd.beijing.App;
 import com.ysbd.beijing.BaseFragment;
 import com.ysbd.beijing.bean.DocumentBean;
@@ -35,10 +28,8 @@ import com.ysbd.beijing.ui.bean.AttachmentBean;
 import com.ysbd.beijing.ui.bean.CommentBean;
 import com.ysbd.beijing.ui.bean.CurrentCommentBean;
 import com.ysbd.beijing.ui.bean.OpinionModel;
-import com.ysbd.beijing.ui.bean.form.JuNeiChuanWenBean;
 import com.ysbd.beijing.utils.CommentFormUtils;
 import com.ysbd.beijing.utils.Constants;
-import com.ysbd.beijing.utils.DBUtils;
 import com.ysbd.beijing.utils.DateFormatUtil;
 import com.ysbd.beijing.utils.FileUtils;
 import com.ysbd.beijing.utils.SpUtils;
@@ -63,8 +54,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
-import static com.ysbd.beijing.App.userId;
 
 
 /**
@@ -177,12 +166,12 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
         }
 
         if (currentComment != null) {
+            boolean in=false;
             for (int i = 0; i < currentComment.size(); i++) {
                 String frame = CommentFormUtils.getCommentFrame(formName, currentComment.get(i).getComment_guid());
                 List<OpinionModel> opinionModels = opinionMap.get(frame);
 
                 if (opinionModels != null) {
-                    boolean in = false;
                     OpinionModel opinionModel = new OpinionModel();
                     opinionModel.setParent(true);
                     opinionModel.setOpinionFrameMark(currentComment.get(i).getComment_guid());
@@ -192,8 +181,8 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                     //最下面的意见 是最新的
                     if (opinionModels.size() > 0 && opinionModels.get(opinionModels.size() - 1).getUserId().equals(userId)
                             && SpUtils.getInstance().getCommentEditable(opinionModels.get(opinionModels.size() - 1).getId())) {//这一行加了缓存的判断
-                        opinionModels.get(opinionModels.size() - 1).setEditable(true);
-                        in = true;
+                           opinionModels.get(opinionModels.size() - 1).setEditable(true);
+                        in =true;
                     }
 //                    for (int i1 = 0; i1 < opinionModels.size(); i1++) {
 //                        if (currentComment.get(i).getComment_guid().equals(opinionModels.get(i1).getOpinionFrameMark())
@@ -202,10 +191,11 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
 //                            in = true;
 //                            break;
 //                        }
-//                    }
+//
                     if (!in) {
                         opinionModels.add(opinionModel);
                     }
+
                 }
             }
         }
@@ -327,8 +317,9 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
 //                downLoadAttachment(attachmentList.get(position).getAttachmentrow_guid(),attachmentList.get(position).getAttachment_name());
                 if (attachmentList.get(position).getAttachment_extension().toLowerCase().equals("html")) {
                     openForm(attachmentList.get(position).getAttachment_description(), attachmentList.get(position).getAttachment_name());
-                } else
+                } else {
                     down(attachmentList.get(position).getUrl(), attachmentList.get(position).getAttachment_name(), false);
+                }
             }
         });
     }
@@ -582,6 +573,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
         }
     }
 
+    private Boolean isHave=true;
 
     private Handler handler = new Handler() {
         @Override
@@ -612,7 +604,10 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                             opinionModel.setId(opinionMap.get(editType).get(i).getOpinionFrameMark());
                             opinionModel.setAddable(true);
                             opinionMap.get(editType).remove(i);
-                            opinionMap.get(editType).add(opinionModel);
+//                            if (isHave) {
+                                opinionMap.get(editType).add(opinionModel);
+//                            }
+//                            isHave=true;
                             break;
                         }
                     }

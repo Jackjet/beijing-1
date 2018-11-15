@@ -264,4 +264,38 @@ public class EditActivity extends OfficeSDKCompatActivity {
 //        aIntent.putExtra("Find_Index", "搜索索引");
         startActivityForResult(aIntent, 101);
     }
+
+    private void openToDo(File file) {
+        String path = file.getPath();
+        String absolutePath = file.getAbsolutePath();
+        Log.e("absolutePath", absolutePath);
+        Log.e("path", path);
+        //创建一个Office的实例
+        Intent aIntent = new Intent("android.intent.action.StartEIOffice_1");
+        //是将该实例设置为在屏幕最前端显示
+        aIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        //File_Name为需要打开文件的绝对路径名
+        aIntent.putExtra("File_Name", absolutePath);
+//        File_Path为需要打开文件的绝对路径名
+        aIntent.putExtra("File_Path", absolutePath);
+        //是否是OA调用(true: OA调用; false: 非OA调用)
+        aIntent.putExtra("IS_OA", true);
+        //是否是新建文档(true: 新建文档为true; false: 打开文档为)
+        aIntent.putExtra("isNew", false);
+        //用于控制签批或是编辑模式(handwrite:签批模式;  edit:编辑模式；read:只读模式)
+        aIntent.putExtra("Start_Type", "edit");
+        //编辑此文档的用户名
+//        aIntent.putExtra("User_Name", "用户名");
+        //进入修订时的状态（ 0: 修订状态带标记的最终状态;  1:修订状态不带标记的最终状态 ;  2:修订状态带标记的原始状态;  3:修订状态不带标记的原始状态）
+        aIntent.putExtra("Revise_Status", "1");
+        //保存按钮显示成"提交"按钮。
+        aIntent.putExtra("ID_SUBMIT", "提交");
+        //是否显示切换按钮，不传入此参数，不显示切换模式按钮
+//        aIntent.putExtra("ID_SWITCH_VIEW", "编辑");
+        //开档后根据传入的内容进行搜索
+//        aIntent.putExtra("Find_Text", "搜索内容");
+        //开档后根据传入的内容定位到第几个搜索到的结果
+//        aIntent.putExtra("Find_Index", "搜索索引");
+        startActivityForResult(aIntent, 101);
+    }
 }

@@ -8,6 +8,7 @@ public class CurrentCommentBean {
     private String action_name;
     private String action_guid;
     private String comment_guid;
+    private String step;
 
     public String getStep() {
         return step;
@@ -17,7 +18,7 @@ public class CurrentCommentBean {
         this.step = step;
     }
 
-    private String step;
+
 
     public String getAction_name() {
         return action_name;
