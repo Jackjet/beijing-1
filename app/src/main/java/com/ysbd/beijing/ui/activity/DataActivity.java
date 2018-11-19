@@ -21,8 +21,6 @@ import com.ysbd.beijing.recyclerView.OnViewClickListener;
 import com.ysbd.beijing.recyclerView.RecyclerViewAdapter;
 import com.ysbd.beijing.ui.fragment.QueryFragment;
 import com.ysbd.beijing.ui.fragment.QueryListFragment;
-import com.ysbd.beijing.ui.fragment.form.ZhibiaowenFragment;
-import com.ysbd.beijing.ui.fragment.list.BaseListFragment;
 import com.ysbd.beijing.ui.fragment.list.JieyuzijinList;
 import com.ysbd.beijing.ui.fragment.list.JuneichuanwenList;
 import com.ysbd.beijing.ui.fragment.list.ShizhuanwenList;
@@ -32,7 +30,6 @@ import com.ysbd.beijing.ui.fragment.list.ZhibiaowenList;
 import com.ysbd.beijing.ui.fragment.list.ZhubanwenList;
 import com.ysbd.beijing.utils.QueryHelper;
 import com.ysbd.beijing.utils.SpUtils;
-import com.ysbd.beijing.utils.WebServiceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,6 +169,7 @@ public class DataActivity extends BaseActivity implements QueryHelper {
         View inflate = LayoutInflater.from(this).inflate(R.layout.head_data_class, null);
         final ImageView dataClassImg = inflate.findViewById(R.id.head_data_class_img);
         final TextView dataClassTitle = inflate.findViewById(R.id.head_data_class_title);
+
         dataClassTitle.setText(getIntent().getStringExtra("type"));
         classAdapter.addHeaderView(inflate);
         dataClassImg.setImageResource(R.mipmap.exchange);

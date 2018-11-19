@@ -1,19 +1,10 @@
 package com.ysbd.beijing.ui.bean.form;
 
-import com.ysbd.beijing.bean.ActorsBean;
-import com.ysbd.beijing.bean.DocumentBean;
-import com.ysbd.beijing.ui.bean.AttachmentBean;
-import com.ysbd.beijing.ui.bean.CommentBean;
-import com.ysbd.beijing.ui.bean.CurrentCommentBean;
-import com.ysbd.beijing.ui.bean.MenuBean;
-
-import java.util.List;
-
 /**
  * Created by lcjing on 2018/8/10.
  */
 
-public class ZhuBanwenBean {
+public class ZhuBanwenBean extends BaseFormBean{
 
     /**
      * currentComment : [{"action_name":"处长批示","action_guid":"{B0832517-8927-417A-9948-266082698AC9}","comment_guid":"{A9522312-FFFF-FFFF-9C1B-8B7D00000559}"},{"action_name":"处长批示归档","action_guid":"{1D3C9DA1-D962-4B61-9B9F-ED558EA8BE3C}","comment_guid":"{A9522312-FFFF-FFFF-D3F4-C0290000004F}"}]
@@ -117,48 +108,10 @@ public class ZhuBanwenBean {
     private String zhutofa;//
     private String zhutojieyu;//
     private String zhutozhi;//
-    private List<CurrentCommentBean> currentComment;
-    private List<CommentBean> comment;
-    private List<MenuBean> menus;
-    private List<AttachmentBean> attachment;
-    private DocumentBean documentcb;//呈报内容
-    private DocumentBean document;//正文
-    private List<ActorsBean> actors;
+
 
     private String guidangren;
 
-
-    public List<ActorsBean> getActors() {
-        return actors;
-    }
-
-    public void setActors(List<ActorsBean> actors) {
-        this.actors = actors;
-    }
-
-    public DocumentBean getDocumentcb() {
-        return documentcb;
-    }
-
-    public void setDocumentcb(DocumentBean documentcb) {
-        this.documentcb = documentcb;
-    }
-
-    public DocumentBean getDocument() {
-        return document;
-    }
-
-    public void setDocument(DocumentBean document) {
-        this.document = document;
-    }
-
-    public List<AttachmentBean> getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(List<AttachmentBean> attachment) {
-        this.attachment = attachment;
-    }
 
     public String getBangongshilch() {
         return bangongshilch;
@@ -552,21 +505,6 @@ public class ZhuBanwenBean {
         this.zhutozhi = zhutozhi;
     }
 
-    public List<CurrentCommentBean> getCurrentComment() {
-        return currentComment;
-    }
-
-    public void setCurrentComment(List<CurrentCommentBean> currentComment) {
-        this.currentComment = currentComment;
-    }
-
-    public List<CommentBean> getComment() {
-        return comment;
-    }
-
-    public void setComment(List<CommentBean> comment) {
-        this.comment = comment;
-    }
 
 //    public static class CurrentCommentBean {
 //        /**
@@ -663,12 +601,5 @@ public class ZhuBanwenBean {
 //
 //    }
 
-    public List<MenuBean> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(List<MenuBean> menus) {
-        this.menus = menus;
-    }
 
 }

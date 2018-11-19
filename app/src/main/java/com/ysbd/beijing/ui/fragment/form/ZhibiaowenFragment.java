@@ -14,19 +14,14 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.ysbd.beijing.App;
-import com.ysbd.beijing.BaseFragment;
 import com.ysbd.beijing.R;
 import com.ysbd.beijing.ui.activity.FormActivity;
-import com.ysbd.beijing.ui.adapter.CommentAdapter;
 import com.ysbd.beijing.ui.bean.FileIdBean;
-import com.ysbd.beijing.ui.bean.OpinionModel;
 import com.ysbd.beijing.ui.bean.form.ZhibiaowenBean;
-import com.ysbd.beijing.ui.bean.form.ZhuBanwenBean;
 import com.ysbd.beijing.utils.Constants;
 import com.ysbd.beijing.utils.DateFormatUtil;
 import com.ysbd.beijing.utils.FileUtils;
@@ -263,15 +258,15 @@ public class ZhibiaowenFragment extends BaseFormFragment {
         xianbanriqi.setText(DateFormatUtil.subDate(bean.getXianbanshijian()));
         daziyuan.setText(bean.getYinzhi());
 //     * yuanyincontent : 无
-        if (bean.getDocumentcb() != null) {
+        if (bean.getDocument() != null) {
             zhengwen.setVisibility(View.VISIBLE);
             zhengwen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //                    String type=bean.getDocumentcb().getDOCUMENTFILENAME().substring(bean.getDocumentcb().getDOCUMENTFILENAME().lastIndexOf("."+1));
-                    down(bean.getDocumentcb().getUrl(), bean.getDocumentcb().getName()
+                    down(bean.getDocument().getUrl(), bean.getDocument().getName()
                             + ".doc", true);
-                    setDocumentBean(bean.getDocumentcb());
+                    setDocumentBean(bean.getDocument());
 
                 }
             });
@@ -281,7 +276,7 @@ public class ZhibiaowenFragment extends BaseFormFragment {
                     if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 20102);
                     } else {
-                        upLoadDocument(bean.getDocumentcb(),
+                        upLoadDocument(bean.getDocument(),
                                 FileUtils.getInstance().makeDocumentDir().getPath() + File.separator + "正文.doc");
 
                     }
@@ -292,15 +287,15 @@ public class ZhibiaowenFragment extends BaseFormFragment {
             zhengwen.setVisibility(View.INVISIBLE);
         }
 
-        if (bean.getDocument() != null) {
+        if (bean.getDocumentcb() != null) {
             chengbaoneirong.setVisibility(View.VISIBLE);
             chengbaoneirong.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //                    String type=bean.getDocumentcb().getDOCUMENTFILENAME().substring(bean.getDocumentcb().getDOCUMENTFILENAME().lastIndexOf("."+1));
-                    down(bean.getDocument().getUrl(), bean.getDocument().getName()
+                    down(bean.getDocumentcb().getUrl(), bean.getDocumentcb().getName()
                             + ".doc", true);
-                    setDocumentBean(bean.getDocument());
+                    setDocumentBean(bean.getDocumentcb());
 
                 }
             });
@@ -310,7 +305,7 @@ public class ZhibiaowenFragment extends BaseFormFragment {
                     if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 20102);
                     } else {
-                        upLoadDocument(bean.getDocument(),
+                        upLoadDocument(bean.getDocumentcb(),
                                 FileUtils.getInstance().makeDocumentDir().getPath() + File.separator + "cb正文.doc");
 
                     }

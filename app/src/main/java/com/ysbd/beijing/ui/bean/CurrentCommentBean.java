@@ -8,14 +8,14 @@ public class CurrentCommentBean {
     private String action_name;
     private String action_guid;
     private String comment_guid;
-    private String step;
+    private String setp;
 
     public String getStep() {
-        return step;
+        return setp;
     }
 
     public void setStep(String step) {
-        this.step = step;
+        this.setp = step;
     }
 
 

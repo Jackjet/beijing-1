@@ -173,17 +173,34 @@ public class SelectPersonActivity extends BaseActivity {
                         for (int i = 0; i < dateBean.getUser().size(); i++) {
                             if (dateBean.getDept()!=null) {
                                 SendNodeBean departBean = dateBean.getDept().get(dateBean.getUser().get(i).getParentNodeGuid());
-                                if (departBean != null) {
-                                    MultiBean multiBean = new MultiBean();
-                                    multiBean.setOpen(false);
-                                    multiBean.setLevel(1);
-                                    multiBean.setName(departBean.getNodeName());
-                                    multiBean.setParent(true);
-                                    multiBean.setId(departBean.getNodeGuid());
-                                    multiBean.setpName("");
-                                    multiBean.setOrgId(departBean.getParentNodeGuid());
-                                    multiBean.setIndex(departBean.getIndex());
-                                    mu.add(multiBean);
+                                if (i<dateBean.getUser().size()-1){
+                                    SendNodeBean departBean1 = dateBean.getDept().get(dateBean.getUser().get(i+1).getParentNodeGuid());
+                                    if (departBean != departBean1) {
+                                        MultiBean multiBean = new MultiBean();
+                                        multiBean.setOpen(false);
+                                        multiBean.setLevel(1);
+                                        multiBean.setName(departBean.getNodeName());
+                                        multiBean.setParent(true);
+                                        multiBean.setId(departBean.getNodeGuid());
+                                        multiBean.setpName("");
+                                        multiBean.setOrgId(departBean.getParentNodeGuid());
+                                        multiBean.setIndex(departBean.getIndex());
+                                        mu.add(multiBean);
+                                    }
+                                    else {
+                                        SendNodeBean userBean = dateBean.getUser().get(i);
+                                        MultiBean multiBean = new MultiBean();
+                                        multiBean.setOpen(false);
+                                        multiBean.setLevel(1);
+                                        multiBean.setName(userBean.getNodeName());
+                                        multiBean.setParent(false);
+                                        multiBean.setId(userBean.getNodeGuid());
+                                        multiBean.setpName("");
+                                        multiBean.setIndex(userBean.getIndex());
+                                        multiBean.setDuty(userBean.getJobtitles());
+                                        multiBean.setOrgId(userBean.getParentNodeGuid());
+                                        mu.add(multiBean);
+                                    }
                                 }
                             }else {
                                 SendNodeBean userBean = dateBean.getUser().get(i);

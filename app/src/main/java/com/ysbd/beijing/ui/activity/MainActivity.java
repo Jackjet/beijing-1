@@ -474,11 +474,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 sp.edit().putBoolean(Constants.IS_LOGIN, false).apply();
                 if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 //获取SD卡路径
-                    String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/"
-                            + this.getPackageName() + "/bjczj1/";
+                    String path = Environment.getExternalStorageDirectory().getAbsolutePath()
+                            + "/bjczj1/";
 
                     File file = new File(path);
-
                     if (file.exists()) {//如果路径存在
 
                         if (file.isDirectory()) {//如果是文件夹
@@ -488,6 +487,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             }
 
                             for (int i = 0; i < childFiles.length; i++) {//删除文件夹下所有文件
+                                if (childFiles[i].isDirectory()){
+                                   File[] files= childFiles[i].listFiles();
+                                   if (files==null||files.length==0){
+                                       childFiles[i].delete();
+                                       continue;
+                                   }else{
+                                       for (int j=0;j<files.length;j++){
+                                           files[j].delete();
+                                       }
+                                       childFiles[i].delete();
+                                       continue;
+                                   }
+
+                                }
                                 childFiles[i].delete();
                             }
                         }

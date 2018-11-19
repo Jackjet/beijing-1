@@ -49,11 +49,10 @@ public class SpUtils {
         return sp.getInt("screenWidth", 360);
     }
 
-
     public String getIP() {
-//        return "http://192.168.0.112:9998/risenetoabjcz";
-        return "http://2w212116r3.iask.in:9998/risenetoabjcz";
-//        return "http://172.10.48.92:9998/risenetoabjcz";
+        return "http://192.168.0.110:9998/risenetoabjcz";
+//        return "http://2w212116r3.iask.in:9998/risenetoabjcz";
+//        return "http://172.10.48.92:9998/risenetoabjcz"/
 //        return sp.getString("ip", "http://10.123.27.194:9910");
     }//http://172.28.68.48:9910
 

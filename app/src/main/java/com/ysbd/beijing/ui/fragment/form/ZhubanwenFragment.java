@@ -1,6 +1,7 @@
 package com.ysbd.beijing.ui.fragment.form;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import com.google.gson.Gson;
 import com.ysbd.beijing.App;
 import com.ysbd.beijing.R;
 import com.ysbd.beijing.ui.activity.FormActivity;
+import com.ysbd.beijing.ui.activity.IntentWeb;
 import com.ysbd.beijing.ui.bean.form.ZhuBanwenBean;
 import com.ysbd.beijing.utils.DateFormatUtil;
 import com.ysbd.beijing.utils.FileUtils;
@@ -35,6 +37,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
@@ -78,7 +81,7 @@ public class ZhubanwenFragment extends BaseFormFragment {
     TextView guidangriqi;
     @BindView(R.id.jianyaoqingkuang)
     TextView jianyaoqingkuang;
-//    @BindView(R.id.chuzhangqianzi)
+    //    @BindView(R.id.chuzhangqianzi)
 //    TextView chuzhangqianzi;
     @BindView(R.id.chengbaoneirong)
     View chengbaoneirong;
@@ -105,6 +108,8 @@ public class ZhubanwenFragment extends BaseFormFragment {
     TextView beizhu;
     @BindView(R.id.cl_chuzhangqianzi)
     CommentLinearLayout clChuzhangqianzi;//处长签字
+    @BindView(R.id.button)
+    TextView button;
 
     //    private List<OpinionModel> julingdao;
 //    private List<OpinionModel> niban;
@@ -120,7 +125,7 @@ public class ZhubanwenFragment extends BaseFormFragment {
 //    private CommentAdapter qitarenAdapter;
     private LoadingDialog loadingDialog;
 
-    public static ZhubanwenFragment getInstance(String jsonData,String actor) {
+    public static ZhubanwenFragment getInstance(String jsonData, String actor) {
         ZhubanwenFragment fragment = new ZhubanwenFragment();
         Bundle args = new Bundle();
         args.putString("jsonData", jsonData);
@@ -138,7 +143,7 @@ public class ZhubanwenFragment extends BaseFormFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final String jsonData = getArguments().getString("jsonData");
-        actor=getArguments().getString("actor");
+        actor = getArguments().getString("actor");
         View view = inflater.inflate(R.layout.fragment_zhubanwen, null);
         unbinder = ButterKnife.bind(this, view);
         FormActivity.FileIdBean bean = new Gson().fromJson(jsonData, FormActivity.FileIdBean.class);
@@ -160,10 +165,10 @@ public class ZhubanwenFragment extends BaseFormFragment {
                 mHandler.obtainMessage(1, data).sendToTarget();
                 ZhuBanwenBean banwenBean = new Gson().fromJson(data, ZhuBanwenBean.class);
                 try {
-                    if (banwenBean.getMenus()!=null&&getActivity()!=null) {
+                    if (banwenBean.getMenus() != null && getActivity() != null) {
                         ((FormActivity) getActivity()).addMenus(banwenBean.getMenus());
                     }
-                    if (banwenBean.getActors()!=null&&getActivity()!=null) {
+                    if (banwenBean.getActors() != null && getActivity() != null) {
                         ((FormActivity) getActivity()).setActors(banwenBean.getActors());
                     }
                     initCommentDate(banwenBean.getCurrentComment(), banwenBean.getComment());
@@ -226,13 +231,13 @@ public class ZhubanwenFragment extends BaseFormFragment {
     };
 
 
-    private void initHuiqian2(String sub){
-        StringBuffer sb=new StringBuffer();
-        String[] s=sub.split(";");
-        if (s.length>0) {
+    private void initHuiqian2(String sub) {
+        StringBuffer sb = new StringBuffer();
+        String[] s = sub.split(";");
+        if (s.length > 0) {
             for (int i = 0; i < s.length; i++) {
-                String []ss=s[i].split(",");
-                if (ss.length==2) {
+                String[] ss = s[i].split(",");
+                if (ss.length == 2) {
                     sb.append(ss[1]).append("\n");
                 }
             }
@@ -261,28 +266,28 @@ public class ZhubanwenFragment extends BaseFormFragment {
         baoguanqixian.setText(zhuBanwenBean.getBaoguanqixian());
         mijiwen.setText(zhuBanwenBean.getMijiwen());
         guidangriqi.setText(zhuBanwenBean.getGuidangriqi());
-        if (zhuBanwenBean.getJianyaoqingkuang()!=null) {
+        if (zhuBanwenBean.getJianyaoqingkuang() != null) {
             jianyaoqingkuang.setText(Html.fromHtml(zhuBanwenBean.getJianyaoqingkuang()));
         }
 
 //        chuzhangqianzi.setText(zhuBanwenBean.getChuzhangyijian());
 //        chengbaoneirong.setText(zhuBanwenBean.getChengbaoneirong());
 //        biaoti.setText(zhuBanwenBean.getWenjianmingcheng());
-        if (zhuBanwenBean.getWenjianmingcheng()!=null) {
+        if (zhuBanwenBean.getWenjianmingcheng() != null) {
             biaoti.setText(Html.fromHtml(zhuBanwenBean.getWenjianmingcheng()));
         }
         zhongdianducha.setText(zhuBanwenBean.getZhongdianduban());
         huanji.setText(zhuBanwenBean.getHuanji());
         beizhu.setText(zhuBanwenBean.getBeizhu());
         initAttachment(zhuBanwenBean.getAttachment(), clAttachment);
-        if (zhuBanwenBean.getDocument()!=null) {
+        if (zhuBanwenBean.getDocumentcb() != null) {
             chengbaoneirong.setVisibility(View.VISIBLE);
             chengbaoneirong.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //                    String type=bean.getDocumentcb().getDOCUMENTFILENAME().substring(bean.getDocumentcb().getDOCUMENTFILENAME().lastIndexOf("."+1));
                     setDocumentBean(zhuBanwenBean.getDocumentcb());
-                   down(zhuBanwenBean.getDocumentcb().getUrl(), zhuBanwenBean.getDocumentcb().getName()
+                    down(zhuBanwenBean.getDocumentcb().getUrl(), zhuBanwenBean.getDocumentcb().getName()
                             + ".doc", true);
 
                 }
@@ -300,18 +305,27 @@ public class ZhubanwenFragment extends BaseFormFragment {
                     return true;
                 }
             });
-        }else {
-            chengbaoneirong.setVisibility(View.GONE);
+        } else {
+            chengbaoneirong.setVisibility(View.INVISIBLE);
         }
     }
 
-    private boolean viewDestroyed=false;
+    private boolean viewDestroyed = false;
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        viewDestroyed=true;
+        viewDestroyed = true;
     }
 
 
+    @OnClick(R.id.button)
+    public void onViewClicked() {
+        Intent intent = new Intent(getContext(),IntentWeb.class);
+//        String url = "http://192.168.0.110:9998/risenetoabjcz/riseoffice/default/putCopyMobileAction.do?submitType=0&instanceGUID={0A2FCA25-0000-0000-20B2-6DCB00018E4E}&userid=7cd7db16c48a5fa039ab300c79d46bc5000000&mobale=1";//此处填链接
+        String url = "http://10.123.27.194:9910/riseoffice/default/putCopyMobileAction.do?submitType=0&instanceGUID={0A2FCA25-0000-0000-20B2-6DCB00018E4E}&userid=7cd7db16c48a5fa039ab300c79d46bc5000000&mobale=1";//此处填链接
+        intent.putExtra("URL",url);
+        startActivity(intent);
+    }
 }

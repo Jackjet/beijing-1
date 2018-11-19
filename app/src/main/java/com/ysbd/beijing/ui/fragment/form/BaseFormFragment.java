@@ -32,7 +32,6 @@ import com.ysbd.beijing.utils.CommentFormUtils;
 import com.ysbd.beijing.utils.Constants;
 import com.ysbd.beijing.utils.DateFormatUtil;
 import com.ysbd.beijing.utils.FileUtils;
-import com.ysbd.beijing.utils.SpUtils;
 import com.ysbd.beijing.utils.ToastUtil;
 import com.ysbd.beijing.utils.WebServiceUtils;
 import com.ysbd.beijing.view.CommentLinearLayout;
@@ -118,7 +117,21 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
     }
 
     public void initCommentDate(List<CurrentCommentBean> currentComment, List<CommentBean> comment) {
-        if (comment != null) {
+        String frame = null;
+        List<OpinionModel> opinionModels1 = new ArrayList<>();
+        if (comment.size() == 0) {
+            for (int i = 0; i < currentComment.size(); i++) {
+                String frame1 = CommentFormUtils.getCommentFrame(formName, currentComment.get(i).getComment_guid());
+                List<OpinionModel> opinionModels2 = opinionMap.get(frame1);
+                OpinionModel opinionModel = new OpinionModel();
+                opinionModel.setParent(true);
+                opinionModel.setOpinionFrameMark(currentComment.get(i).getComment_guid());
+                opinionModel.setAddable(true);
+                opinionModel.setId(currentComment.get(i).getComment_guid());
+                opinionModel.setOpinionFrameName(frame1);
+                opinionModels2.add(opinionModel);
+            }
+        } else if (comment != null) {
             for (int i = 0; i < comment.size(); i++) {
                 OpinionModel opinionModel = new OpinionModel();
                 opinionModel.setParent(false);
@@ -130,7 +143,9 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                 opinionModel.setUserId(comment.get(i).getPerson_guid());
 //                opinionModel.setUserParentId(DBUtils.getPIdByName(comment.get(i).getComment_person()));
                 opinionModel.setCreateDate(DateFormatUtil.subDate(comment.get(i).getComment_date()));
-                String frame = CommentFormUtils.getCommentFrame(formName, comment.get(i).getComment_guid());
+                opinionModel.setStep(comment.get(i).getStep());
+                opinionModels1.add(opinionModel);
+                frame = CommentFormUtils.getCommentFrame(formName, comment.get(i).getComment_guid());
                 if (opinionMap.get(frame) != null) {
                     opinionMap.get(frame).add(opinionModel);
                 }
@@ -166,36 +181,38 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
         }
 
         if (currentComment != null) {
-            boolean in=false;
             for (int i = 0; i < currentComment.size(); i++) {
-                String frame = CommentFormUtils.getCommentFrame(formName, currentComment.get(i).getComment_guid());
-                List<OpinionModel> opinionModels = opinionMap.get(frame);
+                boolean in = false;
+                String frame1 = CommentFormUtils.getCommentFrame(formName, currentComment.get(i).getComment_guid());
+                List<OpinionModel> opinionModels2 = opinionMap.get(frame1);
+                OpinionModel opinionModel = new OpinionModel();
+                opinionModel.setParent(true);
+                opinionModel.setOpinionFrameMark(currentComment.get(i).getComment_guid());
+                opinionModel.setAddable(true);
+                opinionModel.setId(currentComment.get(i).getComment_guid());
+                opinionModel.setOpinionFrameName(frame1);
+                for (int j = 0; j < opinionModels1.size(); j++) {
+                    String step = opinionModels1.get(j).getStep();
+                    String step1 = currentComment.get(i).getStep();
+                    if (opinionModels1.get(opinionModels1.size() - 1).getUserId().equals(userId)) {
 
-                if (opinionModels != null) {
-                    OpinionModel opinionModel = new OpinionModel();
-                    opinionModel.setParent(true);
-                    opinionModel.setOpinionFrameMark(currentComment.get(i).getComment_guid());
-                    opinionModel.setAddable(true);
-                    opinionModel.setId(currentComment.get(i).getComment_guid());
-                    opinionModel.setOpinionFrameName(frame);
-                    //最下面的意见 是最新的
-                    if (opinionModels.size() > 0 && opinionModels.get(opinionModels.size() - 1).getUserId().equals(userId)
-                            && SpUtils.getInstance().getCommentEditable(opinionModels.get(opinionModels.size() - 1).getId())) {//这一行加了缓存的判断
-                           opinionModels.get(opinionModels.size() - 1).setEditable(true);
-                        in =true;
+                        if (step == null) {
+                            in = true;
+                        } else if (step1 == null) {
+                            in = true;
+                        } else if (step.equals(step1)) {
+                            opinionModels1.get(opinionModels1.size() - 1).setEditable(true);
+                            in = false;
+                        } else {
+                            opinionModels1.get(opinionModels1.size() - 1).setEditable(false);
+                            in = true;
+                        }
+                    } else if (j == opinionModels1.size() - 1) {
+                        opinionModels2.add(opinionModel);
                     }
-//                    for (int i1 = 0; i1 < opinionModels.size(); i1++) {
-//                        if (currentComment.get(i).getComment_guid().equals(opinionModels.get(i1).getOpinionFrameMark())
-//                                && opinionModels.get(i1).getUserName().equals(userName)) {
-//                            opinionModels.get(i1).setEditable(true);
-//                            in = true;
-//                            break;
-//                        }
-//
-                    if (!in) {
-                        opinionModels.add(opinionModel);
-                    }
-
+                }
+                if (in) {
+                    opinionModels2.add(opinionModel);
                 }
             }
         }
@@ -245,14 +262,14 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
             }
             adapterMap.get(editType).notifyDataSetChanged();
         } else if (requestCode == 101 && resultCode == 101) {//更新正文
-            Log.e("是否待办",actor);
+            Log.e("是否待办", actor);
             if (actor.equals("todo") || actor.equals("待办")) {
                 String path = data.getStringExtra("path");
-                Log.e("原始上传正文地址",filePath);
-                Log.e("修改上传正文地址",path);
+                Log.e("原始上传正文地址", filePath);
+                Log.e("修改上传正文地址", path);
                 upLoadDocument(documentBean, filePath);
             }
-        }else if (requestCode == 101){//无需修改正文
+        } else if (requestCode == 101) {//无需修改正文
 
         }
     }
@@ -490,7 +507,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
 //        String fileName = request.getParameter("fileName");
         SharedPreferences sp = getContext().getSharedPreferences(Constants.SP, Context.MODE_PRIVATE);
         String userId = sp.getString(Constants.USER_ID, "");
-        Log.e("上传地址",Constants.UP_LOAD_DOC);
+        Log.e("上传地址", Constants.UP_LOAD_DOC);
         map.put("url", Constants.UP_LOAD_DOC);
         map.put("path", filePath);
         map.put("instanceGUID", guid);
@@ -508,13 +525,13 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                 @Override
                 public void onFailure(Call call, IOException e) {
                     e.getCause();
-                    Log.e("上传正文返回结果","失败："+e.getMessage());
+                    Log.e("上传正文返回结果", "失败：" + e.getMessage());
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String s = response.body().string();
-                    Log.e("上传正文返回结果","结果："+s);
+                    Log.e("上传正文返回结果", "结果：" + s);
                     if (s.length() > 5 && s.substring(0, 5).contains("OK")) {
                         handler.sendEmptyMessage(8);
                     } else {
@@ -524,7 +541,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
             }, new File(filePath));
         } catch (Exception e) {
             e.getCause();
-            Log.e("上传文件出现异常",e.getMessage());
+            Log.e("上传文件出现异常", e.getMessage());
         }
     }
 
@@ -573,7 +590,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
         }
     }
 
-    private Boolean isHave=true;
+    private Boolean isHave = true;
 
     private Handler handler = new Handler() {
         @Override
@@ -605,7 +622,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                             opinionModel.setAddable(true);
                             opinionMap.get(editType).remove(i);
 //                            if (isHave) {
-                                opinionMap.get(editType).add(opinionModel);
+                            opinionMap.get(editType).add(opinionModel);
 //                            }
 //                            isHave=true;
                             break;

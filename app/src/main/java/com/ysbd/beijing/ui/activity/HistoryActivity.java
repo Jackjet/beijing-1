@@ -61,7 +61,6 @@ public class HistoryActivity extends AppCompatActivity {
             String receiverId = actorsBeans.get(i-1).getProecssActor().getPersonGUID();
             String receiverName = DBUtils.getPersonNameById(receiverId);
             receiverName=receiverName + "(" + actorsBeans.get(i-1).getDepartName() + ")";
-
             if (i==1) {
                 String status="";
                 switch (actorsBeans.get(0).getProecssActor().getHandelStatus()) {

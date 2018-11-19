@@ -217,10 +217,10 @@
                         style="@style/FormFieldsValue3"
                         android:layout_weight="5"
                         android:hint=""
-                        android:paddingBottom="@dimen/dimen12"
                         android:paddingLeft="@dimen/dimen4"
+                        android:paddingTop="@dimen/dimen12"
                         android:paddingRight="@dimen/dimen4"
-                        android:paddingTop="@dimen/dimen12" />
+                        android:paddingBottom="@dimen/dimen12" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -440,10 +440,30 @@
                     android:padding="@dimen/dimen05"
                     android:visibility="visible">
 
-                    <TextView
+                    <LinearLayout
                         style="@style/FormFieldsName2"
                         android:layout_height="match_parent"
-                        android:text="预  算  处             处长意见" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/dimen14"
+                            android:text="预  算  处"
+                            android:textColor="@color/textColor"
+                            android:gravity="center"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="处长意见"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/dimen14"
+                            android:gravity="center"/>
+
+                    </LinearLayout>
+
 
                     <View
                         android:layout_width="@dimen/dimen1"
@@ -464,11 +484,30 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05"
                     android:visibility="visible">
-
-                    <TextView
+                    <LinearLayout
                         style="@style/FormFieldsName2"
                         android:layout_height="match_parent"
-                        android:text="预算处意见        （预登文）" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/dimen14"
+                            android:text="预 算 处 意 见"
+                            android:textColor="@color/textColor"
+                            android:gravity="center"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="(预登文)"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/dimen14"
+                            android:gravity="center"/>
+
+                    </LinearLayout>
+
 
                     <View
                         android:layout_width="@dimen/dimen1"
@@ -608,7 +647,15 @@
                         android:layout_weight="2"
                         android:hint="" />
 
-                 <LinearLayout                        android:layout_width="0dp"                        android:layout_height="match_parent"                        android:layout_weight="1">                        <View                            android:layout_width="@dimen/dimen1"                            android:layout_height="match_parent"                            android:background="#ff0000" />
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <View
+                            android:layout_width="@dimen/dimen1"
+                            android:layout_height="match_parent"
+                            android:background="#ff0000" />
 
                         <TextView
                             style="@style/FormFieldsName2"
@@ -705,10 +752,10 @@
                         style="@style/FormFieldsValue3"
                         android:layout_weight="5"
                         android:minHeight="@dimen/dimen40"
-                        android:paddingBottom="@dimen/dimen15"
                         android:paddingLeft="@dimen/dimen8"
-                        android:paddingRight="@dimen/dimen8"
                         android:paddingTop="@dimen/dimen10"
+                        android:paddingRight="@dimen/dimen8"
+                        android:paddingBottom="@dimen/dimen15"
                         android:text="" />
 
                 </LinearLayout>
@@ -889,10 +936,10 @@
                         android:background="#f4f9ff"
                         android:gravity="top"
                         android:minHeight="@dimen/dimen60"
-                        android:paddingBottom="@dimen/dimen12"
                         android:paddingLeft="@dimen/dimen8"
-                        android:paddingRight="@dimen/dimen8"
                         android:paddingTop="@dimen/dimen12"
+                        android:paddingRight="@dimen/dimen8"
+                        android:paddingBottom="@dimen/dimen12"
                         android:text="简要情况">
 
                     </TextView>
@@ -929,8 +976,8 @@
 
                         <com.ysbd.beijing.view.CommentLinearLayout
                             android:id="@+id/cl_chuzhangqianzi"
-                            android:layout_width="match_parent"
-                            style="@style/CommentListStyle" />
+                            style="@style/CommentListStyle"
+                            android:layout_width="match_parent" />
 
                     </FrameLayout>
 
@@ -959,10 +1006,32 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05">
 
-                    <TextView
+                    <LinearLayout
                         style="@style/FormFieldsName2"
                         android:layout_height="match_parent"
-                        android:text="附     件" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="附     件"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/dimen14" />
+
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="公文拷贝"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/dimen12" />
+                    </LinearLayout>
+
 
                     <View
                         android:layout_width="@dimen/dimen1"
@@ -995,8 +1064,8 @@
                                     android:layout_marginRight="@dimen/dimen1"
                                     android:layout_weight="1"
                                     android:background="#dcdce1"
-                                    android:paddingBottom="@dimen/dimen2"
                                     android:paddingTop="@dimen/dimen2"
+                                    android:paddingBottom="@dimen/dimen2"
                                     android:singleLine="true"
                                     android:text="上传文件人员"
                                     android:textColor="#000"

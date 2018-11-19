@@ -21,14 +21,11 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.ysbd.beijing.BaseActivity;
-import com.ysbd.beijing.BaseFragment;
 import com.ysbd.beijing.R;
 import com.ysbd.beijing.bean.ActorsBean;
-import com.ysbd.beijing.fileEidter.FileReaderActivity;
 import com.ysbd.beijing.ui.bean.MenuBean;
 import com.ysbd.beijing.ui.fragment.form.BaseFormFragment;
 import com.ysbd.beijing.ui.fragment.form.JieyuzijinfawenFragment;
-import com.ysbd.beijing.ui.fragment.form.JuneichuanwenFragment;
 import com.ysbd.beijing.ui.fragment.form.JuneichuanwenFragment1;
 import com.ysbd.beijing.ui.fragment.form.ShizhuanwenFragment;
 import com.ysbd.beijing.ui.fragment.form.YibanfawenFragment;
@@ -49,7 +46,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -155,7 +151,7 @@ public class FormActivity extends BaseActivity {
         this.actors = actors;
         if (actors!=null&&actors.size()>0) {
             // 1.待办 2.已阅 3.暂存 4.办结
-            switch (actors.get(0).getProecssActor().getHandelStatus()) {
+            switch (actors.get(1).getProecssActor().getHandelStatus()) {
                 case 1:
                     if (("diong".equals(actor)||"在办".equals(actor))) {
 
