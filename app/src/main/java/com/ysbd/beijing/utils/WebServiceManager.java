@@ -102,7 +102,7 @@ public class WebServiceManager {
         log("****url************" + method + "***********url****\n" + url);
         log(userName + "****json************" + method + "***********json****\n" + json);
         //添加ClipData对象到剪切板中
-        String log = "json=" + json + ";   url=" + url + ";  method=" + method;
+//        String log = "json=" + json + ";   url=" + url + ";  method=" + method;
 //        clipboardManager.setText(log);
 //        String soapAction = "http://mobile.risesoft.net/login";
         try {

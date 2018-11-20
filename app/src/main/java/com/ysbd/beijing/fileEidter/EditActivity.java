@@ -91,7 +91,7 @@ public class EditActivity extends OfficeSDKCompatActivity {
         //编辑此文档的用户名
 //        aIntent.putExtra("User_Name", "用户名");
         //进入修订时的状态（ 0: 修订状态带标记的最终状态;  1:修订状态不带标记的最终状态 ;  2:修订状态带标记的原始状态;  3:修订状态不带标记的原始状态）
-        aIntent.putExtra("Revise_Status", "1");
+        aIntent.putExtra("Revise_Status", 1);
         //保存按钮显示成"提交"按钮。
         aIntent.putExtra("ID_SUBMIT", "提交");
         //是否显示切换按钮，不传入此参数，不显示切换模式按钮
