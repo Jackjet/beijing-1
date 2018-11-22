@@ -434,6 +434,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                 ToastUtil.show("请允许本应用读取设备内存", getContext());
             }
         }
+        handler.sendEmptyMessage(10);
         try {
             fileName = attachmentName;
             final Request request = new Request.Builder()
@@ -582,6 +583,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
             if (index > 1) {
                 filePath.substring(index + 1);
             }
+
             intent.putExtra("filename", name);
             intent.putExtra("uploadurl", "");
             intent.putExtra("TYPE", "edit");
@@ -676,6 +678,8 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                 case 9:
                     ToastUtil.show(msg.obj.toString(), getActivity());
                     break;
+                case 10:
+                    ToastUtil.show("正在加载",getActivity());
 
             }
         }

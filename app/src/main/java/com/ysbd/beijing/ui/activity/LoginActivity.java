@@ -283,12 +283,6 @@ public class LoginActivity extends BaseLoginActivity {
     };
 
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("USERID",userId);
-    }
-
     @OnClick(R.id.bt_save)
     public void onViewClicked() {
         SpUtils.getInstance().setIp(etIp.getText().toString());
