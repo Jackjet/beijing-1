@@ -21,11 +21,13 @@ public class EditActivity extends OfficeSDKCompatActivity {
 
     }
 
+    private String type;
     @Override
     protected void onStart() {
         super.onStart();
         String path = getIntent().getStringExtra("path");
         String filename = getIntent().getStringExtra("filexname");
+        type=getIntent().getStringExtra("TYPE");
         String uploadurl = getIntent().getStringExtra("uploadurl");
         if (firstStart) {
             openLocalWord(path, filename);
@@ -87,7 +89,7 @@ public class EditActivity extends OfficeSDKCompatActivity {
         //是否是新建文档(true: 新建文档为true; false: 打开文档为)
         aIntent.putExtra("isNew", false);
         //用于控制签批或是编辑模式(handwrite:签批模式;  edit:编辑模式；read:只读模式)
-        aIntent.putExtra("Start_Type", "edit");
+        aIntent.putExtra("Start_Type", type);
         //编辑此文档的用户名
 //        aIntent.putExtra("User_Name", "用户名");
         //进入修订时的状态（ 0: 修订状态带标记的最终状态;  1:修订状态不带标记的最终状态 ;  2:修订状态带标记的原始状态;  3:修订状态不带标记的原始状态）

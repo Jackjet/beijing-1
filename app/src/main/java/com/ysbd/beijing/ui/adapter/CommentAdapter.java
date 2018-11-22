@@ -1,12 +1,9 @@
 package com.ysbd.beijing.ui.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.text.ClipboardManager;
 import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -17,11 +14,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
 import com.ysbd.beijing.App;
 import com.ysbd.beijing.R;
 import com.ysbd.beijing.ui.bean.OpinionModel;
-import com.ysbd.beijing.utils.DBUtils;
 import com.ysbd.beijing.utils.SpUtils;
 import com.ysbd.beijing.utils.WebServiceManager;
 import com.ysbd.beijing.utils.WebServiceUtils;
@@ -124,7 +119,6 @@ public class CommentAdapter extends LinearLayoutBaseAdapter {
 //                @Override
 //                public void onClick(View v) {
 //                    ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-//                    //添加ClipData对象到剪切板中
 //                    clipboardManager.setText(url);
 //                }
 //            });

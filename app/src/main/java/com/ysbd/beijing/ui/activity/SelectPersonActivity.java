@@ -200,6 +200,20 @@ public class SelectPersonActivity extends BaseActivity {
                                         multiBean.setDuty(userBean.getJobtitles());
                                         multiBean.setOrgId(userBean.getParentNodeGuid());
                                         mu.add(multiBean);
+                                        if (i == dateBean.getUser().size()-2){
+                                            SendNodeBean userBean1 = dateBean.getUser().get(i+1);
+                                            MultiBean multiBean1 = new MultiBean();
+                                            multiBean1.setOpen(false);
+                                            multiBean1.setLevel(1);
+                                            multiBean1.setName(userBean1.getNodeName());
+                                            multiBean1.setParent(false);
+                                            multiBean1.setId(userBean1.getNodeGuid());
+                                            multiBean1.setpName("");
+                                            multiBean1.setIndex(userBean1.getIndex());
+                                            multiBean1.setDuty(userBean1.getJobtitles());
+                                            multiBean1.setOrgId(userBean1.getParentNodeGuid());
+                                            mu.add(multiBean1);
+                                        }
                                     }
                                 }
                             }else {

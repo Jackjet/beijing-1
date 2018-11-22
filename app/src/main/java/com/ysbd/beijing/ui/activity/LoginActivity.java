@@ -57,6 +57,7 @@ public class LoginActivity extends BaseLoginActivity {
     LinearLayout llB;
 
     private String code;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,6 +217,7 @@ public class LoginActivity extends BaseLoginActivity {
                                 editor.putString(Constants.USER_PASS, psw);
                                 editor.apply();
                                 getAddressBook();
+                                userId=loginResBean.getUserid();
                                 handler.sendEmptyMessage(1);
                             } else {
                                 handler.obtainMessage(2, jsonObject.getString("info")).sendToTarget();
@@ -224,8 +226,8 @@ public class LoginActivity extends BaseLoginActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                         String message = e.getMessage();
-                        ClipboardManager clipboardManager = (ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                        clipboardManager.setText("服务器返回数据::"+msg);
+//                        ClipboardManager clipboardManager = (ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+//                        clipboardManager.setText("服务器返回数据::"+msg);
                         handler.obtainMessage(3, "登录异常，请稍后再试...").sendToTarget();
                     }
                 }
@@ -280,6 +282,12 @@ public class LoginActivity extends BaseLoginActivity {
         }
     };
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("USERID",userId);
+    }
 
     @OnClick(R.id.bt_save)
     public void onViewClicked() {

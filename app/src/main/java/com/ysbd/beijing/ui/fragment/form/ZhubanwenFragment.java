@@ -1,6 +1,8 @@
 package com.ysbd.beijing.ui.fragment.form;
 
 import android.Manifest;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import com.ysbd.beijing.ui.activity.IntentWeb;
 import com.ysbd.beijing.ui.bean.form.ZhuBanwenBean;
 import com.ysbd.beijing.utils.DateFormatUtil;
 import com.ysbd.beijing.utils.FileUtils;
+import com.ysbd.beijing.utils.SpUtils;
 import com.ysbd.beijing.utils.ToastUtil;
 import com.ysbd.beijing.utils.WebServiceUtils;
 import com.ysbd.beijing.view.CommentLinearLayout;
@@ -124,6 +127,7 @@ public class ZhubanwenFragment extends BaseFormFragment {
 //    private CommentAdapter chuzhangpishiAdapter;
 //    private CommentAdapter qitarenAdapter;
     private LoadingDialog loadingDialog;
+    private String userId;
 
     public static ZhubanwenFragment getInstance(String jsonData, String actor) {
         ZhubanwenFragment fragment = new ZhubanwenFragment();
@@ -150,6 +154,9 @@ public class ZhubanwenFragment extends BaseFormFragment {
         id = bean.getInstanceguid();
         initComment();
         getData();
+        if (savedInstanceState!=null){
+            userId=savedInstanceState.getString("USERID");
+        }
         return view;
     }
 
@@ -323,8 +330,11 @@ public class ZhubanwenFragment extends BaseFormFragment {
     @OnClick(R.id.button)
     public void onViewClicked() {
         Intent intent = new Intent(getContext(),IntentWeb.class);
-//        String url = "http://192.168.0.110:9998/risenetoabjcz/riseoffice/default/putCopyMobileAction.do?submitType=0&instanceGUID={0A2FCA25-0000-0000-20B2-6DCB00018E4E}&userid=7cd7db16c48a5fa039ab300c79d46bc5000000&mobale=1";//此处填链接
-        String url = "http://10.123.27.194:9910/riseoffice/default/putCopyMobileAction.do?submitType=0&instanceGUID={0A2FCA25-0000-0000-20B2-6DCB00018E4E}&userid=7cd7db16c48a5fa039ab300c79d46bc5000000&mobale=1";//此处填链接
+
+        ((ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE)).setText("instanceGUID"+id+"userid="+SpUtils.getInstance().getUserId());
+//        String url = "http://192.168.0.110:9998/risenetoabjcz/riseoffice/default/putCopyMobileAction.do?submitType=0&instanceGUID="+id+"&userid="+SpUtils.getInstance().getUserId()+"&mobale=1";//此处填链接
+        String url = "http://10.123.27.194:9910/riseoffice/default/putCopyMobileAction.do?submitType=0" +
+                "&instanceGUID="+id+"&userid="+SpUtils.getInstance().getUserId()+"&mobale=1";//此处填链接
         intent.putExtra("URL",url);
         startActivity(intent);
     }

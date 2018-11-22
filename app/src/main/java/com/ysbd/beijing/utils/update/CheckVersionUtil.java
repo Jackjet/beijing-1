@@ -31,7 +31,7 @@ import okhttp3.Response;
 public class CheckVersionUtil {
 
     private final String VERSION_NAME = "http://10.123.27.194:9910/app/bjcz_";
-    private int VERSION_CODE = 5;
+    private int VERSION_CODE = 6;
     private static CheckVersionUtil checkVersionUtil;
     private ProgressDialog progressDialog;
     private Handler mHandler;
@@ -129,6 +129,7 @@ public class CheckVersionUtil {
 
     private void startActivityApk(Activity activity, File file) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         setIntentDataAndType(activity, intent, "application/vnd.android.package-archive", file, true);
         activity.startActivity(intent);
     }
@@ -220,7 +221,7 @@ public class CheckVersionUtil {
                 intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             }
         } else {
-            intent.setDataAndType(Uri.fromFile(file), type);
+            intent.setDataAndType(Uri.parse("file://"+ file), type);
         }
     }
 
@@ -229,7 +230,7 @@ public class CheckVersionUtil {
         if (Build.VERSION.SDK_INT >= 24) {
             fileUri = getUriForFile24(context, file);
         } else {
-            fileUri = Uri.fromFile(file);
+            fileUri = Uri.parse("file://"+ file);
         }
         return fileUri;
     }

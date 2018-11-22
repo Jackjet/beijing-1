@@ -450,7 +450,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) throws IOException {
+                public void onResponse(Call call, Response response)  {
                     InputStream inputStream = response.body().byteStream();
                     if (isDocument) {
                         filePath = FileUtils.getInstance().makeDocumentDir().getPath() + File.separator + fileName;
@@ -584,9 +584,20 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
             }
             intent.putExtra("filename", name);
             intent.putExtra("uploadurl", "");
+            intent.putExtra("TYPE", "edit");
             startActivityForResult(intent, 101);
         } else {
-            getContext().startActivity(FileUtils.getInstance().openFile(filePath, getContext()));
+            Intent intent = new Intent(getContext(), EditActivity.class);
+            intent.putExtra("path", filePath);
+            int index = filePath.lastIndexOf("/");
+            String name = "";
+            if (index > 1) {
+                filePath.substring(index + 1);
+            }
+            intent.putExtra("filename", name);
+            intent.putExtra("uploadurl", "");
+            intent.putExtra("TYPE", "read");
+            startActivityForResult(intent, 101);
         }
     }
 

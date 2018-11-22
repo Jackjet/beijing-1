@@ -225,7 +225,16 @@ public class FormActivity extends BaseActivity {
 
     public static class FileIdBean {
         String instanceguid;
-        String userid = "7cd7db16c48a5fa039ab300c79d46bc5000000";
+        String userid ;
+        public String getUserid() {
+            return userid;
+        }
+
+        public void setUserid(String userid) {
+            this.userid = userid;
+        }
+
+
 
         public String getInstanceguid() {
             return instanceguid;
