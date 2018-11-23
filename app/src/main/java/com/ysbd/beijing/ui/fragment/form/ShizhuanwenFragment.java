@@ -38,6 +38,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -108,6 +109,8 @@ public class ShizhuanwenFragment extends BaseFormFragment {
     @BindView(R.id.chengbaoneirong)
     View chengbao;
     Unbinder unbinder;
+    @BindView(R.id.gongwen_copy_shizhuanwen)
+    TextView gongwenCopyShizhuanwen;
 
     public static ShizhuanwenFragment getInstance(String guid, String actor) {
         ShizhuanwenFragment fragment = new ShizhuanwenFragment();
@@ -125,6 +128,9 @@ public class ShizhuanwenFragment extends BaseFormFragment {
         unbinder = ButterKnife.bind(this, view);
         guid = getArguments().getString("guid");
         actor = getArguments().getString("actor");
+        if (actor.equals("todo") || actor.equals("待办")) {//默认共公文拷贝隐藏,如果是待办状态,显示按钮
+            gongwenCopyShizhuanwen.setVisibility(View.VISIBLE);
+        }
         initComment();
         getData();
 
@@ -161,25 +167,24 @@ public class ShizhuanwenFragment extends BaseFormFragment {
             @Override
             public void run() {
                 String data;
-                int count=0;
+                int count = 0;
                 do {
                     data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);/////////流程测试
-                }while(TextUtils.isEmpty(data)&&count++<10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
+                } while (TextUtils.isEmpty(data) && count++ < 10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
                 try {
                     ShizhuanwenBean banwenBean = new Gson().fromJson(data, ShizhuanwenBean.class);
                     mHandler.obtainMessage(1, banwenBean).sendToTarget();
                     if (getActivity() != null) {
-                        if (banwenBean.getMenus()!=null) {
+                        if (banwenBean.getMenus() != null) {
                             ((FormActivity) getActivity()).addMenus(banwenBean.getMenus());
                         }
-                        if (banwenBean.getActors()!=null) {
+                        if (banwenBean.getActors() != null) {
                             ((FormActivity) getActivity()).setActors(banwenBean.getActors());
                         }
                     }
                     initCommentDate(banwenBean.getCurrentComment(), banwenBean.getComment());
 
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     App.catchE(e);
                 }
 
@@ -187,13 +192,13 @@ public class ShizhuanwenFragment extends BaseFormFragment {
         }).start();
     }
 
-    private void initHuiqian2(String sub){
-        StringBuffer sb=new StringBuffer();
-        String[] s=sub.split(";");
-        if (s.length>0) {
+    private void initHuiqian2(String sub) {
+        StringBuffer sb = new StringBuffer();
+        String[] s = sub.split(";");
+        if (s.length > 0) {
             for (int i = 0; i < s.length; i++) {
-                String []ss=s[i].split(",");
-                if (ss.length==2) {
+                String[] ss = s[i].split(",");
+                if (ss.length == 2) {
                     sb.append(ss[1]).append("\n");
                 }
             }
@@ -209,7 +214,7 @@ public class ShizhuanwenFragment extends BaseFormFragment {
         dubanjilu.setText(bean.getDubanjilu());
         guidangqiri.setText(bean.getGuidangriqi());
         hao.setText(bean.getHao());
-        if (bean.getJianyaoqingkuang()!=null) {
+        if (bean.getJianyaoqingkuang() != null) {
             jianyaoqingkuang.setText(Html.fromHtml(bean.getJianyaoqingkuang()));
         }
         laiwendanwei.setText(bean.getLaiwendanwei());
@@ -231,7 +236,7 @@ public class ShizhuanwenFragment extends BaseFormFragment {
         shizhengfubianhao.setText(bean.getShizhengfubianhao());
         chushichengbanren.setText(bean.getChengbanren());
         guidangren.setText(bean.getGuidangren());
-        if (bean.getShilingdaopishi()!=null) {
+        if (bean.getShilingdaopishi() != null) {
             shilingdaopishi.setText(Html.fromHtml(bean.getShilingdaopishi()));
         }
 
@@ -291,11 +296,17 @@ public class ShizhuanwenFragment extends BaseFormFragment {
     };
 
 
-    private boolean viewDestroyed=false;
+    private boolean viewDestroyed = false;
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        viewDestroyed=true;
+        viewDestroyed = true;
+    }
+
+    @OnClick(R.id.gongwen_copy_shizhuanwen)
+    public void onViewClicked() {
+        toWebIntent(guid);
     }
 }

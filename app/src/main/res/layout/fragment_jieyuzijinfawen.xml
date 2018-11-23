@@ -1051,11 +1051,31 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05">
 
-                    <TextView
+                    <LinearLayout
                         style="@style/FormFieldsName2"
                         android:layout_height="match_parent"
-                        android:layout_marginRight="@dimen/dimen1"
-                        android:text="附     件" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="附     件"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/dimen14" />
+
+                        <TextView
+                            android:id="@+id/gongwen_copy_jieyuzijinfawen"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="公文拷贝"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/dimen12" />
+                    </LinearLayout>
 
                     <View
                         android:layout_width="@dimen/dimen1"

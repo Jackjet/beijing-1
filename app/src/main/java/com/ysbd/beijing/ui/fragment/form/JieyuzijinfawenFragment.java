@@ -37,13 +37,14 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
  * Created by lcjing on 2018/8/20.
  */
 
-public class JieyuzijinfawenFragment extends BaseFormFragment  {
+public class JieyuzijinfawenFragment extends BaseFormFragment {
 
     @BindView(R.id.yudenghao)
     TextView yudenghao;
@@ -116,10 +117,12 @@ public class JieyuzijinfawenFragment extends BaseFormFragment  {
     @BindView(R.id.cl_yijianlan)
     CommentLinearLayout clYijianlan;
     @BindView(R.id.huiqian)
-            TextView huiqian;
+    TextView huiqian;
     Unbinder unbinder;
+    @BindView(R.id.gongwen_copy_jieyuzijinfawen)
+    TextView gongwenCopyJieyuzijinfawen;
 
-    public static JieyuzijinfawenFragment getInstance(String guid,String actor) {
+    public static JieyuzijinfawenFragment getInstance(String guid, String actor) {
         JieyuzijinfawenFragment fragment = new JieyuzijinfawenFragment();
         Bundle args = new Bundle();
         args.putString("guid", guid);
@@ -128,7 +131,8 @@ public class JieyuzijinfawenFragment extends BaseFormFragment  {
         return fragment;
     }
 
-    private String formName="结余资金";
+    private String formName = "结余资金";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -152,6 +156,9 @@ public class JieyuzijinfawenFragment extends BaseFormFragment  {
         frames.add("主任核稿");
         frames.add("秘书核稿");
         frames.add("意见栏");
+        if (actor.equals("todo") || actor.equals("待办")) {//默认共公文拷贝隐藏,如果是待办状态,显示按钮
+            gongwenCopyJieyuzijinfawen.setVisibility(View.VISIBLE);
+        }
         initData(layoutMap, frames, guid, formName);
         getData();
 
@@ -250,10 +257,10 @@ public class JieyuzijinfawenFragment extends BaseFormFragment  {
             @Override
             public void run() {
                 String data;
-                int count=0;
+                int count = 0;
                 do {
                     data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);/////////流程测试
-                }while(TextUtils.isEmpty(data)&&count++<10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
+                } while (TextUtils.isEmpty(data) && count++ < 10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
                 if (data.length() < 3) {
                     mHandler.sendEmptyMessage(3);
                     return;
@@ -277,13 +284,15 @@ public class JieyuzijinfawenFragment extends BaseFormFragment  {
                 }
                 try {
                     mHandler.obtainMessage(1, banwenBean).sendToTarget();
-                    if (banwenBean.getMenus()!=null&&getActivity()!=null) {
+                    if (banwenBean.getMenus() != null && getActivity() != null) {
                         ((FormActivity) getActivity()).addMenus(banwenBean.getMenus());
                     }
-                    if (banwenBean.getActors()!=null&&getActivity()!=null) {
+                    if (banwenBean.getActors() != null && getActivity() != null) {
                         ((FormActivity) getActivity()).setActors(banwenBean.getActors());
                     }
-                }catch (Exception e){App.catchE(e);}
+                } catch (Exception e) {
+                    App.catchE(e);
+                }
 
                 initCommentDate(banwenBean.getCurrentComment(), banwenBean.getComment());
             }
@@ -309,7 +318,7 @@ public class JieyuzijinfawenFragment extends BaseFormFragment  {
 //        bangongshilch :
         baoguanqixian.setText(bean.getBaoguanqixian());//        保管期限
 //        biaoti.setText(bean.getBiaoti());
-        if (bean.getBiaoti()!=null) {
+        if (bean.getBiaoti() != null) {
             biaoti.setText(Html.fromHtml(bean.getBiaoti()));
         }
         chushifenshu.setText(bean.getChushifenshu());
@@ -343,7 +352,7 @@ public class JieyuzijinfawenFragment extends BaseFormFragment  {
 
         yudenghao.setText(bean.getYdwwenhao());
         gongkaishuxing.setText(bean.getGongkaishuxing());
-        hegaoren.setText(bean.getNigao()+" "+DateFormatUtil.subDate(bean.getNigaoriqi()));
+        hegaoren.setText(bean.getNigao() + " " + DateFormatUtil.subDate(bean.getNigaoriqi()));
         chengwenriqi.setText(DateFormatUtil.subDate(bean.getChengwenriqi()));
         if (bean.getDocumentcb() != null) {
             zhengwen.setVisibility(View.VISIBLE);
@@ -406,14 +415,14 @@ public class JieyuzijinfawenFragment extends BaseFormFragment  {
 
     }
 
-    private void initHuiqian2(String sub){
-        sub=Html.fromHtml(sub).toString();
-        StringBuffer sb=new StringBuffer();
-        String[] s=sub.split(";");
-        if (s.length>0) {
+    private void initHuiqian2(String sub) {
+        sub = Html.fromHtml(sub).toString();
+        StringBuffer sb = new StringBuffer();
+        String[] s = sub.split(";");
+        if (s.length > 0) {
             for (int i = 0; i < s.length; i++) {
-                if (s[i].indexOf(">")>0) {
-                    sb.append(s[i].substring(s[i].indexOf(">")+1));
+                if (s[i].indexOf(">") > 0) {
+                    sb.append(s[i].substring(s[i].indexOf(">") + 1));
                 }
             }
 
@@ -421,11 +430,17 @@ public class JieyuzijinfawenFragment extends BaseFormFragment  {
         huiqian.setText(sb.toString());
     }
 
-    private boolean viewDestroyed=false;
+    private boolean viewDestroyed = false;
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        viewDestroyed=true;
+        viewDestroyed = true;
+    }
+
+    @OnClick(R.id.gongwen_copy_jieyuzijinfawen)
+    public void onViewClicked() {
+        toWebIntent(guid);
     }
 }

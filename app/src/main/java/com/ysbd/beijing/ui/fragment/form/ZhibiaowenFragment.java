@@ -39,6 +39,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -119,8 +120,10 @@ public class ZhibiaowenFragment extends BaseFormFragment {
     View chengbaoneirong;
 
     Unbinder unbinder;
+    @BindView(R.id.gongwen_copy_zhibiaowen)
+    TextView gongwenCopyZhibiaowen;
 
-    public static ZhibiaowenFragment getInstance(String guid,String actor) {
+    public static ZhibiaowenFragment getInstance(String guid, String actor) {
         ZhibiaowenFragment fragment = new ZhibiaowenFragment();
         Bundle args = new Bundle();
         args.putString("guid", guid);
@@ -139,6 +142,9 @@ public class ZhibiaowenFragment extends BaseFormFragment {
         guid = getArguments().getString("guid");
         actor = getArguments().getString("actor");
         unbinder = ButterKnife.bind(this, view);
+        if (actor.equals("todo") || actor.equals("待办")) {//默认共公文拷贝隐藏,如果是待办状态,显示按钮
+            gongwenCopyZhibiaowen.setVisibility(View.VISIBLE);
+        }
         initComment();
         getData();
         return view;
@@ -155,24 +161,24 @@ public class ZhibiaowenFragment extends BaseFormFragment {
             @Override
             public void run() {
                 String data;
-                int count=0;
+                int count = 0;
                 do {
                     data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);/////////流程测试
-                }while(TextUtils.isEmpty(data)&&count++<10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
+                } while (TextUtils.isEmpty(data) && count++ < 10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
 
                 mHandler.obtainMessage(1, data).sendToTarget();
                 ZhibiaowenBean banwenBean = new Gson().fromJson(data, ZhibiaowenBean.class);
                 try {
-                    if (banwenBean.getMenus()!=null&&getActivity()!=null) {
+                    if (banwenBean.getMenus() != null && getActivity() != null) {
                         ((FormActivity) getActivity()).addMenus(banwenBean.getMenus());
                     }
-                    if (banwenBean.getActors()!=null&&getActivity()!=null) {
+                    if (banwenBean.getActors() != null && getActivity() != null) {
                         ((FormActivity) getActivity()).setActors(banwenBean.getActors());
                     }
                     initCommentDate(banwenBean.getCurrentComment(), banwenBean.getComment());
 
                 } catch (Exception e) {
-                    mHandler.obtainMessage(2,"获取详情失败").sendToTarget();
+                    mHandler.obtainMessage(2, "获取详情失败").sendToTarget();
                     App.catchE(e);
                 }
             }
@@ -236,14 +242,14 @@ public class ZhibiaowenFragment extends BaseFormFragment {
         hao.setText(bean.getHqzbw_chushi_hao());
         zhusong.setText(bean.getZhusong());
 
-        nigaoren.setText(bean.getNigao()+" "+DateFormatUtil.subDate(bean.getNigaoriqi()));
-        jiaoduiren.setText(bean.getJiaodui()+" "+DateFormatUtil.subDate(bean.getJiaoduiriqi()));
+        nigaoren.setText(bean.getNigao() + " " + DateFormatUtil.subDate(bean.getNigaoriqi()));
+        jiaoduiren.setText(bean.getJiaodui() + " " + DateFormatUtil.subDate(bean.getJiaoduiriqi()));
         shouji.setText(bean.getJiaoduidianhua());
 
         bangongshifenshu.setText(bean.getBangongshifenshu());
         baoguanqixian.setText(bean.getBaoguanqixian());
 
-        if (bean.getBiaoti()!=null) {
+        if (bean.getBiaoti() != null) {
             biaoti.setText(Html.fromHtml(bean.getBiaoti()));
         }
         initAttachment(bean.getAttachment(), clAttachment);
@@ -325,11 +331,17 @@ public class ZhibiaowenFragment extends BaseFormFragment {
 
     }
 
-    private boolean viewDestroyed=false;
+    private boolean viewDestroyed = false;
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        viewDestroyed=true;
+        viewDestroyed = true;
+    }
+
+    @OnClick(R.id.gongwen_copy_zhibiaowen)
+    public void onViewClicked() {
+        toWebIntent(guid);
     }
 }

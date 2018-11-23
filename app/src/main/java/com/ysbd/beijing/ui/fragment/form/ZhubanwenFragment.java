@@ -107,8 +107,8 @@ public class ZhubanwenFragment extends BaseFormFragment {
     TextView beizhu;
     @BindView(R.id.cl_chuzhangqianzi)
     CommentLinearLayout clChuzhangqianzi;//处长签字
-    @BindView(R.id.gongwen_copy) //公文拷贝按钮
-    TextView gongwenCopy;
+    @BindView(R.id.gongwen_copy_zhubanwen)
+    TextView gongwenCopyZhubanwen;
 
 
     //    private List<OpinionModel> julingdao;
@@ -149,7 +149,7 @@ public class ZhubanwenFragment extends BaseFormFragment {
         FormActivity.FileIdBean bean = new Gson().fromJson(jsonData, FormActivity.FileIdBean.class);
         id = bean.getInstanceguid();
         if (actor.equals("todo") || actor.equals("待办")) {//默认共公文拷贝隐藏,如果是待办状态,显示按钮
-            gongwenCopy.setVisibility(View.VISIBLE);
+            gongwenCopyZhubanwen.setVisibility(View.VISIBLE);
         }
         initComment();
         getData();
@@ -328,8 +328,8 @@ public class ZhubanwenFragment extends BaseFormFragment {
     }
 
 
-    @OnClick(R.id.gongwen_copy)
-    public void onViewClicked() {//跳转intent
+    @OnClick(R.id.gongwen_copy_zhubanwen)
+    public void onViewClicked() {
         toWebIntent(id);
     }
 }

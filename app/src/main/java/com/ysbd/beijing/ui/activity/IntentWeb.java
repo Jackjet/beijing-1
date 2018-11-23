@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -17,10 +18,15 @@ public class IntentWeb extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intent_web);
-        webView=findViewById(R.id.gongwen_copy);
+        findViewById(R.id.intent_webBack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        webView=findViewById(R.id.gongwen_copy_web);
         Intent intent=getIntent();
         String url=intent.getStringExtra("URL");
-
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setBuiltInZoomControls(true);

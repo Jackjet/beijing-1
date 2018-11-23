@@ -39,6 +39,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -78,7 +79,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
     @BindView(R.id.chengbaoneirong)
     View chengbaoneirong;
     @BindView(R.id.chengbanren)
-    TextView   chengbanren;
+    TextView chengbanren;
     @BindView(R.id.lianxidianhua)
     TextView lianxidianhua;
     @BindView(R.id.cl_xiebanchushiyijian)
@@ -96,11 +97,13 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
 
     @BindView(R.id.cl_attachment)
     CommentLinearLayout clAttachment;//附件列表
+    @BindView(R.id.gongwen_copy_juneichuanwen)
+    TextView gongwenCopyJuneichuanwen;
 
     private LoadingDialog loadingDialog;
 
 
-    public static JuneichuanwenFragment1 getInstance(String guid,String actor) {
+    public static JuneichuanwenFragment1 getInstance(String guid, String actor) {
         JuneichuanwenFragment1 fragment = new JuneichuanwenFragment1();
         Bundle args = new Bundle();
         args.putString("guid", guid);
@@ -115,7 +118,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         View view = inflater.inflate(R.layout.fragment_juneichuanwen, null);
         unbinder = ButterKnife.bind(this, view);
         guid = getArguments().getString("guid");
-        actor= getArguments().getString("actor");
+        actor = getArguments().getString("actor");
         Map<String, CommentLinearLayout> layoutMap = new HashMap<>();
         layoutMap.put("处长批示", clChuzhangpishi);
         layoutMap.put("局领导批示", clJulingdao);
@@ -126,6 +129,9 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         frames.add("局领导批示");
         frames.add("处长签字");
         frames.add("其他人意见");
+        if (actor.equals("todo") || actor.equals("待办")) {//默认共公文拷贝隐藏,如果是待办状态,显示按钮
+            gongwenCopyJuneichuanwen.setVisibility(View.VISIBLE);
+        }
         initData(layoutMap, frames, guid, formName);
         getData();
         return view;
@@ -145,10 +151,10 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
             @Override
             public void run() {
                 String data;
-                int count=0;
+                int count = 0;
                 do {
                     data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);/////////流程测试
-                }while(TextUtils.isEmpty(data)&&count++<10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
+                } while (TextUtils.isEmpty(data) && count++ < 10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
 //                mHandler.obtainMessage(2, data).sendToTarget();
                 if (data.length() < 3) {
                     mHandler.sendEmptyMessage(3);
@@ -160,10 +166,10 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
                     data = data.replace("]]>", "");
                     banwenBean = new Gson().fromJson(data, JuNeiChuanWenBean.class);
                     mHandler.obtainMessage(1, banwenBean).sendToTarget();
-                    if (banwenBean.getMenus()!=null&&getActivity()!=null) {
+                    if (banwenBean.getMenus() != null && getActivity() != null) {
                         ((FormActivity) getActivity()).addMenus(banwenBean.getMenus());
                     }
-                    if (banwenBean.getActors()!=null&&getActivity()!=null) {
+                    if (banwenBean.getActors() != null && getActivity() != null) {
                         ((FormActivity) getActivity()).setActors(banwenBean.getActors());
                     }
                     initCommentDate(banwenBean.getCurrentComment(), banwenBean.getComment());
@@ -200,7 +206,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
                     }
                     break;
                 case 2:
-                    ToastUtil.show(msg.obj.toString(),getContext());
+                    ToastUtil.show(msg.obj.toString(), getContext());
                     break;
                 case 3:
                     ToastUtil.show("未获取到该公文的详细信息！", getContext());
@@ -215,7 +221,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
 
 
     private void setFormData(final JuNeiChuanWenBean bean) {
-        if (bean.getWenjianmingcheng()!=null) {
+        if (bean.getWenjianmingcheng() != null) {
             wenjianmingcheng.setText(Html.fromHtml(bean.getWenjianmingcheng()));
         }
         baoguanqixian.setText(bean.getBaoguanqixian());
@@ -235,7 +241,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         guidangren.setText(bean.getGuidangren());
         guidangqiri.setText(bean.getGuidangshijian());
         hao.setText(bean.getChushi_zi() + "   " + bean.getHao());
-        if (bean.getJianyaoqingkuang()!=null) {
+        if (bean.getJianyaoqingkuang() != null) {
             jianyaoqingkuang.setText(Html.fromHtml(bean.getJianyaoqingkuang()));
         }
 
@@ -290,11 +296,17 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         }
     }
 
-    private boolean viewDestroyed=false;
+    private boolean viewDestroyed = false;
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        viewDestroyed=true;
+        viewDestroyed = true;
+    }
+
+    @OnClick(R.id.gongwen_copy_juneichuanwen)
+    public void onViewClicked() {
+        toWebIntent(guid);
     }
 }

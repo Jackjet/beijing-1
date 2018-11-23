@@ -39,6 +39,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -126,6 +127,8 @@ public class YibanfawenFragment extends BaseFormFragment {
     View zhengwen;
     @BindView(R.id.chengbaoneirong)
     View chengbaoneirong;
+    @BindView(R.id.gongwen_copy_yibanfawen)
+    TextView gongwenCopyYibanfawen;
 
     private LoadingDialog loadingDialog;
 
@@ -148,6 +151,9 @@ public class YibanfawenFragment extends BaseFormFragment {
         guid = getArguments().getString("guid");
         actor = getArguments().getString("actor");
         unbinder = ButterKnife.bind(this, view);
+        if (actor.equals("todo") || actor.equals("待办")) {//默认共公文拷贝隐藏,如果是待办状态,显示按钮
+            gongwenCopyYibanfawen.setVisibility(View.VISIBLE);
+        }
         initComment();
         getData();
 
@@ -188,10 +194,10 @@ public class YibanfawenFragment extends BaseFormFragment {
             @Override
             public void run() {
                 String data;
-                int count=0;
+                int count = 0;
                 do {
                     data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);/////////流程测试
-                }while(TextUtils.isEmpty(data)&&count++<10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
+                } while (TextUtils.isEmpty(data) && count++ < 10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
 
 
                 try {
@@ -200,10 +206,10 @@ public class YibanfawenFragment extends BaseFormFragment {
                     } else {
                         YibanfawenBean banwenBean = new Gson().fromJson(data, YibanfawenBean.class);
                         mHandler.obtainMessage(1, banwenBean).sendToTarget();
-                        if (banwenBean.getMenus()!=null&&getActivity()!=null) {
+                        if (banwenBean.getMenus() != null && getActivity() != null) {
                             ((FormActivity) getActivity()).addMenus(banwenBean.getMenus());
                         }
-                        if (banwenBean.getActors()!=null&&getActivity()!=null) {
+                        if (banwenBean.getActors() != null && getActivity() != null) {
                             ((FormActivity) getActivity()).setActors(banwenBean.getActors());
                         }
                         initCommentDate(banwenBean.getCurrentComment(), banwenBean.getComment());
@@ -275,7 +281,7 @@ public class YibanfawenFragment extends BaseFormFragment {
         type.setText(bean.getZi());
         qianfa.setText(bean.getQfbjczj());//        签发 文字+意见框/
         huiqian.setText(bean.getHuiqian());///
-        if (bean.getChushihuiqian()!=null) {
+        if (bean.getChushihuiqian() != null) {
             huiqian.setText(Html.fromHtml(bean.getChushihuiqian()));///会签文字
         }
         initAttachment(bean.getAttachment(), clAttachment);
@@ -350,13 +356,13 @@ public class YibanfawenFragment extends BaseFormFragment {
 
     }
 
-    private void initHuiqian2(String sub){
-       StringBuffer sb=new StringBuffer();
-        String[] s=sub.split(";");
-        if (s.length>0) {
+    private void initHuiqian2(String sub) {
+        StringBuffer sb = new StringBuffer();
+        String[] s = sub.split(";");
+        if (s.length > 0) {
             for (int i = 0; i < s.length; i++) {
-                String []ss=s[i].split(",");
-                if (ss.length==2) {
+                String[] ss = s[i].split(",");
+                if (ss.length == 2) {
                     sb.append(ss[1]).append("\n");
                 }
             }
@@ -366,11 +372,17 @@ public class YibanfawenFragment extends BaseFormFragment {
     }
 
 
-    private boolean viewDestroyed=false;
+    private boolean viewDestroyed = false;
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        viewDestroyed=true;
+        viewDestroyed = true;
+    }
+
+    @OnClick(R.id.gongwen_copy_yibanfawen)
+    public void onViewClicked() {
+        toWebIntent(guid);
     }
 }
