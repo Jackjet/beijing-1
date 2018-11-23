@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,7 +154,12 @@ public class ZhibiaowenFragment extends BaseFormFragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);
+                String data;
+                int count=0;
+                do {
+                    data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);/////////流程测试
+                }while(TextUtils.isEmpty(data)&&count++<10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
+
                 mHandler.obtainMessage(1, data).sendToTarget();
                 ZhibiaowenBean banwenBean = new Gson().fromJson(data, ZhibiaowenBean.class);
                 try {

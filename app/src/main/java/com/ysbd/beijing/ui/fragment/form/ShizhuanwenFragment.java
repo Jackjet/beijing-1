@@ -11,24 +11,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.ysbd.beijing.App;
-import com.ysbd.beijing.BaseFragment;
 import com.ysbd.beijing.R;
 import com.ysbd.beijing.ui.activity.FormActivity;
-import com.ysbd.beijing.ui.adapter.CommentAdapter;
 import com.ysbd.beijing.ui.bean.FileIdBean;
-import com.ysbd.beijing.ui.bean.OpinionModel;
-import com.ysbd.beijing.ui.bean.form.BaseFormBean;
 import com.ysbd.beijing.ui.bean.form.ShizhuanwenBean;
-import com.ysbd.beijing.ui.bean.form.YibanfawenBean;
-import com.ysbd.beijing.ui.bean.form.ZhuBanwenBean;
 import com.ysbd.beijing.utils.Constants;
 import com.ysbd.beijing.utils.DateFormatUtil;
 import com.ysbd.beijing.utils.FileUtils;
@@ -166,7 +160,11 @@ public class ShizhuanwenFragment extends BaseFormFragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);
+                String data;
+                int count=0;
+                do {
+                    data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);/////////流程测试
+                }while(TextUtils.isEmpty(data)&&count++<10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
                 try {
                     ShizhuanwenBean banwenBean = new Gson().fromJson(data, ShizhuanwenBean.class);
                     mHandler.obtainMessage(1, banwenBean).sendToTarget();

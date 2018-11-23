@@ -22,6 +22,7 @@ import com.ysbd.beijing.fileEidter.FileReaderActivity;
 import com.ysbd.beijing.fileProgress.ProgressLoadFile;
 import com.ysbd.beijing.ui.activity.CommentActivity;
 import com.ysbd.beijing.ui.activity.FormActivity;
+import com.ysbd.beijing.ui.activity.IntentWeb;
 import com.ysbd.beijing.ui.adapter.AttachmentAdapter;
 import com.ysbd.beijing.ui.adapter.CommentAdapter;
 import com.ysbd.beijing.ui.bean.AttachmentBean;
@@ -32,6 +33,7 @@ import com.ysbd.beijing.utils.CommentFormUtils;
 import com.ysbd.beijing.utils.Constants;
 import com.ysbd.beijing.utils.DateFormatUtil;
 import com.ysbd.beijing.utils.FileUtils;
+import com.ysbd.beijing.utils.SpUtils;
 import com.ysbd.beijing.utils.ToastUtil;
 import com.ysbd.beijing.utils.WebServiceUtils;
 import com.ysbd.beijing.view.CommentLinearLayout;
@@ -583,10 +585,15 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
             if (index > 1) {
                 filePath.substring(index + 1);
             }
+            if (actor.equals("todo") || actor.equals("待办")){
+                intent.putExtra("TYPE", "edit");
+            }else{
+                intent.putExtra("TYPE", "read");
+            }
 
             intent.putExtra("filename", name);
             intent.putExtra("uploadurl", "");
-            intent.putExtra("TYPE", "edit");
+
             startActivityForResult(intent, 101);
         } else {
             Intent intent = new Intent(getContext(), EditActivity.class);
@@ -603,7 +610,6 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
         }
     }
 
-    private Boolean isHave = true;
 
     private Handler handler = new Handler() {
         @Override
@@ -685,6 +691,15 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
         }
     };
     private boolean viewDestroyed = false;
+    protected void toWebIntent(String id){
+        Intent intent = new Intent(getContext(),IntentWeb.class);
+
+//        String url = "http://192.168.0.110:9998/risenetoabjcz/riseoffice/default/putCopyMobileAction.do?submitType=0&instanceGUID="+id+"&userid="+SpUtils.getInstance().getUserId()+"&mobale=1";//此处填链接
+        String url = "http://10.123.27.194:9910/riseoffice/default/putCopyMobileAction.do?submitType=0" +
+                "&instanceGUID="+id+"&userid="+SpUtils.getInstance().getUserId()+"&mobale=1";//此处填链接
+        intent.putExtra("URL",url);
+        startActivity(intent);
+    }
 
     @Override
     public void onDestroyView() {

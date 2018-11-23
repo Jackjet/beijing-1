@@ -1,9 +1,6 @@
 package com.ysbd.beijing.ui.fragment.form;
 
 import android.Manifest;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +20,9 @@ import com.google.gson.Gson;
 import com.ysbd.beijing.App;
 import com.ysbd.beijing.R;
 import com.ysbd.beijing.ui.activity.FormActivity;
-import com.ysbd.beijing.ui.activity.IntentWeb;
 import com.ysbd.beijing.ui.bean.form.ZhuBanwenBean;
 import com.ysbd.beijing.utils.DateFormatUtil;
 import com.ysbd.beijing.utils.FileUtils;
-import com.ysbd.beijing.utils.SpUtils;
 import com.ysbd.beijing.utils.ToastUtil;
 import com.ysbd.beijing.utils.WebServiceUtils;
 import com.ysbd.beijing.view.CommentLinearLayout;
@@ -111,8 +107,9 @@ public class ZhubanwenFragment extends BaseFormFragment {
     TextView beizhu;
     @BindView(R.id.cl_chuzhangqianzi)
     CommentLinearLayout clChuzhangqianzi;//处长签字
-    @BindView(R.id.button)
-    TextView button;
+    @BindView(R.id.gongwen_copy) //公文拷贝按钮
+    TextView gongwenCopy;
+
 
     //    private List<OpinionModel> julingdao;
 //    private List<OpinionModel> niban;
@@ -127,7 +124,6 @@ public class ZhubanwenFragment extends BaseFormFragment {
 //    private CommentAdapter chuzhangpishiAdapter;
 //    private CommentAdapter qitarenAdapter;
     private LoadingDialog loadingDialog;
-    private String userId;
 
     public static ZhubanwenFragment getInstance(String jsonData, String actor) {
         ZhubanwenFragment fragment = new ZhubanwenFragment();
@@ -152,11 +148,11 @@ public class ZhubanwenFragment extends BaseFormFragment {
         unbinder = ButterKnife.bind(this, view);
         FormActivity.FileIdBean bean = new Gson().fromJson(jsonData, FormActivity.FileIdBean.class);
         id = bean.getInstanceguid();
+        if (actor.equals("todo") || actor.equals("待办")) {//默认共公文拷贝隐藏,如果是待办状态,显示按钮
+            gongwenCopy.setVisibility(View.VISIBLE);
+        }
         initComment();
         getData();
-        if (savedInstanceState!=null){
-            userId=savedInstanceState.getString("USERID");
-        }
         return view;
     }
 
@@ -168,7 +164,12 @@ public class ZhubanwenFragment extends BaseFormFragment {
             @Override
             public void run() {
 //                WebServiceUtils.getInstance().findToDoFileInfo();
-                String data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);
+                String data;
+                int count = 0;
+                do {
+                    data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);/////////流程测试
+                } while (TextUtils.isEmpty(data) && count++ < 10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
+
                 mHandler.obtainMessage(1, data).sendToTarget();
                 ZhuBanwenBean banwenBean = new Gson().fromJson(data, ZhuBanwenBean.class);
                 try {
@@ -327,15 +328,8 @@ public class ZhubanwenFragment extends BaseFormFragment {
     }
 
 
-    @OnClick(R.id.button)
-    public void onViewClicked() {
-        Intent intent = new Intent(getContext(),IntentWeb.class);
-
-        ((ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE)).setText("instanceGUID"+id+"userid="+SpUtils.getInstance().getUserId());
-//        String url = "http://192.168.0.110:9998/risenetoabjcz/riseoffice/default/putCopyMobileAction.do?submitType=0&instanceGUID="+id+"&userid="+SpUtils.getInstance().getUserId()+"&mobale=1";//此处填链接
-        String url = "http://10.123.27.194:9910/riseoffice/default/putCopyMobileAction.do?submitType=0" +
-                "&instanceGUID="+id+"&userid="+SpUtils.getInstance().getUserId()+"&mobale=1";//此处填链接
-        intent.putExtra("URL",url);
-        startActivity(intent);
+    @OnClick(R.id.gongwen_copy)
+    public void onViewClicked() {//跳转intent
+        toWebIntent(id);
     }
 }

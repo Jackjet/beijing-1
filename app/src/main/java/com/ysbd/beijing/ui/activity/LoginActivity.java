@@ -197,9 +197,10 @@ public class LoginActivity extends BaseLoginActivity {
                 public void run() {
                     super.run();
                     String msg;
+                    int count=0;
                     do {
                        msg= WebServiceUtils.getInstance().login(name, psw, clipboardManager);
-                    }while (TextUtils.isEmpty(msg));
+                    }while (TextUtils.isEmpty(msg)&&count++<10);
 //                    {"success":"false","info":"用户不存在"}
                     handler.obtainMessage(0, msg).sendToTarget();
                     try {
