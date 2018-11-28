@@ -440,7 +440,7 @@ public class JieyuzijinfawenFragment extends BaseFormFragment {
     }
 
     @OnClick(R.id.gongwen_copy_jieyuzijinfawen)
-    public void onViewClicked() {
+    public void onViewClicked() {  //每个文种都有此方法,用于跳转公文拷贝
         toWebIntent(guid);
     }
 }

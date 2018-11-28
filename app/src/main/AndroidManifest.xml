@@ -11,7 +11,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -21,6 +23,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name=" android.permission.INTERNET " />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:name=".App"
@@ -57,11 +61,13 @@
             android:screenOrientation="landscape" />
         <activity android:name=".ui.activity.CommentActivity" />
         <activity android:name=".ui.activity.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+
+
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.SelectPersonActivity" />
         <activity android:name=".ui.activity.SearchAddressActivity" />
@@ -81,10 +87,24 @@
         <activity android:name=".ui.activity.SettingActivity" />
         <activity android:name=".ui.activity.PersonActivity" />
         <activity android:name=".ui.activity.WebActivity" />
-        <activity android:name=".directorDesktop.Desk2Activity"></activity>
+        <activity android:name=".directorDesktop.Desk2Activity" />
         <activity android:name=".directorDesktop.DeskTopActivity" />
         <activity android:name=".directorDesktop.FileActivity" />
-        <activity android:name=".ui.activity.IntentWeb"></activity>
+        <activity android:name=".ui.activity.IntentWeb" />
+
+        <!-- ca认证activity声明 -->
+        <activity
+            android:name="cn.org.bjca.signet.component.core.activity.SignetCoreApiActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".OneActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
     </application>
 
 </manifest>

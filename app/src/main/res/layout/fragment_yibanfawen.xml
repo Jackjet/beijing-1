@@ -382,6 +382,51 @@
                         android:layout_weight="2"
                         android:hint="" />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/form_bored"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen05">
+
+                    <TextView
+                        style="@style/FormFieldsName2"
+                        android:text="政策性文件" />
+                    <View
+                        android:layout_width="@dimen/dimen1"
+                        android:layout_height="match_parent"
+                        android:background="#ff0000" />
+                    <TextView
+                        android:id="@+id/zcxwj"
+
+                        style="@style/FormFieldsValue2"
+                        android:layout_weight="5"
+                        android:hint="" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/form_bored"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen05">
+
+                    <TextView
+                        style="@style/FormFieldsName2"
+                        android:text="政策解读" />
+                    <View
+                        android:layout_width="@dimen/dimen1"
+                        android:layout_height="match_parent"
+                        android:background="#ff0000" />
+                    <TextView
+                        android:id="@+id/zcjd"
+                        style="@style/FormFieldsValue2"
+                        android:layout_weight="5"
+                        android:hint="" />
+                </LinearLayout>
+
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

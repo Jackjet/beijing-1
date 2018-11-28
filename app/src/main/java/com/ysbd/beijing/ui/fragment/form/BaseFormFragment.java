@@ -596,17 +596,23 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
 
             startActivityForResult(intent, 101);
         } else {
-            Intent intent = new Intent(getContext(), EditActivity.class);
-            intent.putExtra("path", filePath);
-            int index = filePath.lastIndexOf("/");
-            String name = "";
-            if (index > 1) {
-                filePath.substring(index + 1);
+            String end=fileName.substring(fileName.lastIndexOf('.')+1);
+            if (end.equals("doc")||end.equals("docx")||end.equals("xls")||end.equals("xlsx")||end.equals("ppt")||end.equals("pptx"))
+            {
+                Intent intent = new Intent(getContext(), EditActivity.class);
+                intent.putExtra("path", filePath);
+                int index = filePath.lastIndexOf("/");
+                String name = "";
+                if (index > 1) {
+                    filePath.substring(index + 1);
+                }
+                intent.putExtra("filename", name);
+                intent.putExtra("uploadurl", "");
+                intent.putExtra("TYPE", "read");
+                startActivityForResult(intent, 101);
+            }else {
+                startActivity(FileUtils.getInstance().openFile(filePath, getActivity()));
             }
-            intent.putExtra("filename", name);
-            intent.putExtra("uploadurl", "");
-            intent.putExtra("TYPE", "read");
-            startActivityForResult(intent, 101);
         }
     }
 

@@ -1,9 +1,5 @@
 package com.ysbd.beijing.ui.bean.form;
 
-import com.ysbd.beijing.ui.bean.MenuBean;
-
-import java.util.List;
-
 /**
  * Created by lcjing on 2018/8/22.
  */
@@ -150,9 +146,35 @@ public class YibanfawenBean extends BaseFormBean {
     private String yinzhi;
     private String yibanfawen_hao;
 
+
+
+    private String ZCXWJ;
+
+
+
+    private String ZCJD;
+
+
+
 //    private String workflow_sub;
 
     private String ydwwenhao;
+
+    public String getZCXWJ() {
+        return ZCXWJ;
+    }
+
+    public void setZCXWJ(String ZCXWJ) {
+        this.ZCXWJ = ZCXWJ;
+    }
+
+    public String getZCJD() {
+        return ZCJD;
+    }
+
+    public void setZCJD(String ZCJD) {
+        this.ZCJD = ZCJD;
+    }
 
     public String getYdwwenhao() {
         return ydwwenhao;

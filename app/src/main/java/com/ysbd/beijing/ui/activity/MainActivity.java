@@ -283,9 +283,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
                 String title = showList.get(position).getTODO_TITLE();
-                int l = showList.get(position).getTODO_MODULENAME().length();
-                if (title != null && (title.length() + l) > 22) {
-                    title = showList.get(position).getTODO_TITLE().substring(0, 22 - l) + "...";
+                int n = showList.get(position).getTODO_MODULENAME().length();
+                if (title != null && (title.length() + n) > 22) {
+                    title = showList.get(position).getTODO_TITLE().substring(0, 22 - n) + "...";
                 }
                 String d = "[" + showList.get(position).getTODO_MODULENAME() + "]" + title + "(" +
                         showList.get(position).getTODO_SENDPERSONDEPT() + ":" + showList.get(position).getTODO_SENDPERSONNAME() + ")"
