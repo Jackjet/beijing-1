@@ -1073,8 +1073,8 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="公文拷贝"
-                            android:textColor="@color/red"
-                            android:textSize="@dimen/dimen12" />
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/dimen14" />
                     </LinearLayout>
 
                     <View

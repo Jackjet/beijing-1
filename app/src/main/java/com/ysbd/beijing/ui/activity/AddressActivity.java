@@ -52,8 +52,9 @@ public class AddressActivity extends BaseActivity {
 //            roots.get(i).setOpen(false);
 //        }
         adapter = new TreeAdapter(this, roots, 1);
-        lvContract.setOnItemClickListener(new MyOnItemClick());
         lvContract.setAdapter(adapter);
+        lvContract.setOnItemClickListener(new MyOnItemClick());
+
     }
 
     private int clickPosition;

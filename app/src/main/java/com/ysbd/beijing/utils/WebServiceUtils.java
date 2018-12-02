@@ -66,6 +66,7 @@ public class WebServiceUtils {
     private static final String HOST_WORKFLOW = HOST + "/services/mobileWorkflowInstance";//?wsdl
     private static final String HOST_USER = HOST + "/services/mobileUserInfo";//?wsdl
     private static final String HOST_PORTAL = HOST + "/services/portalFrameworkService";//?wsdl
+    private static final String HOST_JOBID = HOST + "/services/mobileUserInfo?wsdl";//?wsdl
 
     public static final String SIGNATURE_IMG = HOST + "/riseoffice/default/signatureimg.jsp?personGUID=";///risenetoabjcz
 
@@ -235,6 +236,9 @@ public class WebServiceUtils {
         return WebServiceManager.getInstance().connect("findTodoFileInfo", HOST_TODO, jsonData);
     }
 
+    public String getSignJobId(){
+        return WebServiceManager.getInstance().connect("login", HOST_JOBID);
+    }
     public String findTodoFiles(int page) {
         String value = "{\"instanceguid\":\"{0A2FF324-FFFF-FFFF-8885-740500000008}\",\"userid\":\"" + userid + "\",\"stalength\":" + page + ",\"returnlength\":30}";
         Log.e("首页待办",value);

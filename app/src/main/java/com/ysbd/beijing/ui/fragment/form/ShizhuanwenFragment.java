@@ -169,7 +169,7 @@ public class ShizhuanwenFragment extends BaseFormFragment {
                 String data;
                 int count = 0;
                 do {
-                    data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);/////////流程测试
+                    data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);
                 } while (TextUtils.isEmpty(data) && count++ < 10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
                 try {
                     ShizhuanwenBean banwenBean = new Gson().fromJson(data, ShizhuanwenBean.class);
