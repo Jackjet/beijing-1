@@ -27,6 +27,7 @@ public class Constants {
     public static final String LAST_LIVE_TIME = "lastLiveTime";
     public static final String CHECK_ALIVE = "checkAlive";
     public static final String FINISH = "finish";
+    public static final String JOB_ID = "jobid";
 
     public static final String IGNORE_VERSION = "ignoreVersion";
 

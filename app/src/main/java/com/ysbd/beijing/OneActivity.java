@@ -1,5 +1,6 @@
 package com.ysbd.beijing;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,12 @@ import android.widget.Button;
 import android.widget.ListPopupWindow;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.ysbd.beijing.base.BaseLoginActivity;
+import com.ysbd.beijing.bean.CaCert;
+import com.ysbd.beijing.ui.activity.LoginActivity;
+import com.ysbd.beijing.ui.activity.MainActivity;
+import com.ysbd.beijing.utils.Constants;
 import com.ysbd.beijing.utils.ToastUtil;
 import com.ysbd.beijing.utils.WebServiceUtils;
 
@@ -38,7 +45,7 @@ import cn.org.bjca.signet.component.core.enums.FindBackType;
  *
  */
 
-public class OneActivity extends BaseActivity {
+public class OneActivity extends BaseLoginActivity {
 
     @BindView(R.id.button)
     Button button;
@@ -61,8 +68,11 @@ public class OneActivity extends BaseActivity {
         certUserList=new ArrayList<>();
         Boolean haveCert=getCertList();
         displayList(haveCert);
-        getData();
-
+        if (sp.getBoolean(Constants.IS_LOGIN, false)) {
+//
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
     }
 
 
@@ -77,27 +87,12 @@ public class OneActivity extends BaseActivity {
                 SignetCoreApi.useCoreFunc(new FindBackUserCallBack(this, FindBackType.FINDBACK_USER) {
                     @Override
                     public void onFindBackResult(FindBackUserResult findBackUserResult) {
-                        Log.d("=====", findBackUserResult.getMsspID());
                     }
                 });
                 break;
             case R.id.login:
+                getData();
 
-                if (selectCert.getText().equals("设备无用户证书")||selectCert.getText().equals("点击选择用户证书"))
-                {
-                    ToastUtil.show("请选择用户证书",this);
-                }else if(!TextUtils.isEmpty(signJobId)){
-                    SignetCoreApi.useCoreFunc(new LoginCallBack(this,certMsspIdList.get(key),signJobId ) {
-                        @Override
-                        public void onLoginResult(LoginResult loginResult) {
-                            Log.d("====="," ErrCode+"+loginResult.getErrCode());
-                            Log.d("=====", loginResult.getCert());
-                        }
-                    });
-                }
-                else {
-                    ToastUtil.show("本次验证失败",this);
-                }
                 break;
         }
 
@@ -167,26 +162,51 @@ public class OneActivity extends BaseActivity {
         }
     }
 
-    String wsdl_url = "http://192.168.0.110:9998/risenetoabjcz/services/mobileUserInfo?wsdl";
-    String name_sapce = "http://www.freshpower.com.cn";
 
-    String signJobId;
+
     private void getData() {
         new Thread(new Runnable() {
             @Override
             public void run() {
 
+                String jobId;
+                int count=0;
+//                do {
+                    jobId=WebServiceUtils.getInstance().getSignJobId();
+//                }while (TextUtils.isEmpty(jobId)&&count++<10);
 
-//                signJobId=WebServiceManager.questToWebService(wsdl_url,name_sapce,"login");
-
-               String sss=WebServiceUtils.getInstance().getSignJobId();
                 Message msg = new Message();
-                msg.obj = sss;
+                msg.what=0;
+                msg.obj = jobId;
+                handler.sendMessage(msg);
+
+            }
+        }).start();
+
+    }
+
+    private void seedVerifyCert(final String CertData, final String CertBook, final String CertValue){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                String verifyCert;
+                int count=0;
+//                do {
+                    verifyCert=WebServiceUtils.getInstance().verifyCert(CertData, CertBook,CertValue);
+//                }while (TextUtils.isEmpty(verifyCert)&&count++<10);
+
+                Message msg = new Message();
+                msg.what=1;
+                msg.obj = verifyCert;
                 handler.sendMessage(msg);
 
             }
         }).start();
     }
+
+
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -199,9 +219,61 @@ public class OneActivity extends BaseActivity {
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            signJobId  = msg.obj.toString();
+            switch (msg.what){
+                case 0:
+                    String signJobId;
+
+                    signJobId  = msg.obj.toString();
+                    String strings[] = signJobId.split("\"");
+                    signJobId= strings[6].substring(0,strings[6].length()-1);
+                    Log.d("=============", "handleMessage: "+signJobId);
+                    if (selectCert.getText().equals("设备无用户证书")||selectCert.getText().equals("点击选择用户证书"))
+                    {
+                        ToastUtil.show("请选择用户证书",OneActivity.this);
+                    }else if(!TextUtils.isEmpty(signJobId)){
+                        SignetCoreApi.useCoreFunc(new LoginCallBack(OneActivity.this,certMsspIdList.get(key),signJobId ) {
+                            @Override
+                            public void onLoginResult(LoginResult loginResult) {
+                                
+                                String certData=loginResult.getSignDataJobId();
+                                String certBook=loginResult.getCert();
+                                String certValue=loginResult.getSignDataInfos().get(0).getSignature();
+
+                                seedVerifyCert(certData,certBook,certValue);
+
+
+                            }
+                        });
+                    }
+                    else {
+                        ToastUtil.show("本次验证失败",OneActivity.this);
+                    }
+                    break;
+                case 1:
+                    String result = msg.obj.toString();
+                    CaCert caCert = (CaCert) JSONToObject(result, CaCert.class);
+                    Log.d("=======", "handleMessage: "+caCert.getSuccess());
+                    Log.d("=======", "handleMessage: "+caCert.getUsername());
+                    if (caCert.getSuccess().equals("true")){
+                        Intent intent = new Intent();
+                        intent.setClass(OneActivity.this,LoginActivity.class);
+                        intent.putExtra("name",caCert.getUsername());
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        ToastUtil.show("证书验证失败",OneActivity.this);
+                    }
+
+                    break;
+            }
         }
     };
+
+    public static Object JSONToObject(String json,Class beanClass) {
+        Gson gson = new Gson();
+        Object res = gson.fromJson(json, beanClass);
+        return res;
+    }
 
 }
 

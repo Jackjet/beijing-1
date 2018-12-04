@@ -34,6 +34,15 @@ public class AddressActivity extends BaseActivity {
 
         //无人员的部门不显示
         List<AddressBean> rootDepart = DBUtils.getRootDepart();
+        for (int i = 0; i < rootDepart.size(); i++) {
+            if (rootDepart.get(i).getNodeGuid().equals("{0A2FCA25-FFFF-FFFF-E19F-17AF00000005}")
+                    ||rootDepart.get(i).getNodeGuid().equals("{0A2FF40D-FFFF-FFFF-EAB7-5CA70000000B}")
+                    ||rootDepart.get(i).getNodeGuid().equals("{BFA7820D-FFFF-FFFF-F16C-48610000000E}")
+                    ||rootDepart.get(i).getNodeGuid().equals("{BFA7820D-FFFF-FFFF-F16C-479000000027}")
+                    ||rootDepart.get(i).getNodeGuid().equals("{BFA7820D-FFFF-FFFF-F16C-487100000019}")){
+                rootDepart.remove(i);
+            }
+        }
         for (AddressBean bean : rootDepart) {
             List<AddressBean> child = DBUtils.getChild(bean.getNodeGuid());
             if (child != null && child.size() != 0) {

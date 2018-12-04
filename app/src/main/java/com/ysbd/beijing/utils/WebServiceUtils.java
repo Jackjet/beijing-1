@@ -66,7 +66,7 @@ public class WebServiceUtils {
     private static final String HOST_WORKFLOW = HOST + "/services/mobileWorkflowInstance";//?wsdl
     private static final String HOST_USER = HOST + "/services/mobileUserInfo";//?wsdl
     private static final String HOST_PORTAL = HOST + "/services/portalFrameworkService";//?wsdl
-    private static final String HOST_JOBID = HOST + "/services/mobileUserInfo?wsdl";//?wsdl
+    private static final String HOST_JOBID = HOST + "/services/mobileUserInfo";//?wsdl
 
     public static final String SIGNATURE_IMG = HOST + "/riseoffice/default/signatureimg.jsp?personGUID=";///risenetoabjcz
 
@@ -236,8 +236,26 @@ public class WebServiceUtils {
         return WebServiceManager.getInstance().connect("findTodoFileInfo", HOST_TODO, jsonData);
     }
 
+    /**
+     *verifyCert 这个传签名数据
+     * CertData  签名证书
+     * CertBook 签名值 CertValue
+     * @param CertData
+     * @param CertBook
+     * @param CertValue
+     * @return
+     */
+    public String verifyCert(String CertData, String CertBook,String CertValue) {
+        String value = "{\"CertData\":\"" + CertData + "\",\"CertBook\":\"" + CertBook + "\",\"CertValue\":\"" + CertValue + "\"}";
+        return WebServiceManager.getInstance().connect("verifyCert", HOST_USER, value);
+    }
+
+    /**
+     * 获取jobid
+     * @return
+     */
     public String getSignJobId(){
-        return WebServiceManager.getInstance().connect("login", HOST_JOBID);
+        return WebServiceManager.getInstance().connect("jobid", HOST_JOBID,"?");
     }
     public String findTodoFiles(int page) {
         String value = "{\"instanceguid\":\"{0A2FF324-FFFF-FFFF-8885-740500000008}\",\"userid\":\"" + userid + "\",\"stalength\":" + page + ",\"returnlength\":30}";

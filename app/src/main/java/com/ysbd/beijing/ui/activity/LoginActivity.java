@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.ysbd.beijing.App;
@@ -40,7 +41,7 @@ import butterknife.OnClick;
 public class LoginActivity extends BaseLoginActivity {
     SharedPreferences sp;
     @BindView(R.id.et_name)
-    EditText etName;
+    TextView etName;
     @BindView(R.id.et_password)
     EditText etPassword;
     @BindView(R.id.bt_login)
@@ -58,6 +59,8 @@ public class LoginActivity extends BaseLoginActivity {
 
     private String code;
     private String userId;
+
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,9 @@ public class LoginActivity extends BaseLoginActivity {
 
 //            startActivity(new Intent(this, MainActivity.class));
         }
+
+        name=getIntent().getStringExtra("name");
+        etName.setText(name);
 
     }
 
@@ -167,7 +173,7 @@ public class LoginActivity extends BaseLoginActivity {
     LoadingDialog loadingDialog;
 
     private void login() {
-        final String name = etName.getText().toString();
+//        final String name = etName.getText().toString();
         if (name.length() < 1) {
             ToastUtil.show("请输入用户名", this);
             return;

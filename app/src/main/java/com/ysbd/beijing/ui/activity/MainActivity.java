@@ -387,7 +387,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         case "一般发文":
                         case "市转文":
                         case "指标文":
-                        case "结余资金发文":
+                        case "结余资金":
                             showList.add(todoBeans.get(i));
                             break;
                     }
