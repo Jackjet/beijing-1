@@ -89,8 +89,9 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dimen30"
                 android:layout_weight="1"
-                android:text="验证"
+                android:text="验证登录"
                 android:layout_marginRight="12dp"
+                android:layout_marginLeft="@dimen/dimen20"
                 android:textColor="#fff"
                 android:background="@color/holo_green_dark"/>
             <Button
@@ -100,6 +101,7 @@
                 android:layout_weight="1"
                 android:background="#cccccccc"
                 android:textColor="#fff"
+                android:layout_marginRight="@dimen/dimen20"
                 android:text="下载证书"/>
         </LinearLayout>
     </LinearLayout>

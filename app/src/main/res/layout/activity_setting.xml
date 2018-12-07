@@ -75,6 +75,7 @@
                 android:textColor="@color/textColor"
                 android:gravity="center"/>
             <EditText
+                android:hint="请输入原密码"
                 android:id="@+id/et_original"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -100,6 +101,7 @@
                 android:textColor="@color/textColor"
                 android:gravity="center"/>
             <EditText
+                android:hint="密码长度8-12位,必须有大小写字母和数字"
                 android:id="@+id/et_password"
                 android:inputType="textPassword"
                 android:layout_width="match_parent"
@@ -124,6 +126,7 @@
                 android:textColor="@color/textColor"
                 android:gravity="center"/>
             <EditText
+                android:hint="请再次输入新密码"
                 android:id="@+id/et_code"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -182,13 +185,13 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dimen15"
                 android:textColor="#000"
-                android:text="  -密码长度为1-12位"/>
+                android:text="  -密码长度为8-12位"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dimen15"
                 android:textColor="#000"
-                android:text="  -密码包含字母和数字"/>
+                android:text="  -密码必须包含大小写字母和数字"/>
         </LinearLayout>
 
     </LinearLayout>

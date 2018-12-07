@@ -3,7 +3,7 @@ package com.ysbd.beijing.ui.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -68,21 +68,56 @@ public class SettingActivity extends BaseActivity {
 //        etOriginal.getText().toString().equals()
         String original=etOriginal.getText().toString();
         if (!new MD5().getMD5ofStr(original).equals(sp.getString(Constants.USER_PASS,new MD5().getMD5ofStr("123456")))) {
-            ToastUtil.show("密码输入错误",this);
+            ToastUtil.show("原密码输入错误",this);
             return;
         }
+        boolean containAll = isContainAll(etPassword.getText().toString());
 
-        newPass=etPassword.getText().toString();
-        String rePass=etCode.getText().toString();
-        String msg=LoginUtils.validPwd(newPass);
-        if (msg.length()>1) {
-            ToastUtil.show(msg,this);
-        }else if(rePass.equals(newPass)){
-            reset(newPass);
+        if (etPassword.getText().toString().equals(etCode.getText().toString())){
+            if (etPassword.getText().toString().length()<8){
+                ToastUtil.show("密码不能小于8位",SettingActivity.this);
+            }else if (etPassword.getText().toString().length()>12){
+                ToastUtil.show("密码不能超过12位",SettingActivity.this);
+            }else if (containAll){
+                newPass=etPassword.getText().toString();
+                String rePass=etCode.getText().toString();
+                String msg=LoginUtils.validPwd(newPass);
+                if (msg.length()>1) {
+                    ToastUtil.show(msg,this);
+                }else if(rePass.equals(newPass)){
+                    reset(newPass);
+                }else {
+                    ToastUtil.show("两次输入的新密码不一致",this);
+                }
+            }else {
+                ToastUtil.show("密码必须包含大小写字母和数字",SettingActivity.this);
+            }
         }else {
-            ToastUtil.show("两次输入的新密码不一致",this);
+            ToastUtil.show("两次输入的新密码不一致，请重新输入",SettingActivity.this);
         }
 
+
+
+
+
+    }
+
+    public static boolean isContainAll(String str) {
+        boolean isDigit = false;//定义一个boolean值，用来表示是否包含数字
+        boolean isLowerCase = false;//定义一个boolean值，用来表示是否包含字母
+        boolean isUpperCase = false;
+        for (int i = 0; i < str.length(); i++) {
+            if (Character.isDigit(str.charAt(i))) {   //用char包装类中的判断数字的方法判断每一个字符
+                isDigit = true;
+            } else if (Character.isLowerCase(str.charAt(i))) {  //用char包装类中的判断字母的方法判断每一个字符
+                isLowerCase = true;
+            } else if (Character.isUpperCase(str.charAt(i))) {
+                isUpperCase = true;
+            }
+        }
+        String regex = "^[a-zA-Z0-9]+$";
+        boolean isRight = isDigit && isLowerCase && isUpperCase && str.matches(regex);
+        return isRight;
     }
 
     private void reset(String pass){
@@ -92,7 +127,12 @@ public class SettingActivity extends BaseActivity {
             @Override
             public void run() {
                 super.run();
-                String res=WebServiceUtils.getInstance().resetPass(name,pass1);
+                String res;
+                int count=0;
+                do{
+                    res=WebServiceUtils.getInstance().resetPass(name,pass1);
+                }while (TextUtils.isEmpty(res)&&count++<10);
+
                 if (res.contains("成功")) {
                     handler.sendEmptyMessage(1);
                     sp.edit().putString(Constants.USER_PASS,pass1).apply();

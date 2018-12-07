@@ -1,25 +1,17 @@
 package com.ysbd.beijing.bean;
 
-public class CaCert {
+import java.io.Serializable;
+import java.util.List;
 
+public class CaCert implements Serializable {
 
     /**
+     * userinfo : [{"EMPLOYEE_LOGINNAME":"刘尧xc","PADPASSWORD":"123456","USERID":"{BFA8006E-0000-0000-7877-C03F00000003}","EMPLOYEE_JOBTITLES":null,"DEPARTMENT_GUID":"{0A2FCA25-FFFF-FFFF-9438-791800000001}","EMPLOYEE_MSSPID":"af4b248012df6d1ee2ec705ea50a3ece6acc8a9781c4757f7e608e99da0edc39"},{"EMPLOYEE_LOGINNAME":"刘尧","PADPASSWORD":"872BE7378D2E5C4B747F2547144C6DC5","USERID":"{0A2FCA25-FFFF-FFFF-AB8C-146500000001}","EMPLOYEE_JOBTITLES":"主任科员","DEPARTMENT_GUID":"{BFA7820D-FFFF-FFFF-F16C-486100000011}","EMPLOYEE_MSSPID":"af4b248012df6d1ee2ec705ea50a3ece6acc8a9781c4757f7e608e99da0edc39"}]
      * success : true
-     * userid : {0A2FCA25-FFFF-FFFF-AB8C-146500000001}
-     * username : 刘尧
-     * departmentguid : {BFA7820D-FFFF-FFFF-F16C-486100000011}
-     * departmentname : 办公室6666666
-     * employee_jobtitles : 主任科员
-     * padpassword : 872BE7378D2E5C4B747F2547144C6DC5
      */
 
     private String success;
-    private String userid;
-    private String username;
-    private String departmentguid;
-    private String departmentname;
-    private String employee_jobtitles;
-    private String padpassword;
+    private List<UserinfoBean> userinfo;
 
     public String getSuccess() {
         return success;
@@ -29,51 +21,54 @@ public class CaCert {
         this.success = success;
     }
 
-    public String getUserid() {
-        return userid;
+    public List<UserinfoBean> getUserinfo() {
+        return userinfo;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUserinfo(List<UserinfoBean> userinfo) {
+        this.userinfo = userinfo;
     }
 
-    public String getUsername() {
-        return username;
-    }
+    public static class UserinfoBean {
+        /**
+         * EMPLOYEE_LOGINNAME : 刘尧xc
+         * PADPASSWORD : 123456
+         * USERID : {BFA8006E-0000-0000-7877-C03F00000003}
+         * EMPLOYEE_JOBTITLES : null
+         * DEPARTMENT_GUID : {0A2FCA25-FFFF-FFFF-9438-791800000001}
+         * EMPLOYEE_MSSPID : af4b248012df6d1ee2ec705ea50a3ece6acc8a9781c4757f7e608e99da0edc39
+         */
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+        private String EMPLOYEE_LOGINNAME;
+        private String PADPASSWORD;
+        private String USERID;
+        private Object EMPLOYEE_JOBTITLES;
+        private String DEPARTMENT_GUID;
+        private String EMPLOYEE_MSSPID;
 
-    public String getDepartmentguid() {
-        return departmentguid;
-    }
+        public String getEMPLOYEE_LOGINNAME() {
+            return EMPLOYEE_LOGINNAME;
+        }
 
-    public void setDepartmentguid(String departmentguid) {
-        this.departmentguid = departmentguid;
-    }
+        public void setEMPLOYEE_LOGINNAME(String EMPLOYEE_LOGINNAME) {
+            this.EMPLOYEE_LOGINNAME = EMPLOYEE_LOGINNAME;
+        }
 
-    public String getDepartmentname() {
-        return departmentname;
-    }
+        public String getPADPASSWORD() {
+            return PADPASSWORD;
+        }
 
-    public void setDepartmentname(String departmentname) {
-        this.departmentname = departmentname;
-    }
+        public void setPADPASSWORD(String PADPASSWORD) {
+            this.PADPASSWORD = PADPASSWORD;
+        }
 
-    public String getEmployee_jobtitles() {
-        return employee_jobtitles;
-    }
+        public String getUSERID() {
+            return USERID;
+        }
 
-    public void setEmployee_jobtitles(String employee_jobtitles) {
-        this.employee_jobtitles = employee_jobtitles;
-    }
+        public void setUSERID(String USERID) {
+            this.USERID = USERID;
+        }
 
-    public String getPadpassword() {
-        return padpassword;
-    }
-
-    public void setPadpassword(String padpassword) {
-        this.padpassword = padpassword;
     }
 }

@@ -646,10 +646,8 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                             opinionModel.setId(opinionMap.get(editType).get(i).getOpinionFrameMark());
                             opinionModel.setAddable(true);
                             opinionMap.get(editType).remove(i);
-//                            if (isHave) {
+//
                             opinionMap.get(editType).add(opinionModel);
-//                            }
-//                            isHave=true;
                             break;
                         }
                     }

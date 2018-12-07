@@ -1,5 +1,5 @@
 {
-  "signetServUrl": "http://dev.isignet.cn:8080/MSSPServer/",
-  "appId": "APP_F0AA20A108D64C9D81CFC5A1109989FC",
+  "signetServUrl": "http://172.28.68.15:8080/MSSPServer/",
+  "appId": "APP_A1EEF04083BC43F18EC04AB02FF7ADBD",
   "keyBoardResetShow": "true"
 }

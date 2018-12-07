@@ -11,6 +11,7 @@ import com.ysbd.beijing.R;
 import com.ysbd.beijing.bean.AddressBean;
 import com.ysbd.beijing.ui.adapter.TreeAdapter;
 import com.ysbd.beijing.utils.DBUtils;
+import com.ysbd.beijing.utils.WebServiceUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,6 @@ public class AddressActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address2);
         ButterKnife.bind(this);
-
         //无人员的部门不显示
         List<AddressBean> rootDepart = DBUtils.getRootDepart();
         for (int i = 0; i < rootDepart.size(); i++) {
@@ -63,10 +63,20 @@ public class AddressActivity extends BaseActivity {
         adapter = new TreeAdapter(this, roots, 1);
         lvContract.setAdapter(adapter);
         lvContract.setOnItemClickListener(new MyOnItemClick());
-
+        adapter.notifyDataSetChanged();
     }
 
     private int clickPosition;
+
+    private void getAddressBook() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                WebServiceUtils.getInstance().refreshAddressBook();
+            }
+        }.start();
+    }
 
 
     private class MyOnItemClick implements AdapterView.OnItemClickListener {
@@ -116,6 +126,7 @@ public class AddressActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fl_back:
+
                 finish();
                 break;
             case R.id.fl_search:

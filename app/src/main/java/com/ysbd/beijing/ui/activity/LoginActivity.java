@@ -7,14 +7,18 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListPopupWindow;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -32,6 +36,7 @@ import com.ysbd.beijing.view.LoadingDialog;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
@@ -59,8 +64,8 @@ public class LoginActivity extends BaseLoginActivity {
 
     private String code;
     private String userId;
-
     private String name;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,10 +108,42 @@ public class LoginActivity extends BaseLoginActivity {
 //            startActivity(new Intent(this, MainActivity.class));
         }
 
-        name=getIntent().getStringExtra("name");
-        etName.setText(name);
+        final ArrayList<String> names = getIntent().getStringArrayListExtra("names");
+        if (names.size() == 1) {
+            name = names.get(0);
+            etName.setText(name);
+        } else {
+            etName.setText(names.get(0));
+            name=names.get(0);
+            final ListPopupWindow listPopupWindow = new ListPopupWindow(this);
+            listPopupWindow.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names));
+            listPopupWindow.setHeight(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+            listPopupWindow.setWidth(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+            listPopupWindow.setAnchorView(etName);
+            listPopupWindow.setModal(true);
+            listPopupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    etName.setText(names.get(i));
+                    name=names.get(i);
+                    listPopupWindow.dismiss();
+                }
+            });
 
+            /**
+             * 监听点击事件,将列表展开
+             */
+            etName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listPopupWindow.show();
+                }
+            });
+
+        }
     }
+
+
 
     private String compare1() {
         String a = "1.2.3a";
@@ -193,56 +230,56 @@ public class LoginActivity extends BaseLoginActivity {
 //            ToastUtil.show(msg, this);
 //        } else
 
-       // {
-            final String psw = new MD5().getMD5ofStr(pass);
-            loadingDialog = new LoadingDialog();
-            loadingDialog.show(getSupportFragmentManager());
-            final ClipboardManager clipboardManager = (ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-            new Thread() {
-                @Override
-                public void run() {
-                    super.run();
-                    String msg;
-                    int count=0;
-                    do {
-                       msg= WebServiceUtils.getInstance().login(name, psw, clipboardManager);
-                    }while (TextUtils.isEmpty(msg)&&count++<10);
+        // {
+        final String psw = new MD5().getMD5ofStr(pass);
+        loadingDialog = new LoadingDialog();
+        loadingDialog.show(getSupportFragmentManager());
+        final ClipboardManager clipboardManager = (ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String msg;
+                int count = 0;
+                do {
+                    msg = WebServiceUtils.getInstance().login(name, psw, clipboardManager);
+                } while (TextUtils.isEmpty(msg) && count++ < 10);
 //                    {"success":"false","info":"用户不存在"}
-                    handler.obtainMessage(0, msg).sendToTarget();
-                    try {
-                        JSONObject jsonObject = new JSONObject(msg);
-                        //jsonObject.has("success");
-                        if (jsonObject.has("success")) {
-                            if (jsonObject.getBoolean("success")) {
-                                LoginResBean loginResBean = new Gson().fromJson(msg, LoginResBean.class);
-                                SharedPreferences.Editor editor = sp.edit();
-                                editor.putString(Constants.USER_ID, loginResBean.getUserid());
-                                editor.putString(Constants.USER_NAME, loginResBean.getUsername());
-                                editor.putString(Constants.DEPART_ID, loginResBean.getDepartmentguid());
-                                editor.putString(Constants.DEPART_NAME, loginResBean.getDepartmentname());
-                                editor.putString(Constants.EMPLOYEE, loginResBean.getEmployee_jobtitles());
-                                editor.putString(Constants.USER_PASS, psw);
-                                editor.apply();
-                                getAddressBook();
-                                userId=loginResBean.getUserid();
-                                handler.sendEmptyMessage(1);
-                            } else {
-                                handler.obtainMessage(2, jsonObject.getString("info")).sendToTarget();
-                            }
+                handler.obtainMessage(0, msg).sendToTarget();
+                try {
+                    JSONObject jsonObject = new JSONObject(msg);
+                    //jsonObject.has("success");
+                    if (jsonObject.has("success")) {
+                        if (jsonObject.getBoolean("success")) {
+                            LoginResBean loginResBean = new Gson().fromJson(msg, LoginResBean.class);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString(Constants.USER_ID, loginResBean.getUserid());
+                            editor.putString(Constants.USER_NAME, loginResBean.getUsername());
+                            editor.putString(Constants.DEPART_ID, loginResBean.getDepartmentguid());
+                            editor.putString(Constants.DEPART_NAME, loginResBean.getDepartmentname());
+                            editor.putString(Constants.EMPLOYEE, loginResBean.getEmployee_jobtitles());
+                            editor.putString(Constants.USER_PASS, psw);
+                            editor.apply();
+                            getAddressBook();
+                            userId = loginResBean.getUserid();
+                            handler.sendEmptyMessage(1);
+                        } else {
+                            handler.obtainMessage(2, jsonObject.getString("info")).sendToTarget();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        String message = e.getMessage();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    String message = e.getMessage();
 //                        ClipboardManager clipboardManager = (ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
 //                        clipboardManager.setText("服务器返回数据::"+msg);
-                        handler.obtainMessage(3, "登录异常，请稍后再试...").sendToTarget();
-                    }
+                    handler.obtainMessage(3, "登录异常，请稍后再试...").sendToTarget();
                 }
-            }.start();
+            }
+        }.start();
 
 
-        }
-   //}
+    }
+    //}
 
 
     private void getAddressBook() {
@@ -253,11 +290,10 @@ public class LoginActivity extends BaseLoginActivity {
                 WebServiceUtils.getInstance().refreshAddressBook();
             }
         }.start();
-
     }
 
 
-     Handler handler = new Handler() {
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

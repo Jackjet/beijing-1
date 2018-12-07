@@ -531,5 +531,10 @@ public class FormActivity extends BaseActivity {
 //        firstOpen=false;
     }
 
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 }

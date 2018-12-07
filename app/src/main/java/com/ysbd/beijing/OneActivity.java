@@ -66,13 +66,14 @@ public class OneActivity extends BaseLoginActivity {
         ButterKnife.bind(this);
         certMsspIdList=new ArrayList<>();
         certUserList=new ArrayList<>();
-        Boolean haveCert=getCertList();
-        displayList(haveCert);
+
         if (sp.getBoolean(Constants.IS_LOGIN, false)) {
-//
             startActivity(new Intent(this, MainActivity.class));
             finish();
         }
+
+
+
     }
 
 
@@ -130,6 +131,7 @@ public class OneActivity extends BaseLoginActivity {
          */
 
         if (havaCert){
+
             selectCert.setText("点击选择用户证书");
             final ListPopupWindow listPopupWindow=new ListPopupWindow(this);
             listPopupWindow.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,certUserList));
@@ -191,7 +193,7 @@ public class OneActivity extends BaseLoginActivity {
             public void run() {
 
                 String verifyCert;
-                int count=0;
+//                int count=0;
 //                do {
                     verifyCert=WebServiceUtils.getInstance().verifyCert(CertData, CertBook,CertValue);
 //                }while (TextUtils.isEmpty(verifyCert)&&count++<10);
@@ -206,15 +208,6 @@ public class OneActivity extends BaseLoginActivity {
     }
 
 
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        certUserList.clear();
-        certMsspIdList.clear();
-        displayList(getCertList());
-
-    }
 
     Handler handler = new Handler(){
         @Override
@@ -234,12 +227,25 @@ public class OneActivity extends BaseLoginActivity {
                         SignetCoreApi.useCoreFunc(new LoginCallBack(OneActivity.this,certMsspIdList.get(key),signJobId ) {
                             @Override
                             public void onLoginResult(LoginResult loginResult) {
-                                
-                                String certData=loginResult.getSignDataJobId();
-                                String certBook=loginResult.getCert();
-                                String certValue=loginResult.getSignDataInfos().get(0).getSignature();
 
-                                seedVerifyCert(certData,certBook,certValue);
+                                if (loginResult.getErrCode().equals("0x12200000")){
+                                    Log.d("密码错误提示+++++++++", "onLoginResult: "+loginResult.getErrMsg());
+                                    ToastUtil.show("密码输入错误",OneActivity.this);
+                                    Intent intent=new Intent(OneActivity.this,OneActivity.class);
+                                    startActivity(intent);
+                                }else if (loginResult.getErrCode().equals("0x11000001")){
+                                    ToastUtil.show("取消操作",OneActivity.this);
+                                    Intent intent=new Intent(OneActivity.this,OneActivity.class);
+                                    startActivity(intent);
+
+                                }else {
+                                    String certData=loginResult.getSignDataJobId();
+                                    String certBook=loginResult.getCert();
+                                    String certValue=loginResult.getSignDataInfos().get(0).getSignature();
+
+                                    seedVerifyCert(certData,certBook,certValue);
+                                }
+
 
 
                             }
@@ -250,14 +256,17 @@ public class OneActivity extends BaseLoginActivity {
                     }
                     break;
                 case 1:
+                    ArrayList<String> names=new ArrayList<>();
                     String result = msg.obj.toString();
-                    CaCert caCert = (CaCert) JSONToObject(result, CaCert.class);
-                    Log.d("=======", "handleMessage: "+caCert.getSuccess());
-                    Log.d("=======", "handleMessage: "+caCert.getUsername());
-                    if (caCert.getSuccess().equals("true")){
-                        Intent intent = new Intent();
-                        intent.setClass(OneActivity.this,LoginActivity.class);
-                        intent.putExtra("name",caCert.getUsername());
+                    CaCert caCerts = JSONToObject(result);
+                    List<CaCert.UserinfoBean> cacerts= caCerts.getUserinfo();
+                    if (caCerts.getSuccess().equals("true")){
+                        Intent intent = new Intent(OneActivity.this,LoginActivity.class);
+                        for (int j = 0; j <cacerts.size(); j++) {
+                            names.add(cacerts.get(j).getEMPLOYEE_LOGINNAME());
+                        }
+
+                        intent.putStringArrayListExtra("names",names);
                         startActivity(intent);
                         finish();
                     }else {
@@ -269,11 +278,20 @@ public class OneActivity extends BaseLoginActivity {
         }
     };
 
-    public static Object JSONToObject(String json,Class beanClass) {
-        Gson gson = new Gson();
-        Object res = gson.fromJson(json, beanClass);
-        return res;
+
+    public static CaCert JSONToObject(String json) {
+        CaCert caCerts= new Gson().fromJson(json, CaCert.class);
+
+        return caCerts;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        certUserList.clear();
+        certMsspIdList.clear();
+        Boolean haveCert=getCertList();
+        displayList(haveCert);
+    }
 }
 

@@ -77,7 +77,8 @@
 
         <activity android:name=".fileEidter.FileReaderActivity" />
         <activity android:name=".ui.activity.HistoryActivity" />
-        <activity android:name=".ui.activity.AddressActivity" />
+        <activity android:name=".ui.activity.AddressActivity"
+            android:screenOrientation="landscape"/>
         <activity android:name=".ui.activity.LeanderScheduleActivity" />
 
         <meta-data
@@ -96,9 +97,12 @@
         <activity
             android:name="cn.org.bjca.signet.component.core.activity.SignetCoreApiActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent">
+        </activity>
 
-        <activity android:name=".OneActivity">
+        <activity android:name=".OneActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

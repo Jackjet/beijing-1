@@ -68,6 +68,7 @@ public class WebActivity extends BaseActivity {
             public void onDownloadStart(String s, String s1, String s2, String s3, long l) {
                 String name=s.substring(s.lastIndexOf('/')+1);
                 down(s,name);
+                ToastUtil.show("正在加载",WebActivity.this);
             }
         });
 

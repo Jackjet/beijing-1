@@ -51,7 +51,7 @@
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_login_input"
+                android:background="#ccf5f2f2"
                 android:textSize="@dimen/dimen15"
                 android:padding="4dp"
                 android:inputType="text"
