@@ -107,13 +107,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (!TextUtils.isEmpty(userName)) {
             if (userName.equals("马祥伟") || userName.equals("胡志华") || userName.equals("段超") ||
                     userName.equals("吴素芳") || userName.equals("徐蘅") || userName.equals("王婴") ||
-                    userName.equals("于学强") || userName.equals("赵彦明") || userName.equals("韩杰") ||
-                    userName.equals("师淑英") || userName.equals("汪刚") || userName.equals("张宏宇")) {
+                   userName.equals("赵彦明") || userName.equals("韩杰") ||
+                    userName.equals("师淑英") || userName.equals("汪钢") || userName.equals("张宏宇")||
+                    userName.equals("刘尧")||userName.equals("王瑾")) {
                 lingdaoricheng.setVisibility(View.VISIBLE);
             }
             if (userName.equals("马祥伟") || userName.equals("吴素芳") || userName.equals("徐蘅") || userName.equals("王婴") ||
-                    userName.equals("于学强") || userName.equals("赵彦明") || userName.equals("韩杰") ||
-                    userName.equals("师淑英") || userName.equals("汪刚") || userName.equals("张宏宇")) {
+                     userName.equals("赵彦明") || userName.equals("韩杰") ||
+                    userName.equals("师淑英") || userName.equals("汪钢") || userName.equals("张宏宇")|| userName.equals("胡志华") ||
+                    userName.equals("刘尧") ||userName.equals("王瑾")) {
                 tvZhuomian.setVisibility(View.VISIBLE);
             }
         }
@@ -542,11 +544,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.tv_address_book:
 //                startActivity(new Intent(this, SearchAddressActivity.class));
-                if (SpUtils.getInstance().getAddressVisiable()) {
                     startActivity(new Intent(this, AddressActivity.class));
-                } else {
-                    ToastUtil.show("数据加载中...", this);
-                }
 
                 break;
         }
