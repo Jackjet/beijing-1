@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.support.v7.widget.ListPopupWindow;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -18,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListPopupWindow;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -107,8 +107,13 @@ public class LoginActivity extends BaseLoginActivity {
 
 //            startActivity(new Intent(this, MainActivity.class));
         }
-
-        final ArrayList<String> names = getIntent().getStringArrayListExtra("names");
+//        final ArrayList<String> names = getIntent().getStringArrayListExtra("names");
+        final ArrayList<String> names=new ArrayList<>();
+        String ooo[]={"刘海涛","马荣丽","胡陶平","董晓红","王栋","丁龙军","卜振钊","马祥伟","胡志华","段超","吴素芳","徐蘅","王婴","赵彦明",
+                "韩杰","师淑英","汪钢","张宏宇","刘尧","王瑾"};
+        for (int i=0;i<ooo.length;i++){
+            names.add(ooo[i]);
+        }
         if (names.size() == 1) {
             name = names.get(0);
             etName.setText(name);
@@ -117,7 +122,7 @@ public class LoginActivity extends BaseLoginActivity {
             name=names.get(0);
             final ListPopupWindow listPopupWindow = new ListPopupWindow(this);
             listPopupWindow.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names));
-            listPopupWindow.setHeight(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+            listPopupWindow.setHeight(300);
             listPopupWindow.setWidth(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
             listPopupWindow.setAnchorView(etName);
             listPopupWindow.setModal(true);
@@ -215,13 +220,13 @@ public class LoginActivity extends BaseLoginActivity {
             ToastUtil.show("请输入用户名", this);
             return;
         }
-        String mCode = etCode.getText().toString();
-        code = code.toUpperCase();
-        mCode = mCode.toUpperCase();
-        if (!mCode.equals(code)) {
-            ToastUtil.show("验证码输入错误", this);
-            return;
-        }
+//        String mCode = etCode.getText().toString();
+////        code = code.toUpperCase();
+////        mCode = mCode.toUpperCase();
+////        if (!mCode.equals(code)) {
+////            ToastUtil.show("验证码输入错误", this);
+////            return;
+////        }
         final String pass = etPassword.getText().toString();
 //        pass="ab123456";
         //ab123456  初始密码

@@ -560,5 +560,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 break;
         }
+
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 }

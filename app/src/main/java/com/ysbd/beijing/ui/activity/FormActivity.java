@@ -3,6 +3,7 @@ package com.ysbd.beijing.ui.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -64,6 +65,7 @@ public class FormActivity extends BaseActivity {
     private String guid;
     private String type;
     private String actor;
+    private ProgressDialog p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +85,7 @@ public class FormActivity extends BaseActivity {
         String jsonData = new Gson().toJson(fileIdBean);
         setContentView(R.layout.activity_form);
         ButterKnife.bind(this);
-        if (!("todo".equals(actor)||"待办".equals(actor))) {
+        if (!("todo".equals(actor) || "待办".equals(actor))) {
             findViewById(R.id.tv_send).setVisibility(View.GONE);
         }
         switch (type) {
@@ -112,6 +114,8 @@ public class FormActivity extends BaseActivity {
                 formFragment = ZhubanwenFragment.getInstance(jsonData, actor);
         }
 
+        p = new ProgressDialog(this);
+        p.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -130,7 +134,7 @@ public class FormActivity extends BaseActivity {
     public void addMenus(List<MenuBean> menus) {
         if (menus != null) {
             for (int i = 0; i < menus.size(); i++) {
-                if (!menus.get(i).getName().contains("起草") ) {//&& !menus.get(i).getName().contains("协办")
+                if (!menus.get(i).getName().contains("起草")) {//&& !menus.get(i).getName().contains("协办")
                     if (menus.get(i).getName().equals("办结")) {
                         menus.get(i).setName("完成");
                     }
@@ -144,18 +148,18 @@ public class FormActivity extends BaseActivity {
 
     private List<ActorsBean> actors = null;
 
-    private boolean returnBack=false;
+    private boolean returnBack = false;
 
 
     public void setActors(List<ActorsBean> actors) {
         this.actors = actors;
-        if (actors!=null&&actors.size()>0) {
+        if (actors != null && actors.size() > 0) {
             // 1.待办 2.已阅 3.暂存 4.办结
             switch (actors.get(1).getProecssActor().getHandelStatus()) {
                 case 1:
-                    if (("diong".equals(actor)||"在办".equals(actor))) {
+                    if (("doing".equals(actor) || "在办".equals(actor))) {
 
-                        returnBack=true;
+                        returnBack = true;
                         handler.sendEmptyMessage(4);
                     }
                     break;
@@ -171,6 +175,8 @@ public class FormActivity extends BaseActivity {
 
     MenuDialog menuDialog;
 
+    String actionId;
+    String id;
 
     @OnClick({R.id.rlBack, R.id.tv_send, R.id.tv_history})
     public void onViewClicked(View view) {
@@ -181,16 +187,22 @@ public class FormActivity extends BaseActivity {
             case R.id.tv_send:
                 if (returnBack) {
                     rBack();
-                }else
-                if (formFragment.canSend()) {
+                } else if (formFragment.canSend()) {
+
                     menuDialog = MenuDialog.getInstance(menuBeans);
                     menuDialog.setClick(new MenuDialog.Click() {
                         @Override
                         public void click(MenuBean menuBean) {
-                            Intent intent = new Intent(FormActivity.this, SelectPersonActivity.class);
-                            intent.putExtra("actionId", menuBean.getActionguid());//"{ED869C4A-D8BA-4308-8F9B-7B43534C583D}"
-                            intent.putExtra("id", guid);
-                            startActivityForResult(intent, 1);
+                            if (menuBean.getName().equals("归档")||menuBean.getName().equals("结束")) {
+                                actionId = menuBean.getActionguid();
+                                id = guid;
+                                guiDang();
+                            } else {
+                                Intent intent = new Intent(FormActivity.this, SelectPersonActivity.class);
+                                intent.putExtra("actionId", menuBean.getActionguid());//"{ED869C4A-D8BA-4308-8F9B-7B43534C583D}"
+                                intent.putExtra("id", guid);
+                                startActivityForResult(intent, 1);
+                            }
                         }
                     });
                     menuDialog.show(getSupportFragmentManager());
@@ -210,14 +222,31 @@ public class FormActivity extends BaseActivity {
     }
 //    7cd7db16c48a5fa039ab300c79d46bc5000000//
 
-    private void rBack(){
-        new Thread(){
+    private void guiDang() {
+        p.setMessage("正在归档...");
+        p.show();
+        new Thread() {
             @Override
             public void run() {
                 super.run();
-                String data=WebServiceUtils.getInstance().sendInstance(guid,
+                String data = WebServiceUtils.getInstance().sendInstanceUser(id, actionId);
+                if (data!=null){
+                    handler.sendEmptyMessage(5);
+                }else {
+                    handler.sendEmptyMessage(6);
+                }
+            }
+        }.start();
+    }
+
+    private void rBack() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                String data = WebServiceUtils.getInstance().sendInstance(guid,
                         "{WORKFLOW-ACTI-ON00-0000-TAKEBACK0000}", SpUtils.getInstance().getUserId());
-                handler.obtainMessage(3,data).sendToTarget();
+                handler.obtainMessage(3, data).sendToTarget();
             }
         }.start();
     }
@@ -225,7 +254,8 @@ public class FormActivity extends BaseActivity {
 
     public static class FileIdBean {
         String instanceguid;
-        String userid ;
+        String userid;
+
         public String getUserid() {
             return userid;
         }
@@ -233,7 +263,6 @@ public class FormActivity extends BaseActivity {
         public void setUserid(String userid) {
             this.userid = userid;
         }
-
 
 
         public String getInstanceguid() {
@@ -296,18 +325,28 @@ public class FormActivity extends BaseActivity {
                         }
                     }
                 case 3:
-                    String m3=msg.obj.toString();
+                    String m3 = msg.obj.toString();
 
                     if (m3.contains("成功")) {
                         finish();
-                        ToastUtil.show("发送成功",FormActivity.this);
-                    }else {
-                        ToastUtil.show(m3,FormActivity.this);
+                        ToastUtil.show("发送成功", FormActivity.this);
+                    } else {
+                        ToastUtil.show(m3, FormActivity.this);
                     }
                 case 4:
-                    TextView tvSend= findViewById(R.id.tv_send);
+                    TextView tvSend = findViewById(R.id.tv_send);
                     tvSend.setText("收回");
                     tvSend.setVisibility(View.VISIBLE);
+                    break;
+                case 5:
+                    ToastUtil.show("归档成功", FormActivity.this);
+                    p.dismiss();
+                    finish();
+                    break;
+                case 6:
+                    ToastUtil.show("归档失败", FormActivity.this);
+                    p.dismiss();
+                    menuDialog.dismiss();
                     break;
             }
         }
@@ -519,7 +558,7 @@ public class FormActivity extends BaseActivity {
     }
 
     public void lookFile() {
-        Log.e("====","===");
+        Log.e("====", "===");
 //        String filePath = FileUtils.getInstance().makeDir().getPath() + File.separator + list.get(pos).getName();
 //        Intent intent=new Intent(getContext(), FileReaderActivity.class);
 //        intent.putExtra("filePath",filePath);

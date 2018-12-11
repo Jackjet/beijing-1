@@ -330,9 +330,9 @@ public class SelectPersonActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    ToastUtil.show("未获取到发送人员", SelectPersonActivity.this);
+                    ToastUtil.show("未获取人员列表", SelectPersonActivity.this);
                     p.dismiss();
-//                    finish();
+                    finish();
                     break;
                 case 2:
                     adapter.notifyDataSetChanged();

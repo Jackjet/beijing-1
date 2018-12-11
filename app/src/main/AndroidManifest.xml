@@ -62,12 +62,12 @@
         <activity android:name=".ui.activity.CommentActivity" />
         <activity android:name=".ui.activity.LoginActivity">
 
-             <!--<intent-filter>-->
-             <!--<action android:name="android.intent.action.MAIN" />-->
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
 
 
-             <!--<category android:name="android.intent.category.LAUNCHER" />-->
-             <!--</intent-filter>-->
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.SelectPersonActivity" />
         <activity android:name=".ui.activity.SearchAddressActivity" />
@@ -91,7 +91,8 @@
         <activity android:name=".directorDesktop.Desk2Activity" />
         <activity android:name=".directorDesktop.DeskTopActivity" />
         <activity android:name=".directorDesktop.FileActivity" />
-        <activity android:name=".ui.activity.IntentWeb" />
+        <activity android:name=".ui.activity.IntentWeb"
+            android:screenOrientation="landscape"/>
 
         <!-- ca认证activity声明 -->
         <activity
@@ -103,11 +104,11 @@
 
         <activity android:name=".OneActivity"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
     </application>
 
