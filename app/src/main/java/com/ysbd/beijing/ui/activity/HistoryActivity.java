@@ -55,15 +55,15 @@ public class HistoryActivity extends AppCompatActivity {
         rvHistory.setAdapter(adapter);
         for (int i = 1; i < actorsBeans.size(); i++) {
             HistoryBean historyBean = new HistoryBean();
-            String senderId = actorsBeans.get(i ).getProecssActor().getPersonGUID();
+            String senderId = actorsBeans.get(i).getProecssActor().getPersonGUID();
             String sendName = DBUtils.getPersonNameById(senderId);
-            historyBean.setSender(sendName + "(" + actorsBeans.get(i ).getDepartName() + ")");
-            String receiverId = actorsBeans.get(i-1).getProecssActor().getPersonGUID();
+            historyBean.setSender(sendName + "(" + actorsBeans.get(i).getDepartName() + ")");
+            String receiverId = actorsBeans.get(i).getProecssActor().getPersonGUID();
             String receiverName = DBUtils.getPersonNameById(receiverId);
-            receiverName=receiverName + "(" + actorsBeans.get(i-1).getDepartName() + ")";
+            receiverName=receiverName + "(" + actorsBeans.get(i).getDepartName() + ")";
             if (i==1) {
                 String status="";
-                switch (actorsBeans.get(0).getProecssActor().getHandelStatus()) {
+                switch (actorsBeans.get(1).getProecssActor().getHandelStatus()) {
                     case 1:
                         status="待办";
                         break;

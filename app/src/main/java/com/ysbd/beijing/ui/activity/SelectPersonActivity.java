@@ -158,6 +158,7 @@ public class SelectPersonActivity extends BaseActivity {
                 super.run();
                 String data = WebServiceUtils.getInstance().sendInstanceUser(id, actionId);
 //                String data= DBUtils.getSender();
+
                 SendUserBean bean = null;
                 if (data.length() > 2) {
                     try {
@@ -173,6 +174,7 @@ public class SelectPersonActivity extends BaseActivity {
                         for (int i = 0; i < dateBean.getUser().size(); i++) {
                             if (dateBean.getDept()!=null) {
                                 SendNodeBean departBean = dateBean.getDept().get(dateBean.getUser().get(i).getParentNodeGuid());
+
                                 if (i<dateBean.getUser().size()-1){
                                     SendNodeBean departBean1 = dateBean.getDept().get(dateBean.getUser().get(i+1).getParentNodeGuid());
                                     if (departBean != departBean1) {
@@ -186,6 +188,18 @@ public class SelectPersonActivity extends BaseActivity {
                                         multiBean.setOrgId(departBean.getParentNodeGuid());
                                         multiBean.setIndex(departBean.getIndex());
                                         mu.add(multiBean);
+                                        if (i == dateBean.getUser().size()-2){
+                                            MultiBean multiBean1 = new MultiBean();
+                                            multiBean1.setOpen(false);
+                                            multiBean1.setLevel(1);
+                                            multiBean1.setName(departBean1.getNodeName());
+                                            multiBean1.setParent(true);
+                                            multiBean1.setId(departBean1.getNodeGuid());
+                                            multiBean1.setpName("");
+                                            multiBean1.setOrgId(departBean1.getParentNodeGuid());
+                                            multiBean1.setIndex(departBean1.getIndex());
+                                            mu.add(multiBean1);
+                                        }
                                     }
                                     else {
                                         SendNodeBean userBean = dateBean.getUser().get(i);
@@ -335,6 +349,19 @@ public class SelectPersonActivity extends BaseActivity {
                     finish();
                     break;
                 case 2:
+//                    boolean flag=true;
+//                    for (int i = 0; i < multiBeanList.size(); i++) {
+//                        if (multiBeanList.get(i).getName().equals("会计处")){
+//                            ((ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE)).setText(multiBeanList.get(i).getName());
+//                            Log.d("哈哈哈===", "run: "+multiBeanList.get(i).getName());
+//                            flag=false;
+//                        }
+//                    }
+//                    if (flag){
+//                        ((ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE)).setText("没有找到会计处");
+//                        Log.d("哈哈哈===", "run: 没有找到会计处");
+//                    }
+
                     adapter.notifyDataSetChanged();
                     p.dismiss();
                     mu.clear();

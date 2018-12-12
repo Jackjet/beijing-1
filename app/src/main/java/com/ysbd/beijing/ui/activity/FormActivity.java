@@ -158,16 +158,21 @@ public class FormActivity extends BaseActivity {
             switch (actors.get(1).getProecssActor().getHandelStatus()) {
                 case 1:
                     if (("doing".equals(actor) || "在办".equals(actor))) {
-
                         returnBack = true;
                         handler.sendEmptyMessage(4);
+                        Log.d("=======case1",""+actors.get(1).getProecssActor().getHandelStatus());
                     }
                     break;
                 case 2:
+                    Log.d("=======case2",""+actors.get(1).getProecssActor().getHandelStatus());
                     break;
                 case 3:
+                    Log.d("=======case3",""+actors.get(1).getProecssActor().getHandelStatus());
                     break;
                 case 4:
+                    for (int i = 0; i < actors.size(); i++) {
+                        Log.d("=======",""+actors.get(i));
+                    }
                     break;
             }
         }
