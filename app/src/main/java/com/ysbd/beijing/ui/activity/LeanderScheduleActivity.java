@@ -16,7 +16,6 @@ import com.ysbd.beijing.R;
 import com.ysbd.beijing.recyclerView.OnBindView;
 import com.ysbd.beijing.recyclerView.OnViewClickListener;
 import com.ysbd.beijing.recyclerView.RecyclerViewAdapter;
-import com.ysbd.beijing.ui.bean.LingdaoRichengBean;
 import com.ysbd.beijing.utils.ToastUtil;
 import com.ysbd.beijing.utils.WebServiceUtils;
 
@@ -132,8 +131,8 @@ public class LeanderScheduleActivity extends BaseActivity {
                 return "XU2";
             case "王婴":
                 return "WANGYING";
-            case "于学强":
-                return "YUXUEQIANG";
+//            case "于学强":
+//                return "YUXUEQIANG";
             case "赵彦明":
                 return "ZHAOYANMING";
             case "韩杰":
@@ -153,7 +152,7 @@ public class LeanderScheduleActivity extends BaseActivity {
         names.add("吴素芳");
         names.add("徐蘅");
         names.add("王婴");
-        names.add("于学强");
+//        names.add("于学强");
         names.add("赵彦明");
         names.add("韩杰");
         names.add("师淑英");
