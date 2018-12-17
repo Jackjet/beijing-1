@@ -31,11 +31,13 @@ import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 import com.ysbd.beijing.BaseActivity;
 import com.ysbd.beijing.R;
+import com.ysbd.beijing.bean.AddressBean;
 import com.ysbd.beijing.recyclerView.OnBindView;
 import com.ysbd.beijing.recyclerView.OnViewClickListener;
 import com.ysbd.beijing.recyclerView.RecyclerViewAdapter;
 import com.ysbd.beijing.ui.bean.TodoBean;
 import com.ysbd.beijing.utils.Constants;
+import com.ysbd.beijing.utils.DBUtils;
 import com.ysbd.beijing.utils.DateFormatUtil;
 import com.ysbd.beijing.utils.SpUtils;
 import com.ysbd.beijing.utils.ToastUtil;
@@ -69,6 +71,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private TextView tvAddress, tvZhuomian;
     private WebView webView;
+    List<AddressBean> dept;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,15 +110,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (!TextUtils.isEmpty(userName)) {
             if (userName.equals("马祥伟") || userName.equals("胡志华") || userName.equals("段超") ||
                     userName.equals("吴素芳") || userName.equals("徐蘅") || userName.equals("王婴") ||
-                   userName.equals("赵彦明") || userName.equals("韩杰") ||
-                    userName.equals("师淑英") || userName.equals("汪钢") || userName.equals("张宏宇")||
-                    userName.equals("刘尧")||userName.equals("王瑾")) {
+                    userName.equals("赵彦明") || userName.equals("韩杰") ||
+                    userName.equals("师淑英") || userName.equals("汪钢") || userName.equals("张宏宇") ||
+                    userName.equals("刘尧") || userName.equals("王瑾")) {
                 lingdaoricheng.setVisibility(View.VISIBLE);
             }
             if (userName.equals("马祥伟") || userName.equals("吴素芳") || userName.equals("徐蘅") || userName.equals("王婴") ||
-                     userName.equals("赵彦明") || userName.equals("韩杰") ||
-                    userName.equals("师淑英") || userName.equals("汪钢") || userName.equals("张宏宇")|| userName.equals("胡志华") ||
-                    userName.equals("刘尧") ||userName.equals("王瑾")) {
+                    userName.equals("赵彦明") || userName.equals("韩杰") ||
+                    userName.equals("师淑英") || userName.equals("汪钢") || userName.equals("张宏宇") || userName.equals("胡志华") ||
+                    userName.equals("刘尧") || userName.equals("王瑾")) {
                 tvZhuomian.setVisibility(View.VISIBLE);
             }
         }
@@ -158,6 +161,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Log.e("版本更新", "无需更新");
             }
         });
+
     }
 
 
@@ -390,6 +394,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         case "市转文":
                         case "指标文":
                         case "结余资金":
+                        case "局内传文_协办":
+                        case "主办文_协办":
                             showList.add(todoBeans.get(i));
                             break;
                     }
@@ -417,6 +423,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 case 2:
                     ToastUtil.show("已加载全部数据", MainActivity.this);
                     break;
+                case 10:
+                    ToastUtil.show("数据加载中...", MainActivity.this);
+                    tongxunlu();
+                    break;
+
             }
         }
     };
@@ -453,9 +464,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         return true;
                     }
                 }
-                if (url.contains("http://10.123.27.193/jntz/index_1077.htm")){
+                if (url.contains("http://10.123.27.193/jntz/index_1077.htm")) {
                     view.loadUrl(url);
-                }else {
+                } else {
                     Intent intent = new Intent(MainActivity.this, WebActivity.class);
                     intent.putExtra("url", url);
                     startActivity(intent);
@@ -489,18 +500,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             }
 
                             for (int i = 0; i < childFiles.length; i++) {//删除文件夹下所有文件
-                                if (childFiles[i].isDirectory()){
-                                   File[] files= childFiles[i].listFiles();
-                                   if (files==null||files.length==0){
-                                       childFiles[i].delete();
-                                       continue;
-                                   }else{
-                                       for (int j=0;j<files.length;j++){
-                                           files[j].delete();
-                                       }
-                                       childFiles[i].delete();
-                                       continue;
-                                   }
+                                if (childFiles[i].isDirectory()) {
+                                    File[] files = childFiles[i].listFiles();
+                                    if (files == null || files.length == 0) {
+                                        childFiles[i].delete();
+                                        continue;
+                                    } else {
+                                        for (int j = 0; j < files.length; j++) {
+                                            files[j].delete();
+                                        }
+                                        childFiles[i].delete();
+                                        continue;
+                                    }
 
                                 }
                                 childFiles[i].delete();
@@ -538,14 +549,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
+    private boolean isHave = true;
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_address_book:
 //                startActivity(new Intent(this, SearchAddressActivity.class));
-                    startActivity(new Intent(this, AddressActivity.class));
-
+                if (isHave) {
+                    isHave = false;
+                    tongxunlu();
+                }
                 break;
         }
     }
@@ -562,10 +576,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();
-        finish();
-        startActivity(getIntent());
+        isHave = true;
+        initTodo();
+    }
+
+    //获取部门
+    private void tongxunlu() {
+        if (DBUtils.getRootDepart().size() > 50) {
+            startActivity(new Intent(this, AddressActivity.class));
+        } else {
+            new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+                    try {
+                        handler.sendEmptyMessage(10);
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+        }
     }
 }

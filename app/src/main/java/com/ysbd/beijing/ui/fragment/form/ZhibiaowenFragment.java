@@ -165,7 +165,10 @@ public class ZhibiaowenFragment extends BaseFormFragment {
                 do {
                     data = WebServiceUtils.getInstance().findToDoFileInfo(jsonData);/////////流程测试
                 } while (TextUtils.isEmpty(data) && count++ < 10);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
-
+                data = data.replace("<![CDATA[", "");
+                data = data.replace("]]>", "");
+                data = data.replace("&#13;&#10;", "");
+                data = data.replace("&#32;", " ");
                 mHandler.obtainMessage(1, data).sendToTarget();
                 ZhibiaowenBean banwenBean = new Gson().fromJson(data, ZhibiaowenBean.class);
                 try {

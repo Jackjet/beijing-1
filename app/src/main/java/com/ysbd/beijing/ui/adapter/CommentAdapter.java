@@ -18,7 +18,6 @@ import com.ysbd.beijing.App;
 import com.ysbd.beijing.R;
 import com.ysbd.beijing.ui.bean.OpinionModel;
 import com.ysbd.beijing.utils.SpUtils;
-import com.ysbd.beijing.utils.WebServiceManager;
 import com.ysbd.beijing.utils.WebServiceUtils;
 import com.ysbd.beijing.view.LinearLayoutBaseAdapter;
 
@@ -96,8 +95,7 @@ public class CommentAdapter extends LinearLayoutBaseAdapter {
 
             //加载意见签名图片
             final String url = WebServiceUtils.SIGNATURE_IMG + opinionModel.getUserId();
-            Log.d(WebServiceManager.TAG, "name=" + opinionModel.getUserName());
-            Log.d(WebServiceManager.TAG, "url=" + url);
+
             SimpleTarget<GlideDrawable> simpleTarget = new SimpleTarget<GlideDrawable>() {
                 @Override
                 public void onResourceReady(GlideDrawable resource, GlideAnimation glideAnimation) {
@@ -112,23 +110,8 @@ public class CommentAdapter extends LinearLayoutBaseAdapter {
                     holder.tvName.setText(opinionModel.getUserName());
                 }
             };
-            Glide.with(App.getContext()).
-                    load(url).into(simpleTarget);
+            Glide.with(App.getContext()).load(url).into(simpleTarget);
 
-//            holder.itemLayout.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-//                    clipboardManager.setText(url);
-//                }
-//            });
-//            holder.ivName.setImageResource(DBUtils.getSign(opinionModel.getUserName()));
-//            if (DBUtils.getSign(opinionModel.getUserName()) == 0) {
-//                holder.tvName.setVisibility(View.VISIBLE);
-//                holder.tvName.setText(opinionModel.getUserName());
-//                holder.ivName.setVisibility(View.GONE);
-//            } else {
-//            }
             holder.flEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -161,20 +144,7 @@ public class CommentAdapter extends LinearLayoutBaseAdapter {
 
     private String type;
 
-    class ErrorException extends Exception {
-        ViewHolder viewHolder;
-        OpinionModel opinionModel;
 
-        public ErrorException(ViewHolder viewHolder, OpinionModel opinionModel) {
-            this.viewHolder = viewHolder;
-            this.opinionModel = opinionModel;
-            viewHolder.ivName.setVisibility(View.GONE);
-            viewHolder.tvName.setVisibility(View.VISIBLE);
-            viewHolder.tvName.setText(opinionModel.getUserName());
-            Log.d(WebServiceManager.TAG, "ErrorExceptionName=" + opinionModel.getUserName());
-            Log.d(WebServiceManager.TAG, "ErrorExceptionId=" + opinionModel.getUserId() + getMessage());
-        }
-    }
 
     private class ViewHolder {
         TextView tvParentName, tvComment, tvName, tvDate;

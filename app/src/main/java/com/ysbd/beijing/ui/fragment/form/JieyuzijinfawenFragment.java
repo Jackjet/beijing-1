@@ -269,6 +269,9 @@ public class JieyuzijinfawenFragment extends BaseFormFragment {
                 try {
                     data = data.replace("<![CDATA[", "");
                     data = data.replace("]]>", "");
+                    data = data.replace("&#13;&#10;", "");
+                    data = data.replace("&#32;", " ");
+
                     banwenBean = new Gson().fromJson(data, YibanfawenBean.class);
                 } catch (Exception e) {
                     mHandler.sendEmptyMessage(3);

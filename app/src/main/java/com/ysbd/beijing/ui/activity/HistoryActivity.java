@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,13 +36,14 @@ public class HistoryActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         rvHistory = findViewById(R.id.rv_history);
         actorsBeans = (List<ActorsBean>) getIntent().getSerializableExtra("actors");
-        rvHistory.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        linearLayoutManager.setStackFromEnd(true);
+        linearLayoutManager.setReverseLayout(true);
+        rvHistory.setLayoutManager(linearLayoutManager);
         historyBeans = new ArrayList<>();
         adapter = new RecyclerViewAdapter(historyBeans, R.layout.item_history, new OnBindView() {
             @Override
             public void bindView(int position, Object data, View itemView, OnViewClickListener.OnChildViewClickListener viewClickListener) {
-//                TextView textView = itemView.findViewById(R.id.item_history);
-//                textView.setText(String.valueOf(data));
                 TextView tvNum = itemView.findViewById(R.id.tv_num);
                 TextView tvSender = itemView.findViewById(R.id.tv_sender);
                 TextView tvTime = itemView.findViewById(R.id.tv_time);
@@ -53,14 +55,41 @@ public class HistoryActivity extends AppCompatActivity {
             }
         });
         rvHistory.setAdapter(adapter);
-        for (int i = 1; i < actorsBeans.size(); i++) {
+
+        for (int i = actorsBeans.size()-1; i >0; i--) {
             HistoryBean historyBean = new HistoryBean();
-            String senderId = actorsBeans.get(i).getProecssActor().getPersonGUID();
-            String sendName = DBUtils.getPersonNameById(senderId);
-            historyBean.setSender(sendName + "(" + actorsBeans.get(i).getDepartName() + ")");
-            String receiverId = actorsBeans.get(i).getProecssActor().getPersonGUID();
-            String receiverName = DBUtils.getPersonNameById(receiverId);
-            receiverName=receiverName + "(" + actorsBeans.get(i).getDepartName() + ")";
+            String senderId;
+            String sendName;
+            if (actorsBeans.get(i).getProecssActor()!=null){
+                senderId = actorsBeans.get(i).getProecssActor().getPersonGUID();
+                sendName = DBUtils.getPersonNameById(senderId);
+                sendName=sendName+"(" + actorsBeans.get(i).getDepartName() + ")";
+            }else {
+                continue;
+            }
+            historyBean.setSender(sendName);
+            String receiverId;
+            String receiverName;
+            if (actorsBeans.get(i-1).getProecssActor()!=null){
+                receiverId = actorsBeans.get(i-1).getProecssActor().getPersonGUID();
+                int count = 0;
+                do {
+                    receiverName = DBUtils.getPersonNameById(receiverId);
+                } while (TextUtils.isEmpty(receiverName) && count++ < 5);//如果没获取数据尝试多次获取直到获取数据或者获取次数到达10次
+
+                receiverName=receiverName + "(" + actorsBeans.get(i-1).getDepartName() + ")";
+
+            }else if(i==1){
+               receiverName="(๑•̀ㅂ•́)و✧";
+            }else {
+
+                receiverId = actorsBeans.get(i-2).getProecssActor().getPersonGUID();
+                int count = 0;
+                do {
+                    receiverName = DBUtils.getPersonNameById(receiverId);
+                } while (TextUtils.isEmpty(receiverName) && count++ < 5);
+                receiverName=receiverName + "(" + actorsBeans.get(i-2).getDepartName() + ")";
+            }
             if (i==1) {
                 String status="";
                 switch (actorsBeans.get(1).getProecssActor().getHandelStatus()) {
@@ -81,7 +110,7 @@ public class HistoryActivity extends AppCompatActivity {
             }
             historyBean.setReceiver(receiverName);
             historyBean.setStep(actorsBeans.get(i).getCurrentStep() + "");
-            historyBean.setSendTime(actorsBeans.get(i-1).getUpdateDateString());
+            historyBean.setSendTime(actorsBeans.get(i).getUpdateDateString());
             historyBeans.add(0, historyBean);
         }
         adapter.notifyDataSetChanged();

@@ -204,6 +204,10 @@ public class YibanfawenFragment extends BaseFormFragment {
                     if (data.length() < 5) {
                         mHandler.obtainMessage(2, data).sendToTarget();
                     } else {
+                        data = data.replace("<![CDATA[", "");
+                        data = data.replace("]]>", "");
+                        data = data.replace("&#13;&#10;", "");
+                        data = data.replace("&#32;", " ");
                         YibanfawenBean banwenBean = new Gson().fromJson(data, YibanfawenBean.class);
                         mHandler.obtainMessage(1, banwenBean).sendToTarget();
                         if (banwenBean.getMenus() != null && getActivity() != null) {

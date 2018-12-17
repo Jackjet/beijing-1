@@ -50,10 +50,9 @@ public class SpUtils {
     }
 
     public String getIP() {
-
-        return "http://22992i2u86.iok.la:9998/risenetoabjcz";
+        return "http://123.120.24.95:9998/risenetoabjcz";
 //        return "http://192.168.0.110:9998/risenetoabjcz";
-//        return "http://172.10.48.92:9998/risenetoabjcz"/
+//        return "http://172.10.48.92:9998/risenetoabjcz";
 //        return sp.getString("ip", "http://10.123.27.194:9910");
     }//http://172.28.68.48:9910
 

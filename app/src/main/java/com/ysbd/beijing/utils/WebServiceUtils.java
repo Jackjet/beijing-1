@@ -157,6 +157,29 @@ public class WebServiceUtils {
 
     }
 
+    /**
+     * 重写通讯录
+     * getAdderBook获取部门
+     * getAdderBooks获取人员列表
+     * getUserInfo获取人员信息
+     * @return
+     */
+    public String getAdderBook(){
+        return WebServiceManager.getInstance().connect("getAdderBook", HOST_TODO, "?");
+    }
+    public String getAdderBooks(){
+        return WebServiceManager.getInstance().connect("getAdderBooks", HOST_TODO, "?");
+    }
+    public String getUserInfo(String userid){
+        String value = "{\"userid\":\""+ userid  + "\"}";
+        return WebServiceManager.getInstance().connect("userinfos", HOST_TODO, value);
+    }
+
+
+
+
+
+
     public void getAddressBook() {
         String data = WebServiceManager.getInstance().connect("getAdderBook", HOST_TODO, "?");
         try {
@@ -418,10 +441,7 @@ public class WebServiceUtils {
     }
 
 
-    public String getUserInfo(String userid){
-        String value = "{\"userid\":\""+ userid  + "\"}";
-        return WebServiceManager.getInstance().connect("userinfos", HOST_TODO, value);
-    }
+
 
     /**
      * 公文发送

@@ -92,8 +92,14 @@ public class FormActivity extends BaseActivity {
             case "主办文":
                 formFragment = ZhubanwenFragment.getInstance(jsonData, actor);
                 break;
+            case "主办文_协办":
+                formFragment = ZhubanwenFragment.getInstance(jsonData, actor);
+                break;
             case "局内传文":
                 formFragment = JuneichuanwenFragment1.getInstance(guid, actor);
+                break;
+            case "局内传文_协办":
+                formFragment = JieyuzijinfawenFragment.getInstance(guid, actor);
                 break;
             case "市转文":
                 formFragment = ShizhuanwenFragment.getInstance(guid, actor);
@@ -160,18 +166,18 @@ public class FormActivity extends BaseActivity {
                     if (("doing".equals(actor) || "在办".equals(actor))) {
                         returnBack = true;
                         handler.sendEmptyMessage(4);
-                        Log.d("=======case1",""+actors.get(1).getProecssActor().getHandelStatus());
+                        Log.d("=======case1", "" + actors.get(1).getProecssActor().getHandelStatus());
                     }
                     break;
                 case 2:
-                    Log.d("=======case2",""+actors.get(1).getProecssActor().getHandelStatus());
+                    Log.d("=======case2", "" + actors.get(1).getProecssActor().getHandelStatus());
                     break;
                 case 3:
-                    Log.d("=======case3",""+actors.get(1).getProecssActor().getHandelStatus());
+                    Log.d("=======case3", "" + actors.get(1).getProecssActor().getHandelStatus());
                     break;
                 case 4:
                     for (int i = 0; i < actors.size(); i++) {
-                        Log.d("=======",""+actors.get(i));
+                        Log.d("=======", "" + actors.get(i));
                     }
                     break;
             }
@@ -198,7 +204,7 @@ public class FormActivity extends BaseActivity {
                     menuDialog.setClick(new MenuDialog.Click() {
                         @Override
                         public void click(MenuBean menuBean) {
-                            if (menuBean.getName().equals("归档")||menuBean.getName().equals("结束")) {
+                            if (menuBean.getName().equals("归档") || menuBean.getName().equals("结束")) {
                                 actionId = menuBean.getActionguid();
                                 id = guid;
                                 guiDang();
@@ -235,9 +241,9 @@ public class FormActivity extends BaseActivity {
             public void run() {
                 super.run();
                 String data = WebServiceUtils.getInstance().sendInstanceUser(id, actionId);
-                if (data!=null){
+                if (data != null) {
                     handler.sendEmptyMessage(5);
-                }else {
+                } else {
                     handler.sendEmptyMessage(6);
                 }
             }

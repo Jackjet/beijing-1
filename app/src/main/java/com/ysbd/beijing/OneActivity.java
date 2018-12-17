@@ -135,7 +135,7 @@ public class OneActivity extends BaseLoginActivity {
             selectCert.setText("点击选择用户证书");
             final ListPopupWindow listPopupWindow=new ListPopupWindow(this);
             listPopupWindow.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,certUserList));
-            listPopupWindow.setHeight(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+            listPopupWindow.setHeight(300);
             listPopupWindow.setWidth(LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
             listPopupWindow.setAnchorView(selectCert);
             listPopupWindow.setModal(true);

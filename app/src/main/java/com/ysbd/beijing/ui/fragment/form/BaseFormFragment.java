@@ -389,6 +389,8 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
             attachmentName = attachmentName.substring(nameIndex);
             if (attachmentName.contains("主办文")) {
                 type = "主办文";
+            } else if (attachmentName.contains("主办文_协办")) {
+                type = "主办文_协办";
             } else if (attachmentName.contains("结余资金")) {
                 type = "结余资金";
             } else if (attachmentName.contains("一般发文")) {
@@ -399,6 +401,8 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                 type = "市转文";
             } else if (attachmentName.contains("局内传文")) {
                 type = "局内传文";
+            } else if (attachmentName.contains("局内传文_协办")) {
+                type = "局内传文_协办";
             } else {
                 ToastUtil.show("暂时无法打开该文种!", getContext());
                 return;

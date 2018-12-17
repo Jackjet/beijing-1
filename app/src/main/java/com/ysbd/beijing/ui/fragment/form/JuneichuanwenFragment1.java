@@ -164,6 +164,8 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
                 try {
                     data = data.replace("<![CDATA[", "");
                     data = data.replace("]]>", "");
+                    data = data.replace("&#13;&#10;", "");
+                    data = data.replace("&#32;", " ");
                     banwenBean = new Gson().fromJson(data, JuNeiChuanWenBean.class);
                     mHandler.obtainMessage(1, banwenBean).sendToTarget();
                     if (banwenBean.getMenus() != null && getActivity() != null) {

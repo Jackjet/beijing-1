@@ -72,13 +72,12 @@
         <activity android:name=".ui.activity.SelectPersonActivity" />
         <activity android:name=".ui.activity.SearchAddressActivity" />
         <activity android:name=".fileEidter.EditActivity" />
+        <activity android:name=".ui.activity.AddressActivity"/>
 
         <service android:name=".autoExist.TimeoutService" />
 
         <activity android:name=".fileEidter.FileReaderActivity" />
         <activity android:name=".ui.activity.HistoryActivity" />
-        <activity android:name=".ui.activity.AddressActivity"
-            android:screenOrientation="landscape"/>
         <activity android:name=".ui.activity.LeanderScheduleActivity" />
 
         <meta-data
