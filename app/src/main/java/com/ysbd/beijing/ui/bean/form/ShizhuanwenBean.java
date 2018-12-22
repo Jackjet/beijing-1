@@ -120,6 +120,7 @@ public class ShizhuanwenBean extends BaseFormBean{
 
     private String shilingdaopishi;
 
+
     public String getShilingdaopishi() {
         return shilingdaopishi;
     }

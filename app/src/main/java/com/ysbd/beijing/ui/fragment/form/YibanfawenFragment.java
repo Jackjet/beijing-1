@@ -299,16 +299,15 @@ public class YibanfawenFragment extends BaseFormFragment {
         num.setText(bean.getYibanfawen_hao());
         zhusong.setText(bean.getZhusong());//        主送/
         chaosong.setText(bean.getChaosong());//        抄送
-        if (bean.getDocumentcb() != null) {
+        if (bean.getDocument() != null) {
             zhengwen.setVisibility(View.VISIBLE);
             zhengwen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //                    String type=bean.getDocumentcb().getDOCUMENTFILENAME().substring(bean.getDocumentcb().getDOCUMENTFILENAME().lastIndexOf("."+1));
-                    down(bean.getDocumentcb().getUrl(), bean.getDocumentcb().getName()
+                    down(bean.getDocument().getUrl(), bean.getDocument().getName()
                             + ".doc", true);
-                    setDocumentBean(bean.getDocumentcb());
-
+                    setDocumentBean(bean.getDocument());
                 }
             });
             zhengwen.setOnLongClickListener(new View.OnLongClickListener() {
@@ -317,7 +316,7 @@ public class YibanfawenFragment extends BaseFormFragment {
                     if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 20102);
                     } else {
-                        upLoadDocument(bean.getDocumentcb(),
+                        upLoadDocument(bean.getDocument(),
                                 FileUtils.getInstance().makeDocumentDir().getPath() + File.separator + "正文.doc");
 
                     }
@@ -328,15 +327,15 @@ public class YibanfawenFragment extends BaseFormFragment {
             zhengwen.setVisibility(View.INVISIBLE);
         }
 
-        if (bean.getDocument() != null) {
+        if (bean.getDocumentcb() != null) {
             chengbaoneirong.setVisibility(View.VISIBLE);
             chengbaoneirong.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //                    String type=bean.getDocumentcb().getDOCUMENTFILENAME().substring(bean.getDocumentcb().getDOCUMENTFILENAME().lastIndexOf("."+1));
-                    down(bean.getDocument().getUrl(), bean.getDocument().getName()
+                    down(bean.getDocumentcb().getUrl(), bean.getDocumentcb().getName()
                             + ".doc", true);
-                    setDocumentBean(bean.getDocument());
+                    setDocumentBean(bean.getDocumentcb());
 
                 }
             });
@@ -346,7 +345,7 @@ public class YibanfawenFragment extends BaseFormFragment {
                     if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 20102);
                     } else {
-                        upLoadDocument(bean.getDocument(),
+                        upLoadDocument(bean.getDocumentcb(),
                                 FileUtils.getInstance().makeDocumentDir().getPath() + File.separator + "cb正文.doc");
 
                     }

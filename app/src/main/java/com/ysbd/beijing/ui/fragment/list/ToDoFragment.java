@@ -155,6 +155,8 @@ public class ToDoFragment extends BaseFragment {
 //                intent.putExtra("instanceguid",guid);
 //                startActivity(intent);
                 Intent intent=new Intent(getContext(),FormActivity.class);
+                intent.putExtra("from","");
+
                 intent.putExtra("type",type);
                 intent.putExtra("actor",actor);
                 intent.putExtra("instanceguid",list.get(position).getWORKFLOWINSTANCE_GUID());

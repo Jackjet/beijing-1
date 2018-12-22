@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -136,6 +135,8 @@ public class ShizhuanwenList extends BaseListFragment {
             public void onViewClick(int position) {
                 setLiveTime();
                 Intent intent = new Intent(getContext(), FormActivity.class);
+                intent.putExtra("from","");
+
                 intent.putExtra("type", type);
                 intent.putExtra("actor", actor);
                 intent.putExtra("instanceguid", list.get(position).getWORKFLOWINSTANCE_GUID());

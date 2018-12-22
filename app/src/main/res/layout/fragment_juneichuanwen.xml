@@ -144,23 +144,24 @@
                 android:layout_marginLeft="@dimen/dimen60"
                 android:layout_marginRight="@dimen/dimen60"
                 android:background="@drawable/form_bored"
-                android:padding="@dimen/dimen05"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/dimen05">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/form_bored"
-                    android:padding="@dimen/dimen05"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen05">
 
                     <TextView
                         style="@style/FormFieldsName2"
                         android:text="主办处室" />
+
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                        android:background="@drawable/form_bored" />
 
                     <TextView
                         android:id="@+id/zhubanchushi"
@@ -172,18 +173,20 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
+
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="@drawable/form_bored"/>
+                            android:background="@drawable/form_bored" />
 
                         <TextView
                             style="@style/FormFieldsName2"
                             android:text="呈送" />
+
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="@drawable/form_bored"/>
+                            android:background="@drawable/form_bored" />
 
                     </LinearLayout>
 
@@ -199,16 +202,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/form_bored"
-                    android:padding="@dimen/dimen05"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen05">
 
                     <TextView
                         style="@style/FormFieldsName2"
                         android:text="起草处室" />
+
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                        android:background="@drawable/form_bored" />
 
                     <TextView
                         android:id="@+id/qicaochushi"
@@ -220,18 +224,20 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
+
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="@drawable/form_bored"/>
+                            android:background="@drawable/form_bored" />
 
                         <TextView
                             style="@style/FormFieldsName2"
                             android:text="限办日期" />
+
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="@drawable/form_bored"/>
+                            android:background="@drawable/form_bored" />
 
                     </LinearLayout>
 
@@ -247,18 +253,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/form_bored"
-                    android:padding="@dimen/dimen05"
                     android:orientation="horizontal"
+                    android:padding="@dimen/dimen05"
 
                     android:visibility="visible">
 
                     <TextView
                         style="@style/FormFieldsName2"
                         android:text="重点督查" />
+
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                        android:background="@drawable/form_bored" />
 
 
                     <TextView
@@ -272,8 +279,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/form_bored"
-                    android:padding="@dimen/dimen05"
                     android:orientation="horizontal"
+                    android:padding="@dimen/dimen05"
 
                     android:visibility="visible">
 
@@ -284,7 +291,7 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                        android:background="@drawable/form_bored" />
 
 
                     <TextView
@@ -299,19 +306,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/form_bored"
-                    android:padding="@dimen/dimen05"
                     android:orientation="horizontal"
+                    android:padding="@dimen/dimen05"
                     android:visibility="visible">
 
                     <TextView
                         style="@style/FormFieldsName2"
                         android:layout_height="match_parent"
                         android:text="局领导批示" />
+
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
-
+                        android:background="@drawable/form_bored" />
 
 
                     <com.ysbd.beijing.view.CommentLinearLayout
@@ -321,7 +328,7 @@
                         android:layout_weight="5"
                         android:background="#f4f9ff"
                         android:minHeight="@dimen/dimen60"
-                        android:orientation="vertical"/>
+                        android:orientation="vertical" />
 
 
                 </LinearLayout>
@@ -330,18 +337,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/form_bored"
-                    android:padding="@dimen/dimen05"
                     android:orientation="horizontal"
+                    android:padding="@dimen/dimen05"
                     android:visibility="visible">
 
                     <TextView
                         style="@style/FormFieldsName2"
                         android:layout_height="match_parent"
                         android:text="处长批示" />
+
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                        android:background="@drawable/form_bored" />
 
 
                     <com.ysbd.beijing.view.CommentLinearLayout
@@ -351,7 +359,7 @@
                         android:layout_weight="5"
                         android:background="#f4f9ff"
                         android:minHeight="@dimen/dimen60"
-                        android:orientation="vertical"/>
+                        android:orientation="vertical" />
 
                 </LinearLayout>
 
@@ -359,8 +367,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/form_bored"
-                    android:padding="@dimen/dimen05"
                     android:orientation="horizontal"
+                    android:padding="@dimen/dimen05"
                     android:visibility="visible">
 
                     <TextView
@@ -371,7 +379,7 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                        android:background="@drawable/form_bored" />
 
 
                     <com.ysbd.beijing.view.CommentLinearLayout
@@ -381,8 +389,7 @@
                         android:layout_weight="5"
                         android:background="#f4f9ff"
                         android:minHeight="@dimen/dimen60"
-                        android:orientation="vertical"/>
-
+                        android:orientation="vertical" />
 
 
                 </LinearLayout>
@@ -392,8 +399,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/form_bored"
-                    android:padding="@dimen/dimen05"
                     android:orientation="horizontal"
+                    android:padding="@dimen/dimen05"
                     android:visibility="visible">
 
                     <TextView
@@ -404,7 +411,7 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                        android:background="@drawable/form_bored" />
 
 
                     <FrameLayout
@@ -412,22 +419,25 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
                         android:background="#f4f9ff">
+
                         <LinearLayout
                             android:id="@+id/chengbaoneirong"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:visibility="invisible">
+
                             <ImageView
-                                android:layout_marginLeft="@dimen/dimen8"
-                                android:layout_marginRight="@dimen/dimen8"
                                 android:layout_width="@dimen/dimen28"
                                 android:layout_height="match_parent"
-                                android:src="@mipmap/document"/>
+                                android:layout_marginLeft="@dimen/dimen8"
+                                android:layout_marginRight="@dimen/dimen8"
+                                android:src="@mipmap/document" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/dimen40"
                                 android:gravity="center_vertical"
-                                android:text="呈报内容"/>
+                                android:text="呈报内容" />
                         </LinearLayout>
 
                     </FrameLayout>
@@ -439,17 +449,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/form_bored"
-                    android:padding="@dimen/dimen05"
                     android:orientation="horizontal"
+                    android:padding="@dimen/dimen05"
                     android:visibility="gone">
 
                     <TextView
                         style="@style/FormFieldsName2"
                         android:text="来文单位" />
+
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                        android:background="@drawable/form_bored" />
 
 
                     <EditText
@@ -461,19 +472,21 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
+
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="@drawable/form_bored"/>
+                            android:background="@drawable/form_bored" />
 
 
                         <TextView
                             style="@style/FormFieldsName2"
                             android:text="密        级" />
+
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="@drawable/form_bored"/>
+                            android:background="@drawable/form_bored" />
 
                     </LinearLayout>
 
@@ -489,17 +502,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/form_bored"
-                    android:padding="@dimen/dimen05"
                     android:orientation="horizontal"
+                    android:padding="@dimen/dimen05"
                     android:visibility="visible">
 
                     <TextView
                         style="@style/FormFieldsName2"
                         android:text="承办人" />
+
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                        android:background="@drawable/form_bored" />
 
                     <TextView
                         android:id="@+id/chengbanren"
@@ -511,18 +525,20 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
+
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="@drawable/form_bored"/>
+                            android:background="@drawable/form_bored" />
 
                         <TextView
                             style="@style/FormFieldsName2"
                             android:text="联系电话" />
+
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="@drawable/form_bored"/>
+                            android:background="@drawable/form_bored" />
 
                     </LinearLayout>
 
@@ -537,21 +553,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/form_bored"
-                    android:padding="@dimen/dimen05"
                     android:orientation="horizontal"
+                    android:padding="@dimen/dimen05"
                     android:visibility="visible">
 
                     <TextView
                         style="@style/FormFieldsName2"
                         android:layout_height="match_parent"
                         android:text="协办处室意见" />
+
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                        android:background="@drawable/form_bored" />
 
 
-                    <FrameLayout
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="5"
@@ -562,12 +579,13 @@
                             android:layout_height="@dimen/dimen40"
                             android:background="#f4f9ff" />
 
-                        <com.ysbd.beijing.view.CommentLinearLayout
+                        <android.support.v7.widget.RecyclerView
                             android:id="@+id/cl_xiebanchushiyijian"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"></com.ysbd.beijing.view.CommentLinearLayout>
+                            android:layout_height="match_parent">
+                        </android.support.v7.widget.RecyclerView>
 
-                    </FrameLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -583,325 +601,335 @@
                 android:textSize="@dimen/dimen14" />
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dimen60"
-            android:layout_marginRight="@dimen/dimen60"
-            android:background="@drawable/form_bored"
-            android:padding="@dimen/dimen05"
-            android:orientation="vertical">
-
-            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen60"
+                android:layout_marginRight="@dimen/dimen60"
                 android:background="@drawable/form_bored"
-                android:padding="@dimen/dimen05"
-                android:orientation="horizontal">
-
-
-                <TextView
-                    style="@style/FormFieldsName2"
-                    android:text="保管期限" />
-                <View
-                    android:layout_width="@dimen/dimen1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/form_bored"/>
-
-
-                <TextView
-                    android:id="@+id/baoguanqixian"
-                    style="@style/FormFieldsValue2"
-                    android:layout_weight="2"
-                    android:hint="" />
+                android:orientation="vertical"
+                android:padding="@dimen/dimen05">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <View
-                        android:layout_width="@dimen/dimen1"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                    android:background="@drawable/form_bored"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen05">
+
 
                     <TextView
                         style="@style/FormFieldsName2"
-                        android:text="密        级" />
+                        android:text="保管期限" />
+
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                        android:background="@drawable/form_bored" />
 
+
+                    <TextView
+                        android:id="@+id/baoguanqixian"
+                        style="@style/FormFieldsValue2"
+                        android:layout_weight="2"
+                        android:hint="" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <View
+                            android:layout_width="@dimen/dimen1"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/form_bored" />
+
+                        <TextView
+                            style="@style/FormFieldsName2"
+                            android:text="密        级" />
+
+                        <View
+                            android:layout_width="@dimen/dimen1"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/form_bored" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/mijiwen"
+                        style="@style/FormFieldsValue2"
+                        android:layout_weight="2"
+                        android:hint="" />
                 </LinearLayout>
 
-
-                <TextView
-                    android:id="@+id/mijiwen"
-                    style="@style/FormFieldsValue2"
-                    android:layout_weight="2"
-                    android:hint="" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/form_bored"
-                android:padding="@dimen/dimen05"
-                android:orientation="horizontal">
-
-
-                <TextView
-                    style="@style/FormFieldsName2"
-                    android:text="归 档 人" />
-                <View
-                    android:layout_width="@dimen/dimen1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/form_bored"/>
-
-                <TextView
-                    android:id="@+id/guidangren"
-                    style="@style/FormFieldsValue2"
-                    android:layout_weight="2"
-                    android:hint="" />
-
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-                    <View
-                        android:layout_width="@dimen/dimen1"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                    android:background="@drawable/form_bored"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen05">
+
 
                     <TextView
                         style="@style/FormFieldsName2"
-                        android:text="归档日期" />
+                        android:text="归 档 人" />
+
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="@drawable/form_bored"/>
+                        android:background="@drawable/form_bored" />
+
+                    <TextView
+                        android:id="@+id/guidangren"
+                        style="@style/FormFieldsValue2"
+                        android:layout_weight="2"
+                        android:hint="" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <View
+                            android:layout_width="@dimen/dimen1"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/form_bored" />
+
+                        <TextView
+                            style="@style/FormFieldsName2"
+                            android:text="归档日期" />
+
+                        <View
+                            android:layout_width="@dimen/dimen1"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/form_bored" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/guidangqiri"
+                        style="@style/FormFieldsValue2"
+                        android:layout_weight="2"
+                        android:hint="" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/form_bored"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen05">
+
+                    <TextView
+                        style="@style/FormFieldsName2"
+                        android:layout_height="match_parent"
+                        android:text="简要情况" />
+
+                    <View
+                        android:layout_width="@dimen/dimen1"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/form_bored" />
+
+
+                    <TextView
+                        android:id="@+id/jianyaoqingkuang"
+                        style="@style/FormFieldsValue3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:background="#f4f9ff"
+                        android:gravity="top"
+                        android:minHeight="@dimen/dimen60"
+                        android:paddingLeft="@dimen/dimen4"
+
+                        android:paddingTop="@dimen/dimen8"
+                        android:paddingRight="@dimen/dimen4"
+                        android:paddingBottom="@dimen/dimen8"
+                        android:text="简要情况">
+
+                    </TextView>
 
                 </LinearLayout>
 
-
-                <TextView
-                    android:id="@+id/guidangqiri"
-                    style="@style/FormFieldsValue2"
-                    android:layout_weight="2"
-                    android:hint="" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/form_bored"
-                android:padding="@dimen/dimen05"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/FormFieldsName2"
-                    android:layout_height="match_parent"
-                    android:text="简要情况" />
-                <View
-                    android:layout_width="@dimen/dimen1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/form_bored"/>
-
-
-                <TextView
-                    android:id="@+id/jianyaoqingkuang"
-                    style="@style/FormFieldsValue3"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:paddingTop="@dimen/dimen8"
-                    android:paddingBottom="@dimen/dimen8"
-                    android:paddingLeft="@dimen/dimen4"
-                    android:paddingRight="@dimen/dimen4"
+                    android:background="@drawable/form_bored"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen05">
 
-                    android:text="简要情况"
-                    android:minHeight="@dimen/dimen60"
-                    android:gravity="top"
-                    android:background="#f4f9ff">
+                    <TextView
+                        style="@style/FormFieldsName2"
+                        android:layout_height="match_parent"
+                        android:text="处长签字" />
 
-                </TextView>
+                    <View
+                        android:layout_width="@dimen/dimen1"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/form_bored" />
 
-            </LinearLayout>
+                    <com.ysbd.beijing.view.CommentLinearLayout
+                        android:id="@+id/chuzhangqianzi"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:background="#f4f9ff"
+                        android:minHeight="@dimen/dimen60"
+                        android:orientation="vertical" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/form_bored"
-                android:padding="@dimen/dimen05"
-                android:orientation="horizontal">
 
-                <TextView
-                    style="@style/FormFieldsName2"
-                    android:layout_height="match_parent"
-                    android:text="处长签字" />
-
-                <View
-                    android:layout_width="@dimen/dimen1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/form_bored"/>
-
-                <com.ysbd.beijing.view.CommentLinearLayout
-                    android:id="@+id/chuzhangqianzi"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:background="#f4f9ff"
-                    android:minHeight="@dimen/dimen60"
-                    android:orientation="vertical" />
-
+                </LinearLayout>
 
             </LinearLayout>
-
-        </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen12"
                 android:background="#fff" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/dimen60"
-            android:layout_marginRight="@dimen/dimen60"
-            android:background="@drawable/form_bored"
-            android:padding="@dimen/dimen05">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dimen60"
+                android:layout_marginRight="@dimen/dimen60"
                 android:background="@drawable/form_bored"
-                android:padding="@dimen/dimen05"
-                android:orientation="horizontal">
+                android:padding="@dimen/dimen05">
 
                 <LinearLayout
-                    style="@style/FormFieldsName2"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="附     件"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/dimen14" />
-
-                    <TextView
-                        android:id="@+id/gongwen_copy_juneichuanwen"
-                        android:visibility="gone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="公文拷贝"
-                        android:textColor="@color/textColor"
-                        android:textSize="@dimen/dimen14" />
-                </LinearLayout>
-                <View
-                    android:layout_width="@dimen/dimen1"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/form_bored"/>
-
-
-                <FrameLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:background="#f4f9ff">
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="@dimen/dimen80"
-                        android:background="#f4f9ff" />
+                    android:background="@drawable/form_bored"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen05">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="@style/FormFieldsName2"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="附     件"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/dimen14" />
+
+                        <TextView
+                            android:id="@+id/gongwen_copy_juneichuanwen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="公文拷贝"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/dimen14"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="@dimen/dimen1"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/form_bored" />
+
+
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:background="#f4f9ff">
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="@dimen/dimen80"
+                            android:background="#f4f9ff" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="#6c6c6c"
-                            android:orientation="horizontal"
-                            android:paddingBottom="@dimen/dimen1">
+                            android:orientation="vertical">
 
-                            <TextView
-                                android:layout_width="0dp"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginRight="@dimen/dimen1"
-                                android:layout_weight="1"
-                                android:background="#dcdce1"
-                                android:paddingBottom="@dimen/dimen2"
-                                android:paddingTop="@dimen/dimen2"
-                                android:singleLine="true"
-                                android:text="上传文件人员"
-                                android:textColor="#000"
-                                android:textSize="@dimen/dimen13"
-                                android:visibility="gone"/>
+                                android:background="#6c6c6c"
+                                android:orientation="horizontal"
+                                android:paddingBottom="@dimen/dimen1">
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="@dimen/dimen1"
-                                android:layout_weight="2"
-                                android:background="#dcdce1"
-                                android:padding="@dimen/dimen2"
-                                android:text="标题"
-                                android:textColor="#000"
-                                android:textSize="@dimen/dimen13" />
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/dimen1"
+                                    android:layout_weight="1"
+                                    android:background="#dcdce1"
+                                    android:paddingTop="@dimen/dimen2"
+                                    android:paddingBottom="@dimen/dimen2"
+                                    android:singleLine="true"
+                                    android:text="上传文件人员"
+                                    android:textColor="#000"
+                                    android:textSize="@dimen/dimen13"
+                                    android:visibility="gone" />
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="@dimen/dimen1"
-                                android:layout_weight="0.7"
-                                android:background="#dcdce1"
-                                android:padding="@dimen/dimen2"
-                                android:singleLine="true"
-                                android:text="扩展名称"
-                                android:textColor="#000"
-                                android:textSize="@dimen/dimen13" />
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/dimen1"
+                                    android:layout_weight="2"
+                                    android:background="#dcdce1"
+                                    android:padding="@dimen/dimen2"
+                                    android:text="标题"
+                                    android:textColor="#000"
+                                    android:textSize="@dimen/dimen13" />
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="@dimen/dimen1"
-                                android:layout_weight="1"
-                                android:background="#dcdce1"
-                                android:padding="@dimen/dimen2"
-                                android:text="部门名称"
-                                android:textColor="#000"
-                                android:textSize="@dimen/dimen13" />
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/dimen1"
+                                    android:layout_weight="0.7"
+                                    android:background="#dcdce1"
+                                    android:padding="@dimen/dimen2"
+                                    android:singleLine="true"
+                                    android:text="扩展名称"
+                                    android:textColor="#000"
+                                    android:textSize="@dimen/dimen13" />
 
-                            <TextView
-                                android:layout_width="0dp"
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="@dimen/dimen1"
+                                    android:layout_weight="1"
+                                    android:background="#dcdce1"
+                                    android:padding="@dimen/dimen2"
+                                    android:text="部门名称"
+                                    android:textColor="#000"
+                                    android:textSize="@dimen/dimen13" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="#dcdce1"
+                                    android:padding="@dimen/dimen2"
+                                    android:text="上传时间"
+                                    android:textColor="#000"
+                                    android:textSize="@dimen/dimen13" />
+                            </LinearLayout>
+
+                            <com.ysbd.beijing.view.CommentLinearLayout
+                                android:id="@+id/cl_attachment"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="#dcdce1"
-                                android:padding="@dimen/dimen2"
-                                android:text="上传时间"
-                                android:textColor="#000"
-                                android:textSize="@dimen/dimen13" />
+                                android:orientation="vertical" />
                         </LinearLayout>
-                        <com.ysbd.beijing.view.CommentLinearLayout
-                            android:id="@+id/cl_attachment"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"/>
-                    </LinearLayout>
 
 
-                </FrameLayout>
+                    </FrameLayout>
 
 
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

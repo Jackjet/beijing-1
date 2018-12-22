@@ -322,6 +322,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (startTag > 13) {
                     guid = tar.substring(startTag);
                 }
+                intent.putExtra("from","");
 
                 intent.putExtra("type", showList.get(position).getTODO_MODULENAME());
                 intent.putExtra("instanceguid", guid);
@@ -396,6 +397,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         case "结余资金":
                         case "局内传文_协办":
                         case "主办文_协办":
+                        case "市转文_协办":
+                        case "发文会签":
                             showList.add(todoBeans.get(i));
                             break;
                     }

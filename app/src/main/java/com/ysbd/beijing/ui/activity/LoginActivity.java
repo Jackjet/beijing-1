@@ -110,7 +110,7 @@ public class LoginActivity extends BaseLoginActivity {
 //        final ArrayList<String> names = getIntent().getStringArrayListExtra("names");
         final ArrayList<String> names=new ArrayList<>();
         String ooo[]={"刘海涛","马荣丽","胡陶平","董晓红","王栋","丁龙军","卜振钊","马祥伟","胡志华","段超","吴素芳","徐蘅","王婴","赵彦明",
-                "韩杰","师淑英","汪钢","张宏宇","刘尧","王瑾"};
+                "韩杰","师淑英","汪钢","张宏宇","刘尧","王瑾","彭尚高"};
         for (int i=0;i<ooo.length;i++){
             names.add(ooo[i]);
         }

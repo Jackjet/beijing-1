@@ -2,6 +2,7 @@ package com.ysbd.beijing.ui.fragment.form;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,7 +23,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.ysbd.beijing.App;
 import com.ysbd.beijing.R;
+import com.ysbd.beijing.bean.XiebanBean;
 import com.ysbd.beijing.ui.activity.FormActivity;
+import com.ysbd.beijing.ui.adapter.XieBan;
 import com.ysbd.beijing.ui.bean.FileIdBean;
 import com.ysbd.beijing.ui.bean.form.JuNeiChuanWenBean;
 import com.ysbd.beijing.utils.Constants;
@@ -82,8 +87,6 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
     TextView chengbanren;
     @BindView(R.id.lianxidianhua)
     TextView lianxidianhua;
-    @BindView(R.id.cl_xiebanchushiyijian)
-    CommentLinearLayout clXiebanchushiyijian;
     @BindView(R.id.baoguanqixian)
     TextView baoguanqixian;
     @BindView(R.id.mijiwen)
@@ -99,8 +102,11 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
     CommentLinearLayout clAttachment;//附件列表
     @BindView(R.id.gongwen_copy_juneichuanwen)
     TextView gongwenCopyJuneichuanwen;
+    @BindView(R.id.cl_xiebanchushiyijian)
+    RecyclerView clXiebanchushiyijian;
 
     private LoadingDialog loadingDialog;
+
 
 
     public static JuneichuanwenFragment1 getInstance(String guid, String actor) {
@@ -111,7 +117,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    XieBan xieBanAdapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -132,8 +138,27 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         if (actor.equals("todo") || actor.equals("待办")) {//默认共公文拷贝隐藏,如果是待办状态,显示按钮
             gongwenCopyJuneichuanwen.setVisibility(View.VISIBLE);
         }
+
+
         initData(layoutMap, frames, guid, formName);
         getData();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        clXiebanchushiyijian.setLayoutManager(layoutManager);
+        xieBanAdapter = new XieBan(xieban);
+        xieBanAdapter.setOnItemClickListener(new XieBan.setOnItemClickListener() {
+            @Override
+            public void OnItemClickListener(int pos) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), FormActivity.class);
+                intent.putExtra("type", "局内传文_协办");
+                intent.putExtra("instanceguid", xieban.get(pos).getChushiGUID());
+                intent.putExtra("actor", actor);
+                intent.putExtra("from","隐藏");
+                startActivity(intent);
+            }
+        });
+        clXiebanchushiyijian.setAdapter(xieBanAdapter);
         return view;
     }
 
@@ -167,6 +192,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
                     data = data.replace("&#13;&#10;", "");
                     data = data.replace("&#32;", " ");
                     banwenBean = new Gson().fromJson(data, JuNeiChuanWenBean.class);
+
                     mHandler.obtainMessage(1, banwenBean).sendToTarget();
                     if (banwenBean.getMenus() != null && getActivity() != null) {
                         ((FormActivity) getActivity()).addMenus(banwenBean.getMenus());
@@ -192,6 +218,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         }).start();
     }
 
+
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -202,6 +229,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
             switch (msg.what) {
                 case 1:
                     JuNeiChuanWenBean bean = (JuNeiChuanWenBean) msg.obj;
+                    getXiebanGuid(bean);
                     setFormData(bean);
                     if (loadingDialog != null) {
                         loadingDialog.cancel();
@@ -221,54 +249,58 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         }
     };
 
+    List<XiebanBean> xieban = new ArrayList<>();
+
+    Map<String, String> xiebanGUID = new HashMap<>();
+
+    private void getXiebanGuid(JuNeiChuanWenBean bean){
+        if (bean.getWorkflow_sub()!=null&&!TextUtils.isEmpty(bean.getWorkflow_sub())) {
+            String xieban_guid;
+            xieban_guid = bean.getWorkflow_sub();
+            String[] sub = xieban_guid.split(";");
+            int num = sub.length;
+            if (num > 1) {
+                for (int i = 0; i < num; i++) {
+                    String strings[] = sub[i].split(",");
+                    xiebanGUID.put(strings[0], strings[1]);
+                }
+            } else {
+                String strings[] = sub[0].split(",");
+                xiebanGUID.put(strings[0], strings[1]);
+            }
+            for (String key:xiebanGUID.keySet()){
+                XiebanBean xiebanBean=new XiebanBean();
+                xiebanBean.setChushiName(xiebanGUID.get(key));
+                xiebanBean.setChushiGUID(key);
+                xieban.add(xiebanBean);
+            }
+            xieBanAdapter.notifyDataSetChanged();
+        }
+    }
+
 
     private void setFormData(final JuNeiChuanWenBean bean) {
         if (bean.getWenjianmingcheng() != null) {
             wenjianmingcheng.setText(Html.fromHtml(bean.getWenjianmingcheng()));
         }
         baoguanqixian.setText(bean.getBaoguanqixian());
-//        private String beizhu;
         chengbanren.setText(bean.getChengbanren());
-//        chengbaoneirong.setText(bean.getChengbaoneirong());
         chengsong.setText(bean.getChengsong());
         qicaochushi.setText(bean.getChushimingcheng());
         qicaoriqi.setText(bean.getShouwenriqi());
-//        private String chuanyueguocheng;
-//        private String chushimingcheng;
-//        private String chushi_zi;
-//        private String chuzhangpishi;
-//        private String chuzhangqianzi;
         lianxidianhua.setText(bean.getDianhua());
-//        private String formguid;
         guidangren.setText(bean.getGuidangren());
         guidangqiri.setText(bean.getGuidangshijian());
         hao.setText(bean.getChushi_zi() + "   " + bean.getHao());
         if (bean.getJianyaoqingkuang() != null) {
             jianyaoqingkuang.setText(Html.fromHtml(bean.getJianyaoqingkuang()));
         }
-
-//        private String julingdaopishi;
-//        private String juneitojieyu;
-//        private String juneitoyiban;
-//        private String jutobian;
-//        private String jutozhi;
         mijiwen.setText(bean.getMiji());
         nian.setText(bean.getNian());
-//        qicaochushi.setText(bean.getQicaochushi());
-//        private String qitarenyijian;
-//        private String riseword;
-//        private String shifoufawen;
-//        private String shouwenriqi;\
-//        private String workflowinstance_guid;
-//        private String workflow_sub;
         xianbanriqi.setText(DateFormatUtil.subDate(bean.getXianbanshijian()));
-//        private String xianbanshijian;
-
-//        private String xiebanyijian;
         zhongdianducha.setText(bean.getZhongdianducha());
         zhubanchushi.setText(bean.getZhubanchushi());
         initAttachment(bean.getAttachment(), clAttachment);
-
         if (bean.getDocumentcb() != null) {
             chengbaoneirong.setVisibility(View.VISIBLE);
             chengbaoneirong.setOnClickListener(new View.OnClickListener() {

@@ -1,11 +1,5 @@
 package com.ysbd.beijing.ui.bean.form;
 
-import com.ysbd.beijing.ui.bean.CommentBean;
-import com.ysbd.beijing.ui.bean.CurrentCommentBean;
-import com.ysbd.beijing.ui.bean.MenuBean;
-
-import java.util.List;
-
 /**
  * Created by lcjing on 2018/8/20.
  */
@@ -140,7 +134,24 @@ public class ZhibiaowenBean extends BaseFormBean{
     private String zhutozhi;//
     private String zi;//
 
+    private String workflow_main;
+    private String workflow_sub;
 
+    public String getWorkflow_sub() {
+        return workflow_sub;
+    }
+
+    public void setWorkflow_sub(String workflow_sub) {
+        this.workflow_sub = workflow_sub;
+    }
+
+    public String getWorkflow_main() {
+        return workflow_main;
+    }
+
+    public void setWorkflow_main(String workflow_main) {
+        this.workflow_main = workflow_main;
+    }
 
     public String getBangongshifenshu() {
         return bangongshifenshu;

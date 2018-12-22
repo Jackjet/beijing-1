@@ -1,9 +1,5 @@
 package com.ysbd.beijing.ui.bean.form;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
-
 /**
  * Created by lcjing on 2018/8/27.
  */
@@ -85,9 +81,20 @@ public class JuNeiChuanWenBean extends BaseFormBean {
     private String xiebanyijian;
     private String zhongdianducha;
     private String zhubanchushi;
+    private String xiebanchushi;
+    private String lianxidianhua;
 
 
+    private String workflow_main;
 
+
+    public String getWorkflow_main() {
+        return workflow_main;
+    }
+
+    public void setWorkflow_main(String workflow_main) {
+        this.workflow_main = workflow_main;
+    }
 
     public String getBaoguanqixian() {
         return baoguanqixian;
@@ -369,4 +376,19 @@ public class JuNeiChuanWenBean extends BaseFormBean {
         this.zhubanchushi = zhubanchushi;
     }
 
+    public String getXiebanchushi() {
+        return xiebanchushi;
+    }
+
+    public void setXiebanchushi(String xiebanchushi) {
+        this.xiebanchushi = xiebanchushi;
+    }
+
+    public String getLianxidianhua() {
+        return lianxidianhua;
+    }
+
+    public void setLianxidianhua(String lianxidianhua) {
+        this.lianxidianhua = lianxidianhua;
+    }
 }

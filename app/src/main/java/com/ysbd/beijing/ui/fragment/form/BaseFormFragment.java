@@ -425,6 +425,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
         Log.d("WebServiceManager", "  instanceguid=" + instanceguid);
         Log.d("WebServiceManager", "  type=" + type);
         Intent intent = new Intent(getContext(), FormActivity.class);
+        intent.putExtra("from","");
         intent.putExtra("type", type);
         intent.putExtra("actor", "办结");
         intent.putExtra("instanceguid", instanceguid);

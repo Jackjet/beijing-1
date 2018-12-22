@@ -141,6 +141,8 @@ public class QueryListFragment extends BaseListFragment {
             public void onViewClick(int position) {
                 setLiveTime();
                 Intent intent = new Intent(getContext(), FormActivity.class);
+                intent.putExtra("from","");
+
                 intent.putExtra("type", type);
                 intent.putExtra("actor", actor);
                 intent.putExtra("instanceguid", list.get(position).getWORKFLOWINSTANCE_GUID());
@@ -254,6 +256,8 @@ public class QueryListFragment extends BaseListFragment {
             public void onViewClick(int position) {
                 setLiveTime();
                 Intent intent = new Intent(getContext(), FormActivity.class);
+                intent.putExtra("from","");
+
                 intent.putExtra("type", type);
                 intent.putExtra("actor", "done");
                 intent.putExtra("instanceguid", list.get(position).getWORKFLOWINSTANCE_GUID());

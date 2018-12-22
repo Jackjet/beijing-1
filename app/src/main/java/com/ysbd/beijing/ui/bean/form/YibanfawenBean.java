@@ -160,6 +160,8 @@ public class YibanfawenBean extends BaseFormBean {
 
     private String ydwwenhao;
 
+
+
     public String getZCXWJ() {
         return ZCXWJ;
     }

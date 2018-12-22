@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.ysbd.beijing.App;
 import com.ysbd.beijing.R;
+import com.ysbd.beijing.bean.XiebanBean;
 import com.ysbd.beijing.ui.activity.FormActivity;
 import com.ysbd.beijing.ui.bean.form.ZhuBanwenBean;
 import com.ysbd.beijing.utils.DateFormatUtil;
@@ -226,6 +227,7 @@ public class ZhubanwenFragment extends BaseFormFragment {
                     String data = msg.obj.toString();
                     if (data.length() > 4) {
                         ZhuBanwenBean banwenBean = new Gson().fromJson(data, ZhuBanwenBean.class);
+                        getXiebanGuid(banwenBean);
                         setData(banwenBean);
                     }
                     if (loadingDialog != null) {
@@ -240,6 +242,32 @@ public class ZhubanwenFragment extends BaseFormFragment {
 
         }
     };
+
+    List<XiebanBean> xieban = new ArrayList<>();
+    Map<String, String> xiebanGUID = new HashMap<>();
+    private void getXiebanGuid(ZhuBanwenBean bean){
+        if (bean.getWorkflow_sub()!=null&&!TextUtils.isEmpty(bean.getWorkflow_sub())) {
+            String xieban_guid;
+            xieban_guid = bean.getWorkflow_sub();
+            String[] sub = xieban_guid.split(";");
+            int num = sub.length;
+            if (num > 1) {
+                for (int i = 0; i < num; i++) {
+                    String strings[] = sub[i].split(",");
+                    xiebanGUID.put(strings[0], strings[1]);
+                }
+            } else {
+                String strings[] = sub[0].split(",");
+                xiebanGUID.put(strings[0], strings[1]);
+            }
+            for (String key:xiebanGUID.keySet()){
+                XiebanBean xiebanBean=new XiebanBean();
+                xiebanBean.setChushiName(xiebanGUID.get(key));
+                xiebanBean.setChushiGUID(key);
+                xieban.add(xiebanBean);
+            }
+        }
+    }
 
 
     private void initHuiqian2(String sub) {

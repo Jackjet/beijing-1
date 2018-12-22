@@ -28,36 +28,26 @@ import com.ysbd.beijing.ui.bean.MenuBean;
 import com.ysbd.beijing.ui.fragment.form.BaseFormFragment;
 import com.ysbd.beijing.ui.fragment.form.JieyuzijinfawenFragment;
 import com.ysbd.beijing.ui.fragment.form.JuneichuanwenFragment1;
+import com.ysbd.beijing.ui.fragment.form.JuneichuanwenXiebanFragment;
 import com.ysbd.beijing.ui.fragment.form.ShizhuanwenFragment;
 import com.ysbd.beijing.ui.fragment.form.YibanfawenFragment;
 import com.ysbd.beijing.ui.fragment.form.ZhibiaowenFragment;
 import com.ysbd.beijing.ui.fragment.form.ZhubanwenFragment;
-import com.ysbd.beijing.utils.Constants;
-import com.ysbd.beijing.utils.FileUtils;
+import com.ysbd.beijing.ui.fragment.form.ZhubanwenXiebanFragment;
 import com.ysbd.beijing.utils.SpUtils;
 import com.ysbd.beijing.utils.ToastUtil;
 import com.ysbd.beijing.utils.UriUtils;
 import com.ysbd.beijing.utils.WebServiceUtils;
 import com.ysbd.beijing.utils.selectPhoto.ImageShowActivity;
-import com.ysbd.beijing.view.BottomDialog;
 import com.ysbd.beijing.view.MenuDialog;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 
 public class FormActivity extends BaseActivity {
@@ -79,12 +69,14 @@ public class FormActivity extends BaseActivity {
         if (actor == null) {
             actor = "todo";
         }
-
         type = getIntent().getStringExtra("type");
         fileIdBean.instanceguid = guid;
         String jsonData = new Gson().toJson(fileIdBean);
         setContentView(R.layout.activity_form);
         ButterKnife.bind(this);
+        if (getIntent().getStringExtra("from").equals("隐藏")){
+            findViewById(R.id.tv_send).setVisibility(View.GONE);
+        }
         if (!("todo".equals(actor) || "待办".equals(actor))) {
             findViewById(R.id.tv_send).setVisibility(View.GONE);
         }
@@ -93,13 +85,13 @@ public class FormActivity extends BaseActivity {
                 formFragment = ZhubanwenFragment.getInstance(jsonData, actor);
                 break;
             case "主办文_协办":
-                formFragment = ZhubanwenFragment.getInstance(jsonData, actor);
+                formFragment = ZhubanwenXiebanFragment.getInstance(jsonData, actor);
                 break;
             case "局内传文":
                 formFragment = JuneichuanwenFragment1.getInstance(guid, actor);
                 break;
             case "局内传文_协办":
-                formFragment = JieyuzijinfawenFragment.getInstance(guid, actor);
+                formFragment = JuneichuanwenXiebanFragment.getInstance(guid, actor);
                 break;
             case "市转文":
                 formFragment = ShizhuanwenFragment.getInstance(guid, actor);
@@ -159,21 +151,21 @@ public class FormActivity extends BaseActivity {
 
     public void setActors(List<ActorsBean> actors) {
         this.actors = actors;
-        if (actors != null && actors.size() > 0) {
+        if (actors != null && actors.size() > 0&&actors.get(0).getInfoBean().getProecssActor()!=null) {
             // 1.待办 2.已阅 3.暂存 4.办结
-            switch (actors.get(1).getProecssActor().getHandelStatus()) {
+            switch (actors.get(0).getInfoBean().getProecssActor().getHandelStatus()) {
                 case 1:
                     if (("doing".equals(actor) || "在办".equals(actor))) {
                         returnBack = true;
                         handler.sendEmptyMessage(4);
-                        Log.d("=======case1", "" + actors.get(1).getProecssActor().getHandelStatus());
+                        Log.d("=======case1", "" + actors.get(0).getInfoBean().getProecssActor().getHandelStatus());
                     }
                     break;
                 case 2:
-                    Log.d("=======case2", "" + actors.get(1).getProecssActor().getHandelStatus());
+                    Log.d("=======case2", "" + actors.get(0).getInfoBean().getProecssActor().getHandelStatus());
                     break;
                 case 3:
-                    Log.d("=======case3", "" + actors.get(1).getProecssActor().getHandelStatus());
+                    Log.d("=======case3", "" + actors.get(0).getInfoBean().getProecssActor().getHandelStatus());
                     break;
                 case 4:
                     for (int i = 0; i < actors.size(); i++) {
@@ -285,42 +277,7 @@ public class FormActivity extends BaseActivity {
         }
     }
 
-    //    {0A2FF324-FFFF-FFFF-CBC8-42F900000021}
-    private void downLoad(String attachmentId) {
-        RequestBody formBody = new FormBody.Builder()
-                .add("attachmentrow_guid", attachmentId)
-                .build();
-        final Request request = new Request.Builder()
-                .url(Constants.LOAD_FILE)
-                .post(formBody)
-                .build();
-        OkHttpClient mOkHttpClient = new OkHttpClient();
-        Call call = mOkHttpClient.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message message = new Message();
-                message.what = 3;
-                handler.sendMessage(message);
-            }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                InputStream inputStream = response.body().byteStream();
-                String file = FileUtils.getInstance().makeDir().getPath() + File.separator + "新建文本文档.txt";
-                try {
-                    FileUtils.getInstance().saveToFile(file, inputStream);
-                    Message message = new Message();
-                    message.what = 2;
-                    handler.sendMessage(message);
-                } catch (Exception e) {
-                    Message message = new Message();
-                    message.what = 3;
-                    handler.sendMessage(message);
-                }
-            }
-        });
-    }
 
     Handler handler = new Handler() {
         @Override
@@ -364,51 +321,7 @@ public class FormActivity extends BaseActivity {
     };
 
 
-    public void showDialog() {
-        BottomDialog bottomDialog = new BottomDialog(this, R.layout.dialog_select_camera,
-                new int[]{R.id.dialogSelectCamera_camera, R.id.dialogSelectCamera_album, R.id.dialogSelectCamera_cancel});
-        bottomDialog.show();
-        bottomDialog.setOnBottomMenuItemClickListener(new BottomDialog.OnBottomMenuItemClickListener() {
-            @Override
-            public void onBottomMenuItemClick(BottomDialog dialog, View view) {
-                switch (view.getId()) {
-                    case R.id.dialogSelectCamera_camera:
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (ContextCompat.checkSelfPermission(FormActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.requestPermissions(FormActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 20103);
-                            } else {
-                                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                intent.setType("*/*");
-                                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                                startActivityForResult(intent, 10102);
-                            }
-                        } else {
-                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                            intent.setType("*/*");
-                            intent.addCategory(Intent.CATEGORY_OPENABLE);
-                            startActivityForResult(intent, 10102);
-                        }
 
-                        break;
-                    case R.id.dialogSelectCamera_album:
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (ContextCompat.checkSelfPermission(FormActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                ActivityCompat.requestPermissions(FormActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 20101);
-                            } else {
-                                openAlbum();
-                            }
-                        } else {
-                            openAlbum();
-                        }
-                        break;
-                    case R.id.dialogSelectCamera_cancel:
-
-                        break;
-                }
-            }
-        });
-
-    }
 
     public void openAlbum() {
 //        isShow = false;
