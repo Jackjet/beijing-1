@@ -273,6 +273,7 @@ public class JuneichuanwenXiebanFragment extends BaseFormFragment {
                 startActivity(intent);
                 break;
             case R.id.gongwen_copy_juneichuanwen:
+                toWebIntent(guid);
                 break;
         }
     }

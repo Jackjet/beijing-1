@@ -6,6 +6,6 @@
     <!--//填充颜色d0d3d7-->
     <solid android:color="#f4f9ff"/>
     <!--//边框-->
-    <stroke android:width="@dimen/dimen05" android:color="#1c22fe"/>
+    <stroke android:width="@dimen/dimen05" android:color="@color/blue"/>
 
 </shape>

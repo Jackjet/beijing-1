@@ -399,6 +399,8 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                 type = "指标文";
             } else if (attachmentName.contains("市转文")) {
                 type = "市转文";
+            } else if (attachmentName.contains("市转文_协办")) {
+                type = "市转文_协办";
             } else if (attachmentName.contains("局内传文")) {
                 type = "局内传文";
             } else if (attachmentName.contains("局内传文_协办")) {

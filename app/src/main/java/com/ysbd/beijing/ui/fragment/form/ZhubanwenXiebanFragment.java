@@ -1,6 +1,7 @@
 package com.ysbd.beijing.ui.fragment.form;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,14 +54,11 @@ public class ZhubanwenXiebanFragment extends BaseFormFragment {
     TextView nian;
     @BindView(R.id.hao)
     TextView hao;
-    @BindView(R.id.laiwendanwei)
-    TextView laiwendanwei;
     @BindView(R.id.yuanwenzihao)
     TextView yuanwenzihao;
     @BindView(R.id.xiebanchushi)
     TextView xiebanchushi;
-    @BindView(R.id.wenjianmingcheng)
-    TextView wenjianmingcheng;
+
     @BindView(R.id.cl_julingdao)
     CommentLinearLayout clJulingdao;
     @BindView(R.id.cl_chuzhangpishi)
@@ -81,6 +79,10 @@ public class ZhubanwenXiebanFragment extends BaseFormFragment {
     CommentLinearLayout clAttachment;
     @BindView(R.id.zhubanchushi)
     TextView zhubanchushi;
+    @BindView(R.id.wenjianmingcheng)
+    TextView wenjianmingcheng;
+    @BindView(R.id.xianbanshijian)
+    TextView xianbanshijian;
     private LoadingDialog loadingDialog;
 
     Unbinder unbinder;
@@ -166,6 +168,7 @@ public class ZhubanwenXiebanFragment extends BaseFormFragment {
         initData(layoutMap, frames, id, formName);
     }
 
+    private String guid_main;
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -178,6 +181,7 @@ public class ZhubanwenXiebanFragment extends BaseFormFragment {
                     String data = msg.obj.toString();
                     if (data.length() > 4) {
                         ZhuBanwenBean banwenBean = new Gson().fromJson(data, ZhuBanwenBean.class);
+                        guid_main = banwenBean.getWorkflow_main();
                         setData(banwenBean);
                     }
                     if (loadingDialog != null) {
@@ -194,9 +198,9 @@ public class ZhubanwenXiebanFragment extends BaseFormFragment {
     };
 
 
-    private void initHuiqian2(String sub) {
+    private void initHuiqian2(String main) {
         StringBuffer sb = new StringBuffer();
-        String[] s = sub.split(";");
+        String[] s = main.split(";");
         if (s.length > 0) {
             for (int i = 0; i < s.length; i++) {
                 String[] ss = s[i].split(",");
@@ -206,7 +210,7 @@ public class ZhubanwenXiebanFragment extends BaseFormFragment {
             }
 
         }
-        xiebanchushi.setText(sb.toString());
+        zhubanchushi.setText(sb.toString());
     }
 
 
@@ -214,14 +218,14 @@ public class ZhubanwenXiebanFragment extends BaseFormFragment {
         shouwenriqi.setText(DateFormatUtil.subDate(zhuBanwenBean.getRecievedate()));
         nian.setText(zhuBanwenBean.getNian());
         hao.setText(zhuBanwenBean.getHao());
-        laiwendanwei.setText(zhuBanwenBean.getLaiwendanwei());
+        wenjianmingcheng.setText(zhuBanwenBean.getWenjianmingcheng());
         yuanwenzihao.setText(zhuBanwenBean.getYuanwenzihao());
         zhubanchushi.setText(zhuBanwenBean.getZhubanchushi());
-        initHuiqian2(zhuBanwenBean.getWorkflow_sub());
-
+        initHuiqian2(zhuBanwenBean.getWorkflow_main());
+        xiebanchushi.setText(zhuBanwenBean.getXiebanchushi());
         chushichengbanren.setText(zhuBanwenBean.getChengbaoren());//
         lianxidianhua.setText(zhuBanwenBean.getLianxidianhua());
-
+        xianbanshijian.setText(DateFormatUtil.subDate(zhuBanwenBean.getExpiredate_xb()));
 
         beizhu.setText(zhuBanwenBean.getBeizhu());
         initAttachment(zhuBanwenBean.getAttachment(), clAttachment);
@@ -264,8 +268,25 @@ public class ZhubanwenXiebanFragment extends BaseFormFragment {
     }
 
 
-    @OnClick({R.id.gongwen_copy_zhubanwen,R.id.zhubanchushi})
-    public void onViewClicked() {
-        toWebIntent(id);
+    @OnClick({R.id.gongwen_copy_zhubanwen, R.id.zhubanchushi})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.zhubanchushi:
+                String[] split = guid_main.split(",");
+                guid_main = split[0];
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), FormActivity.class);
+                intent.putExtra("type", "主办文");
+                intent.putExtra("instanceguid", guid_main);
+                intent.putExtra("actor", actor);
+                intent.putExtra("from", "隐藏");
+                startActivity(intent);
+                break;
+            case R.id.gongwen_copy_zhubanwen:
+                toWebIntent(id);
+                break;
+
+        }
+
     }
 }

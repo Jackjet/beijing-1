@@ -267,12 +267,18 @@
                             android:background="#ff0000" />
                     </LinearLayout>
 
-
-                    <TextView
-                        android:id="@+id/xiebanchushi"
+                    <LinearLayout
                         style="@style/FormFieldsValue2"
-                        android:layout_weight="2"
-                        android:hint="" />
+                        android:layout_weight="2">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/xiebanchushi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        </android.support.v7.widget.RecyclerView>
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -449,18 +455,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:textSize="@dimen/dimen14"
+                            android:gravity="center"
                             android:text="预  算  处"
                             android:textColor="@color/textColor"
-                            android:gravity="center"/>
+                            android:textSize="@dimen/dimen14" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:text="处长意见"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/dimen14"
-                            android:gravity="center"/>
+                            android:textSize="@dimen/dimen14" />
 
                     </LinearLayout>
 
@@ -484,6 +491,7 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05"
                     android:visibility="visible">
+
                     <LinearLayout
                         style="@style/FormFieldsName2"
                         android:layout_height="match_parent"
@@ -493,18 +501,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:textSize="@dimen/dimen14"
+                            android:gravity="center"
                             android:text="预 算 处 意 见"
                             android:textColor="@color/textColor"
-                            android:gravity="center"/>
+                            android:textSize="@dimen/dimen14" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:text="(预登文)"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/dimen14"
-                            android:gravity="center"/>
+                            android:textSize="@dimen/dimen14" />
 
                     </LinearLayout>
 
@@ -1022,14 +1031,14 @@
 
                         <TextView
                             android:id="@+id/gongwen_copy_zhubanwen"
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="公文拷贝"
                             android:textColor="@color/textColor"
-                            android:textSize="@dimen/dimen14" />
+                            android:textSize="@dimen/dimen14"
+                            android:visibility="gone" />
                     </LinearLayout>
 
 

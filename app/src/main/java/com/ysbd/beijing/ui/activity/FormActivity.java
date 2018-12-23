@@ -30,6 +30,7 @@ import com.ysbd.beijing.ui.fragment.form.JieyuzijinfawenFragment;
 import com.ysbd.beijing.ui.fragment.form.JuneichuanwenFragment1;
 import com.ysbd.beijing.ui.fragment.form.JuneichuanwenXiebanFragment;
 import com.ysbd.beijing.ui.fragment.form.ShizhuanwenFragment;
+import com.ysbd.beijing.ui.fragment.form.ShizhuanwenXiebanFragment;
 import com.ysbd.beijing.ui.fragment.form.YibanfawenFragment;
 import com.ysbd.beijing.ui.fragment.form.ZhibiaowenFragment;
 import com.ysbd.beijing.ui.fragment.form.ZhubanwenFragment;
@@ -95,6 +96,9 @@ public class FormActivity extends BaseActivity {
                 break;
             case "市转文":
                 formFragment = ShizhuanwenFragment.getInstance(guid, actor);
+                break;
+            case "市转文_协办":
+                formFragment = ShizhuanwenXiebanFragment.getInstance(guid, actor);
                 break;
             case "指标文":
                 formFragment = ZhibiaowenFragment.getInstance(guid, actor);

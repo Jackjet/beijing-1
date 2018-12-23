@@ -123,9 +123,9 @@ public class CommentFormUtils {
     }
     public static List<OpinionModel> getZhubwxb() {
         List<OpinionModel> commentBeans = new ArrayList<>();
-        commentBeans.add(new OpinionModel("其他人意见", "{A9522312-FFFF-FFFF-9EAA-247B00000003}"));
-        commentBeans.add(new OpinionModel("处长批示", "{A9522312-FFFF-FFFF-9C1B-8B7D00000559}"));
-        commentBeans.add(new OpinionModel("局领导意见", "{A9522312-0000-0000-0BF7-FBC300000102}"));
+        commentBeans.add(new OpinionModel("其他人意见", "{A9522312-FFFF-FFFF-FBAA-CFCA000000FF}"));
+        commentBeans.add(new OpinionModel("处长批示", "{A9522312-FFFF-FFFF-FBAB-5F53000000FD}"));
+        commentBeans.add(new OpinionModel("局领导意见", "{A9522312-FFFF-FFFF-FBAA-920B000000FE}"));
         return commentBeans;
     }
 
@@ -142,9 +142,9 @@ public class CommentFormUtils {
     }
     public static List<OpinionModel> getShizhwxb() {
         List<OpinionModel> commentBeans = new ArrayList<>();
-        commentBeans.add(new OpinionModel("局领导意见", "{A9522312-FFFF-FFFF-9A8B-88E300000099}"));
-        commentBeans.add(new OpinionModel("其他人意见", "{A952230B-FFFF-FFFF-A132-1C6AFFFFFFA9}"));
-        commentBeans.add(new OpinionModel("处长意见", "{A952230B-FFFF-FFFF-A130-E98DFFFFFFA8}"));
+        commentBeans.add(new OpinionModel("局领导意见", "{A9522312-FFFF-FFFF-9C37-F9E8000004A1}"));
+        commentBeans.add(new OpinionModel("其他人意见", "{A9522312-FFFF-FFFF-9C39-772C000004A4}"));
+        commentBeans.add(new OpinionModel("处长意见", "{A9522312-FFFF-FFFF-9C39-34DE000004A2}"));
         return commentBeans;
     }
 

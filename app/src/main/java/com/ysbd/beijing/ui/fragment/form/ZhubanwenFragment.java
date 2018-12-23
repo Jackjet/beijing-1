@@ -1,6 +1,7 @@
 package com.ysbd.beijing.ui.fragment.form;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,6 +24,7 @@ import com.ysbd.beijing.App;
 import com.ysbd.beijing.R;
 import com.ysbd.beijing.bean.XiebanBean;
 import com.ysbd.beijing.ui.activity.FormActivity;
+import com.ysbd.beijing.ui.adapter.XieBan;
 import com.ysbd.beijing.ui.bean.form.ZhuBanwenBean;
 import com.ysbd.beijing.utils.DateFormatUtil;
 import com.ysbd.beijing.utils.FileUtils;
@@ -61,8 +65,7 @@ public class ZhubanwenFragment extends BaseFormFragment {
     TextView biaoti;
     @BindView(R.id.zhubandanwei)
     TextView zhubandanwei;
-    @BindView(R.id.xiebanchushi)
-    TextView xiebanchushi;
+
     @BindView(R.id.xianbanriqi)
     TextView xianbanriqi;
     @BindView(R.id.miji)
@@ -110,7 +113,8 @@ public class ZhubanwenFragment extends BaseFormFragment {
     CommentLinearLayout clChuzhangqianzi;//处长签字
     @BindView(R.id.gongwen_copy_zhubanwen)
     TextView gongwenCopyZhubanwen;
-
+    @BindView(R.id.xiebanchushi)
+    RecyclerView xiebanchushi;
 
     //    private List<OpinionModel> julingdao;
 //    private List<OpinionModel> niban;
@@ -139,7 +143,7 @@ public class ZhubanwenFragment extends BaseFormFragment {
     }
 
     String id;
-
+    XieBan xieBanAdapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -154,6 +158,23 @@ public class ZhubanwenFragment extends BaseFormFragment {
         }
         initComment();
         getData();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        xiebanchushi.setLayoutManager(layoutManager);
+        xieBanAdapter = new XieBan(xieban);
+        xieBanAdapter.setOnItemClickListener(new XieBan.setOnItemClickListener() {
+            @Override
+            public void OnItemClickListener(int pos) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), FormActivity.class);
+                intent.putExtra("type", "主办文_协办");
+                intent.putExtra("instanceguid", xieban.get(pos).getChushiGUID());
+                intent.putExtra("actor", actor);
+                intent.putExtra("from", "隐藏");
+                startActivity(intent);
+            }
+        });
+        xiebanchushi.setAdapter(xieBanAdapter);
         return view;
     }
 
@@ -245,8 +266,9 @@ public class ZhubanwenFragment extends BaseFormFragment {
 
     List<XiebanBean> xieban = new ArrayList<>();
     Map<String, String> xiebanGUID = new HashMap<>();
-    private void getXiebanGuid(ZhuBanwenBean bean){
-        if (bean.getWorkflow_sub()!=null&&!TextUtils.isEmpty(bean.getWorkflow_sub())) {
+
+    private void getXiebanGuid(ZhuBanwenBean bean) {
+        if (bean.getWorkflow_sub() != null && !TextUtils.isEmpty(bean.getWorkflow_sub())) {
             String xieban_guid;
             xieban_guid = bean.getWorkflow_sub();
             String[] sub = xieban_guid.split(";");
@@ -260,30 +282,31 @@ public class ZhubanwenFragment extends BaseFormFragment {
                 String strings[] = sub[0].split(",");
                 xiebanGUID.put(strings[0], strings[1]);
             }
-            for (String key:xiebanGUID.keySet()){
-                XiebanBean xiebanBean=new XiebanBean();
+            for (String key : xiebanGUID.keySet()) {
+                XiebanBean xiebanBean = new XiebanBean();
                 xiebanBean.setChushiName(xiebanGUID.get(key));
                 xiebanBean.setChushiGUID(key);
                 xieban.add(xiebanBean);
             }
+            xieBanAdapter.notifyDataSetChanged();
         }
     }
 
 
-    private void initHuiqian2(String sub) {
-        StringBuffer sb = new StringBuffer();
-        String[] s = sub.split(";");
-        if (s.length > 0) {
-            for (int i = 0; i < s.length; i++) {
-                String[] ss = s[i].split(",");
-                if (ss.length == 2) {
-                    sb.append(ss[1]).append("\n");
-                }
-            }
-
-        }
-        xiebanchushi.setText(sb.toString());
-    }
+//    private void initHuiqian2(String sub) {
+//        StringBuffer sb = new StringBuffer();
+//        String[] s = sub.split(";");
+//        if (s.length > 0) {
+//            for (int i = 0; i < s.length; i++) {
+//                String[] ss = s[i].split(",");
+//                if (ss.length == 2) {
+//                    sb.append(ss[1]).append("\n");
+//                }
+//            }
+//
+//        }
+//        xiebanchushi.setText(sb.toString());
+//    }
 
 
     public void setData(final ZhuBanwenBean zhuBanwenBean) {
@@ -296,7 +319,7 @@ public class ZhubanwenFragment extends BaseFormFragment {
 //        biaoti.setText(zhuBanwenBean.get);
         zhubandanwei.setText(zhuBanwenBean.getZhubanchushi());
 //        xiebanchushi.setText(zhuBanwenBean.getXiebanchushi());
-        initHuiqian2(zhuBanwenBean.getWorkflow_sub());
+//        initHuiqian2(zhuBanwenBean.getWorkflow_sub());
         xianbanriqi.setText(DateFormatUtil.subDate(zhuBanwenBean.getXianbandate()));
 
         miji.setText(zhuBanwenBean.getMiji());

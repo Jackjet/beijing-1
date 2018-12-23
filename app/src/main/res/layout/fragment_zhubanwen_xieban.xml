@@ -44,7 +44,7 @@
                         android:gravity="center"
                         android:paddingTop="@dimen/dimen8"
                         android:text="(协办)"
-                        android:textColor="@color/red"
+                        android:textColor="@color/blue"
                         android:textSize="@dimen/dimen20"
                         android:textStyle="bold" />
 
@@ -158,14 +158,14 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dimen60"
                 android:layout_marginRight="@dimen/dimen60"
-                android:background="@drawable/form_bored"
+                android:background="@drawable/form_bored_blue"
                 android:orientation="vertical"
                 android:padding="@dimen/dimen05">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/form_bored"
+                    android:background="@drawable/form_bored_blue"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05">
 
@@ -177,10 +177,10 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="#ff0000" />
+                        android:background="@color/blue" />
 
                     <TextView
-                        android:id="@+id/laiwendanwei"
+                        android:id="@+id/wenjianmingcheng"
                         style="@style/FormFieldsValue2"
                         android:layout_weight="2"
                         android:text="" />
@@ -193,7 +193,7 @@
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="#ff0000" />
+                            android:background="@color/blue" />
 
                         <TextView
                             style="@style/FormFieldsName2"
@@ -203,7 +203,7 @@
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="#ff0000" />
+                            android:background="@color/blue" />
                     </LinearLayout>
 
 
@@ -218,7 +218,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/form_bored"
+                    android:background="@drawable/form_bored_blue"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05"
                     android:visibility="visible">
@@ -231,13 +231,21 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="#ff0000" />
+                        android:background="@color/blue" />
 
-                    <TextView
-                        android:id="@+id/zhubanchushi"
+                    <LinearLayout
+                        android:layout_height="match_parent"
                         style="@style/FormFieldsValue2"
-                        android:layout_weight="2"
-                        android:hint="" />
+                        android:layout_weight="2">
+                        <TextView
+                            android:id="@+id/zhubanchushi"
+                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/textColor"
+                            android:textSize="@dimen/dimen14"
+                            android:hint="" />
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -247,7 +255,7 @@
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="#ff0000" />
+                            android:background="@color/blue" />
 
                         <TextView
                             style="@style/FormFieldsName2"
@@ -256,7 +264,7 @@
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="#ff0000" />
+                            android:background="@color/blue" />
                     </LinearLayout>
 
 
@@ -269,7 +277,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/form_bored"
+                    android:background="@drawable/form_bored_blue"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05"
 
@@ -283,10 +291,10 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="#ff0000" />
+                        android:background="@color/blue" />
 
                     <TextView
-                        android:id="@+id/wenjianmingcheng"
+                        android:id="@+id/xianbanshijian"
                         style="@style/FormFieldsValue3"
                         android:layout_weight="5"
                         android:hint=""
@@ -300,7 +308,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/form_bored"
+                    android:background="@drawable/form_bored_blue"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05"
                     android:visibility="visible">
@@ -313,7 +321,7 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="#ff0000" />
+                        android:background="@color/blue" />
 
                     <com.ysbd.beijing.view.CommentLinearLayout
                         android:id="@+id/cl_julingdao"
@@ -331,7 +339,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/form_bored"
+                    android:background="@drawable/form_bored_blue"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05"
                     android:visibility="visible">
@@ -344,7 +352,7 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="#ff0000" />
+                        android:background="@color/blue" />
 
                     <com.ysbd.beijing.view.CommentLinearLayout
                         android:id="@+id/cl_chuzhangpishi"
@@ -356,7 +364,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/form_bored"
+                    android:background="@drawable/form_bored_blue"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05"
                     android:visibility="visible">
@@ -369,7 +377,7 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="#ff0000" />
+                        android:background="@color/blue" />
 
                     <com.ysbd.beijing.view.CommentLinearLayout
                         android:id="@+id/cl_qitarenyijian"
@@ -381,7 +389,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/form_bored"
+                    android:background="@drawable/form_bored_blue"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05"
                     android:visibility="visible">
@@ -394,7 +402,7 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="#ff0000" />
+                        android:background="@color/blue" />
 
                     <FrameLayout
                         android:layout_width="0dp"
@@ -435,7 +443,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/form_bored"
+                    android:background="@drawable/form_bored_blue"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05"
                     android:visibility="gone">
@@ -447,7 +455,7 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="#ff0000" />
+                        android:background="@color/blue" />
 
                     <TextView
                         style="@style/FormFieldsValue2"
@@ -462,7 +470,7 @@
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="#ff0000" />
+                            android:background="@color/blue" />
 
                         <TextView
                             style="@style/FormFieldsName2"
@@ -471,7 +479,7 @@
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="#ff0000" />
+                            android:background="@color/blue" />
                     </LinearLayout>
 
 
@@ -485,7 +493,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/form_bored"
+                    android:background="@drawable/form_bored_blue"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05"
                     android:visibility="visible">
@@ -498,7 +506,7 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="#ff0000" />
+                        android:background="@color/blue" />
 
                     <TextView
                         android:id="@+id/chushichengbanren"
@@ -515,7 +523,7 @@
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="#ff0000" />
+                            android:background="@color/blue" />
 
                         <TextView
                             style="@style/FormFieldsName2"
@@ -525,7 +533,7 @@
                         <View
                             android:layout_width="@dimen/dimen1"
                             android:layout_height="match_parent"
-                            android:background="#ff0000" />
+                            android:background="@color/blue" />
                     </LinearLayout>
 
                     <TextView
@@ -538,7 +546,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/form_bored"
+                    android:background="@drawable/form_bored_blue"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05"
                     android:visibility="visible">
@@ -552,7 +560,7 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="#ff0000" />
+                        android:background="@color/blue" />
 
                     <TextView
                         android:id="@+id/beizhu"
@@ -579,7 +587,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dimen60"
                 android:layout_marginRight="@dimen/dimen60"
-                android:background="@drawable/form_bored"
+                android:background="@drawable/form_bored_blue"
                 android:orientation="vertical"
                 android:padding="@dimen/dimen05">
 
@@ -587,7 +595,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/form_bored"
+                    android:background="@drawable/form_bored_blue"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen05">
 
@@ -621,7 +629,7 @@
                     <View
                         android:layout_width="@dimen/dimen1"
                         android:layout_height="match_parent"
-                        android:background="#ff0000" />
+                        android:background="@color/blue" />
 
                     <LinearLayout
                         android:layout_width="0dp"

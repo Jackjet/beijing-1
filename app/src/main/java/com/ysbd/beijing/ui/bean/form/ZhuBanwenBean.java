@@ -108,6 +108,7 @@ public class ZhuBanwenBean extends BaseFormBean{
     private String zhutofa;//
     private String zhutojieyu;//
     private String zhutozhi;//
+    private String expiredate_xb;
 
 
     private String guidangren;
@@ -503,6 +504,14 @@ public class ZhuBanwenBean extends BaseFormBean{
 
     public void setZhutozhi(String zhutozhi) {
         this.zhutozhi = zhutozhi;
+    }
+
+    public String getExpiredate_xb() {
+        return expiredate_xb;
+    }
+
+    public void setExpiredate_xb(String expiredate_xb) {
+        this.expiredate_xb = expiredate_xb;
     }
 
 
