@@ -241,7 +241,7 @@
                             android:id="@+id/zhubanchushi"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
-                            android:textColor="@color/textColor"
+                            android:textColor="@color/saddlebrown"
                             android:textSize="@dimen/dimen14"
                             android:hint="" />
                     </LinearLayout>

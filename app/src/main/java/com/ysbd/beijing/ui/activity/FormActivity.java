@@ -57,6 +57,7 @@ public class FormActivity extends BaseActivity {
     private String type;
     private String actor;
     private ProgressDialog p;
+    private String from;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,8 @@ public class FormActivity extends BaseActivity {
         String jsonData = new Gson().toJson(fileIdBean);
         setContentView(R.layout.activity_form);
         ButterKnife.bind(this);
-        if (getIntent().getStringExtra("from").equals("隐藏")){
+        from=getIntent().getStringExtra("from");
+        if (from.equals("隐藏")){
             findViewById(R.id.tv_send).setVisibility(View.GONE);
         }
         if (!("todo".equals(actor) || "待办".equals(actor))) {
@@ -83,16 +85,16 @@ public class FormActivity extends BaseActivity {
         }
         switch (type) {
             case "主办文":
-                formFragment = ZhubanwenFragment.getInstance(jsonData, actor);
+                formFragment = ZhubanwenFragment.getInstance(jsonData, actor,from);
                 break;
             case "主办文_协办":
-                formFragment = ZhubanwenXiebanFragment.getInstance(jsonData, actor);
+                formFragment = ZhubanwenXiebanFragment.getInstance(jsonData, actor,from);
                 break;
             case "局内传文":
-                formFragment = JuneichuanwenFragment1.getInstance(guid, actor);
+                formFragment = JuneichuanwenFragment1.getInstance(guid, actor,from);
                 break;
             case "局内传文_协办":
-                formFragment = JuneichuanwenXiebanFragment.getInstance(guid, actor);
+                formFragment = JuneichuanwenXiebanFragment.getInstance(guid, actor,from);
                 break;
             case "市转文":
                 formFragment = ShizhuanwenFragment.getInstance(guid, actor);
@@ -113,7 +115,7 @@ public class FormActivity extends BaseActivity {
                 formFragment = JieyuzijinfawenFragment.getInstance(guid, actor);
                 break;
             default:
-                formFragment = ZhubanwenFragment.getInstance(jsonData, actor);
+                formFragment = ZhubanwenFragment.getInstance(jsonData, actor,from);
         }
 
         p = new ProgressDialog(this);

@@ -83,9 +83,20 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
         userId = getContext().getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).getString(Constants.USER_ID, "");
         initComment();
     }
+    public String quanXian="";
+    public void initData(Map<String, CommentLinearLayout> layoutMap, List<String> frameMap, String guid, String formName,String quanXian) {
+        this.frameMap = frameMap;
+        this.layoutMap = layoutMap;
+        this.guid = guid;
+        this.formName = formName;
+        this.quanXian=quanXian;
+        userName = getContext().getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).getString(Constants.USER_NAME, "");
+        userId = getContext().getSharedPreferences(Constants.SP, Context.MODE_PRIVATE).getString(Constants.USER_ID, "");
+        initComment();
+    }
 
     private void initComment() {
-        boolean editable = "todo".equals(actor) || "待办".equals(actor);
+        boolean editable = ("todo".equals(actor)&&quanXian.equals("") )|| ("待办".equals(actor)&&quanXian.equals(""));
         opinionMap = new HashMap<>();
         adapterMap = new HashMap<>();
         for (int i = 0; i < frameMap.size(); i++) {
@@ -413,7 +424,6 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
             ToastUtil.show("暂时无法打开该文种!", getContext());
             return;
         }
-//        int idIndex=url.indexOf("workflowinstance_guid");
         int idIndex = description.indexOf("instanceGUID=");
 
         if (idIndex > 0) {

@@ -2,6 +2,7 @@ package com.ysbd.beijing.ui.fragment.form;
 
 
 import android.Manifest;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -86,15 +87,17 @@ public class JuneichuanwenXiebanFragment extends BaseFormFragment {
         // Required empty public constructor
     }
 
-    public static JuneichuanwenXiebanFragment getInstance(String guid, String actor) {
+    public static JuneichuanwenXiebanFragment getInstance(String guid, String actor,String quanXian) {
         JuneichuanwenXiebanFragment fragment = new JuneichuanwenXiebanFragment();
         Bundle args = new Bundle();
         args.putString("guid", guid);
         args.putString("actor", actor);
+        args.putString("quanxian",quanXian);
         fragment.setArguments(args);
         return fragment;
     }
 
+    private String quanXian;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,6 +107,7 @@ public class JuneichuanwenXiebanFragment extends BaseFormFragment {
         unbinder = ButterKnife.bind(this, view);
         guid = getArguments().getString("guid");
         actor = getArguments().getString("actor");
+        quanXian=getArguments().getString("quanxian");
         Map<String, CommentLinearLayout> layoutMap = new HashMap<>();
         layoutMap.put("处长批示", clChuzhangpishi);
         layoutMap.put("局领导批示", clJulingdao);
@@ -115,7 +119,12 @@ public class JuneichuanwenXiebanFragment extends BaseFormFragment {
         if (actor.equals("todo") || actor.equals("待办")) {//默认共公文拷贝隐藏,如果是待办状态,显示按钮
             gongwenCopyJuneichuanwen.setVisibility(View.VISIBLE);
         }
-        initData(layoutMap, frames, guid, formName);
+        if (quanXian.equals("隐藏")){
+            initData(layoutMap, frames, guid, formName,quanXian);
+        }else {
+            initData(layoutMap, frames, guid, formName);
+        }
+
         getData();
         return view;
     }
@@ -217,6 +226,8 @@ public class JuneichuanwenXiebanFragment extends BaseFormFragment {
         hao.setText(bean.getChushi_zi() + "   " + bean.getHao());
         nian.setText(bean.getNian());
         zhubanchushi.setText(bean.getZhubanchushi());
+        ((ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE)).setText(bean.getZhubanchushi());
+
         initAttachment(bean.getAttachment(), clAttachment);
         xiebanchushi.setText(bean.getXiebanchushi());
 

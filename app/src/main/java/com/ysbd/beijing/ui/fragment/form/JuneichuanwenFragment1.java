@@ -1,6 +1,7 @@
 package com.ysbd.beijing.ui.fragment.form;
 
 import android.Manifest;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -109,14 +110,16 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
 
 
 
-    public static JuneichuanwenFragment1 getInstance(String guid, String actor) {
+    public static JuneichuanwenFragment1 getInstance(String guid, String actor,String quanXian) {
         JuneichuanwenFragment1 fragment = new JuneichuanwenFragment1();
         Bundle args = new Bundle();
         args.putString("guid", guid);
         args.putString("actor", actor);
+        args.putString("quanxian", quanXian);
         fragment.setArguments(args);
         return fragment;
     }
+    private String quanXian;
     XieBan xieBanAdapter;
     @Nullable
     @Override
@@ -125,6 +128,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         unbinder = ButterKnife.bind(this, view);
         guid = getArguments().getString("guid");
         actor = getArguments().getString("actor");
+        quanXian=getArguments().getString("quanxian");
         Map<String, CommentLinearLayout> layoutMap = new HashMap<>();
         layoutMap.put("处长批示", clChuzhangpishi);
         layoutMap.put("局领导批示", clJulingdao);
@@ -139,8 +143,15 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
             gongwenCopyJuneichuanwen.setVisibility(View.VISIBLE);
         }
 
+        /**
+         * 文种内跳转公文隐藏签字笔
+         */
+        if (quanXian.equals("隐藏")){
+            initData(layoutMap, frames, guid, formName,quanXian);
+        }else {
+            initData(layoutMap, frames, guid, formName);
+        }
 
-        initData(layoutMap, frames, guid, formName);
         getData();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -257,6 +268,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         if (bean.getWorkflow_sub()!=null&&!TextUtils.isEmpty(bean.getWorkflow_sub())) {
             String xieban_guid;
             xieban_guid = bean.getWorkflow_sub();
+            ((ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE)).setText(xieban_guid);
             String[] sub = xieban_guid.split(";");
             int num = sub.length;
             if (num > 1) {

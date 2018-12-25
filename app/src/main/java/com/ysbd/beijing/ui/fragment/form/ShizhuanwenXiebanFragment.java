@@ -109,8 +109,7 @@ public class ShizhuanwenXiebanFragment extends BaseFormFragment {
 
     String guid;
     String formName = "市转文_协办";
-
-
+private String quanXian;
     private void initComment() {
         Map<String, CommentLinearLayout> layoutMap = new HashMap<>();
 //        layoutMap.put("承办人意见", );
