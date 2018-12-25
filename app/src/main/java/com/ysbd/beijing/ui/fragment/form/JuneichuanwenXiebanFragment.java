@@ -87,12 +87,12 @@ public class JuneichuanwenXiebanFragment extends BaseFormFragment {
         // Required empty public constructor
     }
 
-    public static JuneichuanwenXiebanFragment getInstance(String guid, String actor,String quanXian) {
+    public static JuneichuanwenXiebanFragment getInstance(String guid, String actor, String quanXian) {
         JuneichuanwenXiebanFragment fragment = new JuneichuanwenXiebanFragment();
         Bundle args = new Bundle();
         args.putString("guid", guid);
         args.putString("actor", actor);
-        args.putString("quanxian",quanXian);
+        args.putString("quanxian", quanXian);
         fragment.setArguments(args);
         return fragment;
     }
@@ -107,7 +107,7 @@ public class JuneichuanwenXiebanFragment extends BaseFormFragment {
         unbinder = ButterKnife.bind(this, view);
         guid = getArguments().getString("guid");
         actor = getArguments().getString("actor");
-        quanXian=getArguments().getString("quanxian");
+        quanXian = getArguments().getString("quanxian");
         Map<String, CommentLinearLayout> layoutMap = new HashMap<>();
         layoutMap.put("处长批示", clChuzhangpishi);
         layoutMap.put("局领导批示", clJulingdao);
@@ -119,11 +119,7 @@ public class JuneichuanwenXiebanFragment extends BaseFormFragment {
         if (actor.equals("todo") || actor.equals("待办")) {//默认共公文拷贝隐藏,如果是待办状态,显示按钮
             gongwenCopyJuneichuanwen.setVisibility(View.VISIBLE);
         }
-        if (quanXian.equals("隐藏")){
-            initData(layoutMap, frames, guid, formName,quanXian);
-        }else {
-            initData(layoutMap, frames, guid, formName);
-        }
+        initData(layoutMap, frames, guid, formName, quanXian);
 
         getData();
         return view;
@@ -280,7 +276,7 @@ public class JuneichuanwenXiebanFragment extends BaseFormFragment {
                 intent.putExtra("type", "局内传文");
                 intent.putExtra("instanceguid", guid_main);
                 intent.putExtra("actor", actor);
-                intent.putExtra("from","隐藏");
+                intent.putExtra("from", "隐藏");
                 startActivity(intent);
                 break;
             case R.id.gongwen_copy_juneichuanwen:

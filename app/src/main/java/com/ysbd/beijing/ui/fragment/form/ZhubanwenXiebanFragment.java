@@ -87,7 +87,7 @@ public class ZhubanwenXiebanFragment extends BaseFormFragment {
 
     Unbinder unbinder;
 
-    public static ZhubanwenXiebanFragment getInstance(String jsonData, String actor,String quanXian) {
+    public static ZhubanwenXiebanFragment getInstance(String jsonData, String actor, String quanXian) {
         ZhubanwenXiebanFragment fragment = new ZhubanwenXiebanFragment();
         Bundle args = new Bundle();
         args.putString("jsonData", jsonData);
@@ -102,12 +102,13 @@ public class ZhubanwenXiebanFragment extends BaseFormFragment {
 
     String id;
     private String quanXian;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final String jsonData = getArguments().getString("jsonData");
         actor = getArguments().getString("actor");
-        quanXian=getArguments().getString("quanxian");
+        quanXian = getArguments().getString("quanxian");
         View view = inflater.inflate(R.layout.fragment_zhubanwen_xieban, null);
         unbinder = ButterKnife.bind(this, view);
         FormActivity.FileIdBean bean = new Gson().fromJson(jsonData, FormActivity.FileIdBean.class);
@@ -167,11 +168,7 @@ public class ZhubanwenXiebanFragment extends BaseFormFragment {
         frames.add("局领导意见");
         frames.add("处长批示");
         frames.add("其他人意见");
-        if (quanXian.equals("隐藏")){
-            initData(layoutMap, frames, id, formName,quanXian);
-        }else {
-            initData(layoutMap, frames, id, formName);
-        }
+        initData(layoutMap, frames, id, formName, quanXian);
     }
 
     private String guid_main;

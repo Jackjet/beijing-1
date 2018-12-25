@@ -82,11 +82,13 @@ public class ShizhuanwenXiebanFragment extends BaseFormFragment {
     @BindView(R.id.cl_attachment)
     CommentLinearLayout clAttachment;
 
-    public static ShizhuanwenXiebanFragment getInstance(String guid, String actor) {
+    private String quanXian;
+    public static ShizhuanwenXiebanFragment getInstance(String guid, String actor,String quanXian) {
         ShizhuanwenXiebanFragment fragment = new ShizhuanwenXiebanFragment();
         Bundle args = new Bundle();
         args.putString("guid", guid);
         args.putString("actor", actor);
+        args.putString("quanxian",quanXian);
         fragment.setArguments(args);
         return fragment;
     }
@@ -98,6 +100,7 @@ public class ShizhuanwenXiebanFragment extends BaseFormFragment {
         unbinder = ButterKnife.bind(this, view);
         guid = getArguments().getString("guid");
         actor = getArguments().getString("actor");
+        quanXian=getArguments().getString("quanxian");
         if (actor.equals("todo") || actor.equals("待办")) {//默认共公文拷贝隐藏,如果是待办状态,显示按钮
             gongwenCopyShizhuanwen.setVisibility(View.VISIBLE);
         }
@@ -109,7 +112,6 @@ public class ShizhuanwenXiebanFragment extends BaseFormFragment {
 
     String guid;
     String formName = "市转文_协办";
-private String quanXian;
     private void initComment() {
         Map<String, CommentLinearLayout> layoutMap = new HashMap<>();
 //        layoutMap.put("承办人意见", );
@@ -120,7 +122,7 @@ private String quanXian;
         frames.add("局领导意见");
         frames.add("处长意见");
         frames.add("其他人意见");
-        initData(layoutMap, frames, guid, formName);
+        initData(layoutMap, frames, guid, formName,quanXian);
     }
 
     private void getData() {

@@ -97,10 +97,10 @@ public class FormActivity extends BaseActivity {
                 formFragment = JuneichuanwenXiebanFragment.getInstance(guid, actor,from);
                 break;
             case "市转文":
-                formFragment = ShizhuanwenFragment.getInstance(guid, actor);
+                formFragment = ShizhuanwenFragment.getInstance(guid, actor,from);
                 break;
             case "市转文_协办":
-                formFragment = ShizhuanwenXiebanFragment.getInstance(guid, actor);
+                formFragment = ShizhuanwenXiebanFragment.getInstance(guid, actor,from);
                 break;
             case "指标文":
                 formFragment = ZhibiaowenFragment.getInstance(guid, actor);
@@ -210,6 +210,7 @@ public class FormActivity extends BaseActivity {
                                 Intent intent = new Intent(FormActivity.this, SelectPersonActivity.class);
                                 intent.putExtra("actionId", menuBean.getActionguid());//"{ED869C4A-D8BA-4308-8F9B-7B43534C583D}"
                                 intent.putExtra("id", guid);
+                                Log.d("hahahahahahahah", "click: +++"+guid);
                                 startActivityForResult(intent, 1);
                             }
                         }

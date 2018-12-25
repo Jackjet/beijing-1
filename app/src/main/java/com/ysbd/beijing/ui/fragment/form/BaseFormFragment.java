@@ -483,7 +483,7 @@ public class BaseFormFragment extends BaseFragment implements CommentAdapter.Com
                     }
                     try {
                         FileUtils.getInstance().saveToFile(filePath, inputStream);
-                        if (isDocument) {
+                        if (isDocument&&quanXian.equals("")) {
                             handler.sendEmptyMessage(7);
                         } else {
                             handler.sendEmptyMessage(5);

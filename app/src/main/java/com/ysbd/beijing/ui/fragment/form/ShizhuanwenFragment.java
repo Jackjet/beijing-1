@@ -112,11 +112,14 @@ public class ShizhuanwenFragment extends BaseFormFragment {
     @BindView(R.id.gongwen_copy_shizhuanwen)
     TextView gongwenCopyShizhuanwen;
 
-    public static ShizhuanwenFragment getInstance(String guid, String actor) {
+    private String quanXian;
+
+    public static ShizhuanwenFragment getInstance(String guid, String actor, String quanXian) {
         ShizhuanwenFragment fragment = new ShizhuanwenFragment();
         Bundle args = new Bundle();
         args.putString("guid", guid);
         args.putString("actor", actor);
+        args.putString("quanxian", quanXian);
         fragment.setArguments(args);
         return fragment;
     }
@@ -128,6 +131,7 @@ public class ShizhuanwenFragment extends BaseFormFragment {
         unbinder = ButterKnife.bind(this, view);
         guid = getArguments().getString("guid");
         actor = getArguments().getString("actor");
+        quanXian = getArguments().getString("quanxian");
         if (actor.equals("todo") || actor.equals("待办")) {//默认共公文拷贝隐藏,如果是待办状态,显示按钮
             gongwenCopyShizhuanwen.setVisibility(View.VISIBLE);
         }
@@ -155,7 +159,9 @@ public class ShizhuanwenFragment extends BaseFormFragment {
         frames.add("处长意见");
         frames.add("处长签字");
         frames.add("其他人意见");
-        initData(layoutMap, frames, guid, formName);
+
+        initData(layoutMap, frames, guid, formName, quanXian);
+
     }
 
     private void getData() {

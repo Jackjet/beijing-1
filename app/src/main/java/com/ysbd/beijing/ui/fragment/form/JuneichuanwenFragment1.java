@@ -1,7 +1,6 @@
 package com.ysbd.beijing.ui.fragment.form;
 
 import android.Manifest;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -109,8 +108,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
     private LoadingDialog loadingDialog;
 
 
-
-    public static JuneichuanwenFragment1 getInstance(String guid, String actor,String quanXian) {
+    public static JuneichuanwenFragment1 getInstance(String guid, String actor, String quanXian) {
         JuneichuanwenFragment1 fragment = new JuneichuanwenFragment1();
         Bundle args = new Bundle();
         args.putString("guid", guid);
@@ -119,8 +117,10 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     private String quanXian;
     XieBan xieBanAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -128,7 +128,7 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         unbinder = ButterKnife.bind(this, view);
         guid = getArguments().getString("guid");
         actor = getArguments().getString("actor");
-        quanXian=getArguments().getString("quanxian");
+        quanXian = getArguments().getString("quanxian");
         Map<String, CommentLinearLayout> layoutMap = new HashMap<>();
         layoutMap.put("处长批示", clChuzhangpishi);
         layoutMap.put("局领导批示", clJulingdao);
@@ -144,13 +144,11 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
         }
 
         /**
-         * 文种内跳转公文隐藏签字笔
+         * quanXian参数: 文种内跳转公文隐藏签字笔
          */
-        if (quanXian.equals("隐藏")){
-            initData(layoutMap, frames, guid, formName,quanXian);
-        }else {
-            initData(layoutMap, frames, guid, formName);
-        }
+
+        initData(layoutMap, frames, guid, formName, quanXian);
+
 
         getData();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -264,11 +262,10 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
 
     Map<String, String> xiebanGUID = new HashMap<>();
 
-    private void getXiebanGuid(JuNeiChuanWenBean bean){
-        if (bean.getWorkflow_sub()!=null&&!TextUtils.isEmpty(bean.getWorkflow_sub())) {
+    private void getXiebanGuid(JuNeiChuanWenBean bean) {
+        if (bean.getWorkflow_sub() != null && !TextUtils.isEmpty(bean.getWorkflow_sub())) {
             String xieban_guid;
             xieban_guid = bean.getWorkflow_sub();
-            ((ClipboardManager) App.getContext().getSystemService(Context.CLIPBOARD_SERVICE)).setText(xieban_guid);
             String[] sub = xieban_guid.split(";");
             int num = sub.length;
             if (num > 1) {
@@ -280,8 +277,8 @@ public class JuneichuanwenFragment1 extends BaseFormFragment {
                 String strings[] = sub[0].split(",");
                 xiebanGUID.put(strings[0], strings[1]);
             }
-            for (String key:xiebanGUID.keySet()){
-                XiebanBean xiebanBean=new XiebanBean();
+            for (String key : xiebanGUID.keySet()) {
+                XiebanBean xiebanBean = new XiebanBean();
                 xiebanBean.setChushiName(xiebanGUID.get(key));
                 xiebanBean.setChushiGUID(key);
                 xieban.add(xiebanBean);

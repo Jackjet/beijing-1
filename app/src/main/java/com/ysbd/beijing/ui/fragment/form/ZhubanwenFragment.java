@@ -130,7 +130,7 @@ public class ZhubanwenFragment extends BaseFormFragment {
 //    private CommentAdapter qitarenAdapter;
     private LoadingDialog loadingDialog;
 
-    public static ZhubanwenFragment getInstance(String jsonData, String actor,String quanXian) { //quanxian参数控制签字笔显示
+    public static ZhubanwenFragment getInstance(String jsonData, String actor, String quanXian) { //quanxian参数控制签字笔显示
         ZhubanwenFragment fragment = new ZhubanwenFragment();
         Bundle args = new Bundle();
         args.putString("jsonData", jsonData);
@@ -142,15 +142,17 @@ public class ZhubanwenFragment extends BaseFormFragment {
 
     public ZhubanwenFragment() {
     }
+
     private String quanXian;
     String id;
     XieBan xieBanAdapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final String jsonData = getArguments().getString("jsonData");
         actor = getArguments().getString("actor");
-        quanXian=getArguments().getString("quanxian");
+        quanXian = getArguments().getString("quanxian");
         View view = inflater.inflate(R.layout.fragment_zhubanwen, null);
         unbinder = ButterKnife.bind(this, view);
         FormActivity.FileIdBean bean = new Gson().fromJson(jsonData, FormActivity.FileIdBean.class);
@@ -235,11 +237,8 @@ public class ZhubanwenFragment extends BaseFormFragment {
         frames.add("处长批示");
         frames.add("处长签字");
         frames.add("其他人意见");
-        if (quanXian.equals("隐藏")){
-            initData(layoutMap, frames, id, formName,quanXian);
-        }else {
-            initData(layoutMap, frames, id, formName);
-        }
+        initData(layoutMap, frames, id, formName, quanXian);
+
 
     }
 
